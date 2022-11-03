@@ -1,0 +1,74 @@
+﻿<div ng-form="contactSelectForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelContactSelect()">×</span>
+        </button>
+        <h4 class="modal-title text-bold">Select contact information</h4>
+    </div>
+    <div class="modal-body" style="overflow-y: auto">
+        <input class="btn btn-primary pull-right" type="button" value="Add organization" style="margin-left:10px" ng-click="addGesOrganization()">
+        <input class="btn btn-primary pull-right" type="button" value="Add contact" ng-click="addGesContact()">
+        <div class="" style="margin-top:40px">
+            <table id="tblcontact" class="table table-bordered table-striped"></table>
+            <div id="myPager"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="button" value="Select" data-dismiss="modal" id="btn-save-guideline" ng-click="contactSelect(ngDialogData.editingDialogue)"/>        
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelContactSelect()" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var postUrl = "/CaseProfile/GetContactsJqGrid";
+        var gridCaption = "";
+        var grid = $("#tblcontact");
+        $.jgrid.defaults.responsive = true;
+        grid.bind("jqGridLoadComplete",
+            function (e, rowid, orgClickEvent) {
+
+                $(window).resize();
+            });
+        grid.jqGrid({
+            url: postUrl,
+            datatype: "json",
+            postData: {},
+            mtype: "post",
+            colNames: ["Individual Id", "First Name", "Last Name", "Job Title", "Email", "Organization"],
+            colModel: [
+                { name: "UserId", width: "80px", align: "right", hidden: false, search: false, key: true },
+                { name: "FirstName" },
+                { name: "LastName" },
+                { name: "JobTitle" },
+                { name: "Email" },
+                { name: "OrganizationName" }
+            ],
+            pager: $("#myPager"),
+            rowNum: 50,
+            rowList: [20, 50, 100],
+            autowidth: true,
+            shrinkToFit: true,
+
+            toppager: true,
+            // rownumbers: true,
+            gridview: true,
+            height: "400",
+            viewrecords: true,
+            caption: gridCaption,
+            scrollrows: true,
+            sortname: "Id",
+            sortorder: "desc",
+            ondblClickRow: function() {
+                $('#btn-save-guideline').click();              
+            }
+        });
+        setBooleanSelect.call(grid, "LockoutEnabled", "All");
+        grid.jqGrid("navGrid",
+            "#myPager",
+            { edit: false, add: false, del: false, search: false, refresh: true, 'cloneToTop': true });
+
+        grid.jqGrid("filterToolbar",
+            { stringResult: true, searchOnEnter: true, defaultSearch: "cn", searchOperators: false });
+
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@using GES.Common.Resources
+@using GES.Common.Helpers
+
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileUNGPAssessmentComponent
+
+@{
+    var score = "";
+    var rangeHelper = new RangeHelper();
+    rangeHelper.Add(1, 4, "Low");
+    rangeHelper.Add(5, 7, "Medium");
+    rangeHelper.Add(8, 10, "High");
+
+
+    if (Model.SalientHumanRightsPotentialViolationTotalScore.HasValue)
+    {
+        score = rangeHelper.GetResult(Model.SalientHumanRightsPotentialViolationTotalScore);
+    }
+}
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-9 col-md-8 col-xs-12">            
+        </div>
+        <div class="text-right tool-bar col-lg-3 col-md-4 col-xs-12">
+            <table style="width:100%;height:100%">
+                <tbody>
+                    <tr>
+                        <td align="right" style="vertical-align:bottom">
+
+                            <span>
+                                <i class="fa fa-calendar" aria-hidden="true"></i> @(Model.Modified.HasValue ? Model.Modified.Value.ToString("yyyy-MM-dd") : "")
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr class="style10"/>
+</div>
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-9 col-md-8 col-xs-12">
+            <span class="tooltip-hint" data-tooltip-content="salience-hint">Level of human rights salience*</span>
+        </div>
+    </div>
+    <hr class="style10" />
+    <div class="box-body">
+        <div>
+            <strong>@Resources.UNGPTotalScore:</strong>
+            <span class="ungp-sl-score-@score.ToLower()" style="font-weight:bold">@score</span><span style="font-weight:bold"> (@Model.SalientHumanRightsPotentialViolationTotalScore/10)</span>
+        </div>
+        <br />
+        <strong>@Resources.GesComment:</strong>
+        <br />
+        <p class="ges-content">
+            @Model.GesCommentSalientHumanRight
+        </p>
+    </div>
+</div>
+
+<div id="salience-hint" class="normal-hidden">
+    <div class="tooltip-hint-content status-value excellent response-status">@Html.Raw(Resources.UNGPSalienceHint)</div>
+</div>

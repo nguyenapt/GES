@@ -1,0 +1,87 @@
+﻿@model GES.Inside.Data.Models.DocumentViewModel
+
+@{
+    var title = Model.G_ManagedDocuments_Id == 0? "New Document" : "Edit Document";
+    var submitBtnText = Model.G_ManagedDocuments_Id == 0? "Create" : "Save";
+}
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="CreateUpdateGlossaryModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">@title</h3>
+            </div>
+
+            <div>
+                @using (Ajax.BeginForm("CreateUpdateCompanyDocument", "DocumentMgmt",
+                    new
+                    {
+                        @id = "form-create-document"
+                    },
+                new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST",
+                    OnBegin = "$('.btn-create-edit-document').button('loading')",
+                    OnComplete = "resetNewGesDocumentButton()"
+                },
+
+                new { enctype = "multipart/form-data" }
+                ))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-body">
+                        @Html.HiddenFor(m=>m.G_ManagedDocuments_Id)
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.Name):
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.Name, new {@class = "form-control", @id = "new-document-name", @placeholder = "Name..."})
+                                @Html.ValidationMessageFor(m => m.Name, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.FileName):
+                            </div>
+                            <div class="editor-field">
+                                <div>
+                                    <a target="_blank" href="@Url.Action("CompanyDocDownload", new {documentId = Model.G_ManagedDocuments_Id})">@Model.FileName</a>
+                                </div>
+                                <div>
+                                    <input type="file" name="file" />
+                                    @Html.ValidationMessageFor(m => m.FileName, "", new { @class = "text-danger" })
+                                    
+                                    @Html.HiddenFor(m=>m.FileName)
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.Comment):
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextAreaFor(m => m.Comment, new {@class = "form-control", @id = "new-document-comment", @placeholder = "Comment..."})
+                                @Html.ValidationMessageFor(m => m.Comment, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-create-edit-document" id="btn-save-document" data-loading-text="Processing..." type="submit">@submitBtnText</button>
+                        <button type="button" class="btn btn-document-cancel btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                }
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+   
+</div><!-- /.modal -->
+@Scripts.Render("~/bundles/page-companydocumentmgmt-detail")

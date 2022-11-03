@@ -1,0 +1,302 @@
+﻿@using System.Web.Configuration
+@using GES.Common.Configurations
+@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model GES.Clients.Web.Models.DashboardViewModel
+@{
+    ViewBag.Title = Resources.Dashboard;
+    ViewBag.SubTitle = "";
+    ViewBag.PageClass = "page-dashboard page-dashboard-index";
+}
+
+@section globalVar {
+    <script type="text/javascript">
+        var oldClientsSiteUrl = '@WebConfigurationManager.AppSettings["oldClientsSiteUrl"]';
+        window.individualId = @ViewBag.IndividualId;
+        window.orgId = @ViewBag.OrgId;
+    </script>
+
+    <script type="text/javascript">
+
+        var kpiPieColors = {};
+        kpiPieColors.Low = '@Configurations.KpiPerformanceColors["Low"]';
+        kpiPieColors.Medium = '@Configurations.KpiPerformanceColors["Medium"]';
+        kpiPieColors.High = '@Configurations.KpiPerformanceColors["High"]';
+    </script>
+
+    <script id="calendar-template" type="text/x-handlebars-template">
+        <div id="ei-events">
+            {{#each events}}
+            <div class="ei-event" data-start='{{this.EventDate}}' data-end="{{this.EventEndDate}}" data-loc="" data-parts="{{this.CompanyId}}-{{this.EngagementTypeId}}" {{#if this.IsGesEvent}} data-eventtype="ges" {{else}} data-eventtype="nonges" {{/if}}>
+                <div class="ei-name">{{this.Heading}}</div>
+                <div class="ei-description">{{this.Description}}</div>
+                <div class="ei-event-download-link">{{this.Id}}</div>
+            </div>
+            {{/each}}
+        </div>
+    </script>
+
+    <script id="blog-posts-template" type="text/x-handlebars-template">
+        {{#each entries}}
+        <div class="">
+            <div class="heading-block">
+                <h4><a target="_blank" href="{{this.link}}">{{this.title}}</a></h4>
+                <span class="description">{{this.publishedDate}}</span>
+            </div><!-- /.user-block -->
+            <div class="post-block">
+                <!-- post text -->
+                {{{this.content}}}
+            </div>
+        </div>
+        <hr>
+        {{/each}}
+    </script>
+
+    <script id="announcement-posts-template" type="text/x-handlebars-template">
+        {{#each entries}}
+        <div class="">
+            <div class="heading-block">
+                <span class="description" style="font-weight:bold">{{this.publishedDate}}</span>
+                <h4><a target="_blank" href="{{this.link}}">{{this.title}}</a></h4>
+            </div><!-- /.user-block -->
+            <div class="post-block annoucement-content">
+                <!-- post text -->
+                {{{this.content}}}
+            </div>
+        </div>
+        <hr>
+        {{/each}}
+    </script>
+
+    <script id="stats-box-template" type="text/x-handlebars-template">
+        <p>
+            Companies: <a target="_blank" href="{{companiesLink}}">{{NumberOfCompanies}}</a>&nbsp;&nbsp;
+            {{#if DashboardInfoDetails}}
+            <a data-toggle="collapse" data-target="#stats-details" class="anchor-pointer"><i class="fa fa-arrow-down"></i>&nbsp;@Resources.Details</a>
+            {{/if}}
+        </p>
+        {{#if DashboardInfoDetails}}
+        <div id="stats-details" class="collapse">
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr class="no-bottom-border-row">
+                        <th colspan="2" class="no-bottom-padding">@Resources.Name</th>
+                    </tr>
+                    <tr class="no-top-border-row">
+                        <th class="no-top-padding">@Resources.LastUpdated</th>
+                        <th class="no-top-padding text-right">@Resources.Companies</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each DashboardInfoDetails}}
+                    <tr>
+                        <td colspan="2" class="no-bottom-padding">
+                            <a href="{{this.LinkToSearchPage}}">{{this.PortfolioName}}</a><br />
+                        </td>
+                    </tr>
+                    <tr class="no-top-border-row">
+                        <td class="no-top-padding">
+                            {{this.LastUpdated}}
+                        </td>
+                        <td class="no-top-padding text-right">
+                            {{this.NumHoldings}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        {{else}}
+
+        {{/if}}
+    </script>
+}
+
+@section styling {
+    @Styles.Render("~/Content/plugins/eventify/eventify-css-bundle")
+    @Styles.Render("~/Content/plugins/iCheck/iCheck-css-bundle")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-homepage")
+    @Scripts.Render("~/bundles/page-company-search-list")
+    <script type="text/javascript">
+        function Open(theme) {
+            var message = '';
+            if (theme.indexOf("Burma") >= 0) {
+                message = '@Resources.UnsubscribeBurma';
+            }
+            else if (theme.indexOf("Carbon") >= 0) {
+                message = '@Resources.UnsubscribeCarbon';
+            }
+            else if (theme.indexOf("EME") >= 0) {
+                message = '@Resources.UnsubscribeEME';
+            }
+            else if (theme.indexOf("Palm Oil") >= 0) {
+                message = '@Resources.UnsubscribePalmOil';
+            }
+            else if (theme.indexOf("Taxation") >= 0) {
+                message = '@Resources.UnsubscribeTaxation';
+            }
+            else if (theme.indexOf("Water") >= 0) {
+                message = '@Resources.UnsubscribeWater';
+            }
+            else if (theme.indexOf("Bespoke") >= 0) {
+                message = '@Resources.UnsubscribeBespoke';
+            }
+            else {
+                message = '@Resources.UnsubscribedServiceContent';
+            }
+
+            $('#unsubscribed-body').html(message);
+            $('#pop-up-unsubscribed').modal('show');
+        }
+    </script>
+}
+<div class="box-tools" data-toggle="tooltip" title="">
+    <div class="btn-group btn-group-dashboard" data-toggle="btn-toggle">
+
+    </div>
+</div>
+<div class="clear"></div>
+
+<!--Announcement-->
+<div class="row box-announcement-page">
+    <div class="col-md-12 col-lg-12 col-xs-12">
+
+        <div class="box box-primary box-announcement">
+            <div class="box-header with-border">
+                <h3 class="box-title">@Resources.GesAnnouncement</h3>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+                <div class="col-md-8 col-lg-8 col-xs-12" style="max-height: 150px;overflow-y: auto;">
+                    <!--<div class="annoucement-body"></div>-->
+                    @if (Model.AnnouncementModels != null && Model.AnnouncementModels.Any())
+                    {
+                        for (int i = 0; i < Model.AnnouncementModels.Count; i++)
+                        {
+                            <div class="heading-block">
+                                <p class="description" style="font-weight:bold">@(Model.AnnouncementModels[i].AnnouncementDate.HasValue ? Model.AnnouncementModels[i].AnnouncementDate.Value.ToString("MMM dd, yyyy") : "")</p>
+                                <h4><a target="_blank" href="@Model.AnnouncementModels[i].LinkTitle">@Model.AnnouncementModels[i].Title</a></h4>
+                            </div>
+                            <div class="tab-pane dashboard-announcement-content">
+                                @Html.Raw(Model.AnnouncementModels[i].Content)
+                            </div>
+                            if (i < Model.AnnouncementModels.Count - 1)
+                            {
+                                <hr />
+                            }
+                        }
+                    }
+                </div>
+                <div class="col-md-4 col-lg-4 col-xs-12" style="max-height: 150px;height:150px">
+                    <div class="annoucement-image" style="width:100%;height:100%"></div>
+                </div>
+
+            </div><!-- /.box-body -->
+            <div class="overlay normal-hidden">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>        <!-- /.box -->
+
+    </div><!-- /.col -->
+</div>
+<!--End of Annoucement-->
+
+
+<div class="row page-search">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">@Resources.Search</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="">
+                    @Html.Partial("~/Views/Company/_CompanySearchBox.cshtml", Model.CompanySearchBox)
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <br />
+                        <table id="tblcompanies" class="table table-bordered table-striped"></table>
+                        <div id="myPager"></div>
+                    </div>
+                </div>
+                @Html.Partial("~/Views/Company/_SignUp_Box_Messagebox.cshtml")
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+<div id="myEndorsementModalContainer"></div>
+
+@{ Html.RenderPartial("~/Views/Company/_UnSubscribed_Box_Message.cshtml"); }
+<div class="row box-home-page">
+    <div class="col-md-3">
+        <div class="box box-primary box-calendar">
+            <div class="box-header with-border">
+                <h3 class="box-title">@Resources.Calendar</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <p>@Resources.ThereAreNoEventsScheduledForThisPeriod</p>
+            </div><!-- /.box-body -->
+            <div class="overlay normal-hidden">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="box box-primary box-latestnew">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@Resources.LatestNews</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="tab-pane" id="latest-news"></div>
+                    </div><!-- /.box-body -->
+
+                    <div class="overlay normal-hidden">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <div class="box box-primary box-blog">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@Resources.LatestBlogPosts</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        @if (Model.BlogModels != null && Model.BlogModels.Any())
+                        {
+                            for (int i = 0; i < Model.BlogModels.Count; i++)
+                            {
+                                <div class="heading-block">
+                                    <h4><a target="_blank" href="@Model.BlogModels[i].LinkTitle">@Model.BlogModels[i].Title</a></h4>
+                                    <span class="description">@(Model.BlogModels[i].PublishedDate.HasValue ? Model.BlogModels[i].PublishedDate.Value.ToString("MMM dd, yyyy") : "")</span>
+                                </div><!-- /.user-block -->
+                                <div class="post-block dashboard-blog-content">
+                                    <!-- post text -->
+                                    @Html.Raw(Model.BlogModels[i].Content)
+                                </div>
+                                if (i < Model.BlogModels.Count - 1)
+                                {
+                                    <hr />
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <p>@Resources.NoBlogPostsAvailable</p>
+                        }
+                    </div><!-- /.box-body -->
+
+                    <div class="overlay normal-hidden">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </div><!-- /.col -->
+</div><!-- /.row -->

@@ -1,0 +1,212 @@
+﻿@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CompanyDetailViewModel
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Company Info</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    Company Name
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.CompanyName
+                                </div>
+                                <div class="col-xs-2">
+                                    ISIN
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.Isin
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    Sedol
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.Sedol
+                                </div>
+                                <div class="col-xs-2">
+                                    Bloomberg ticker
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.BloombergTicker
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    Country
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.Country
+                                </div>
+                                <div class="col-xs-2">
+                                    Ownership information
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.OwnershipInfo
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    MSCI Industry
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.MsciIndustry
+                                </div>
+                                <div class="col-xs-2">
+                                    GICS Sector
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.GicsSector
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    Website
+                                </div>
+                                <div class="col-xs-3">
+                                    <a target="_blank" href=@Model.Website>@Model.Website</a>
+                                </div>
+                                <div class="col-xs-2">
+                                    Relevant initiatives
+                                </div>
+                                <div class="col-xs-3">
+                                    @Model.RelevantInitiative
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-bold">Overview:</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-justify">
+                                    @Model.Overview
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    @*Chart*@
+
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-9">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Key ESG Issues in the Industry</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-12 text-justify">
+                                    @Model.KeyEsgIssues
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Company Assessment</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-12 text-justify">
+                                    @Model.CompanyAssessment
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Engagement Statistics</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    Contacts: @Model.Contacts
+                                </div>
+                                <div class="col-xs-4">
+                                    Cases: @Model.Cases
+                                </div>
+                                <div class="col-xs-4"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    Meetings: @Model.Meetings
+                                </div>
+                                <div class="col-xs-4">
+
+                                </div>
+                                <div class="col-xs-4"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    Alerts: @Model.Alerts
+                                </div>
+                                <div class="col-xs-4">
+
+                                </div>
+                                <div class="col-xs-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+
+                </div>
+            </div>
+
+            @if (Model?.EngagementCases?.Count > 0)
+            {
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">GES Engagement cases</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        @foreach (CaseReportSummaryViewModel engagementItem in Model.EngagementCases)
+                                        {
+                                            <div class="row">
+                                                <div class="col-xs-6 text-justify text-bold">
+                                                    @Html.ActionLink(engagementItem.CompanyIssueName, "CaseReport", new { id = engagementItem.Id })
+                                                </div>
+                                                <div class="col-xs-6">
+
+                                                </div>
+                                            </div>
+                                                <div class="row">
+                                                    <div class="col-xs-6 text-justify">
+                                                        @engagementItem.Sumary
+                                                    </div>
+                                                    <div class="col-xs-6">
+
+                                                    </div>
+                                                </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

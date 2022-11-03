@@ -1,0 +1,691 @@
+﻿@using GES.Common.Resources
+
+<style>
+   input.submitted.ng-invalid
+   {
+      border:1px solid #f00;
+   }
+   
+   .input-error {
+      border: solid 1px red !important;
+   }
+   .input-success {
+      border-right: solid 5px green !important;
+   }
+</style>
+<div class="modal fade" id="ungp-dialog" style="display: none;">
+   <div class="modal-dialog modal-lg" style="width: 1000px; height: auto">
+      <div class="modal-content" ng-form="ungpForm">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title text-bold">{{GesUngpAssessmentFormViewModel.GesUNGPAssessmentFormId == '00000000-0000-0000-0000-000000000000' ? "Add New" : "Edit"}} UNGP assessment</h4>
+         </div>
+         <div class="modal-body" style="min-height: 0; max-height: 700px; overflow-y: auto; width: 100%;">
+            <div class="nav-tabs-custom">
+               <ul class="nav nav-tabs hidden-print">
+                  <li class="active">
+                     <a href="#assessment-form-salient-human-rights-potential-violation-diaglog" data-toggle="tab"><b>@Resources.SalientHumanRightsPotentialViolation</b></a>
+                  </li>
+                  <li>
+                     <a href="#company-preparedness-diaglog" data-toggle="tab"><b>@Resources.CompanyPreparedness</b></a>
+                  </li>
+                  <li>
+                     <a href="#ungp-sources-diaglog" data-toggle="tab"><b>@Resources.Sources</b></a>
+                  </li>
+               </ul>
+               <div class="tab-content hidden-print">
+                  <div class="active tab-pane" id="assessment-form-salient-human-rights-potential-violation-diaglog">
+                     <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-9 col-md-8">
+                                 <p>@Resources.Scale</p>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <div class="header">
+                              <div class=" col-lg-9 col-md-8">
+                                 <p><b>1.  @Resources.TheExtentOfHarm </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="scale-extent-harm" data-tooltip-title=""></i></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.TheExtentOfHarmesScoreComment" style="font-style: italic;" placeholder="Internal comment" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.TheExtentOfHarmesScoreId" id="theextentofharm-select" name="theextentofharmSelect" class="form-control" ng-change="updateTotalOfHumanRightsScore()" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.theextentofharmSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in scaleExtentOfHarmScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class=" col-lg-9 col-md-8">
+                                 <p><b>2.  @Resources.TheNumberofPeopleAffected </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="scale-the-number-of-people-affected" data-tooltip-title=""></i></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.TheNumberOfPeopleAffectedScoreComment" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.TheNumberOfPeopleAffectedScoreId" id="thenumberofpeopleaffected-select" ng-change="updateTotalOfHumanRightsScore()" name="thenumberofpeopleaffectedSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.thenumberofpeopleaffectedSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in scaleNumberOfPeopleAffectedScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-9 col-md-8">
+                                 <p>@Resources.Systematic <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="systematic-tip" data-tooltip-title=""></i></p>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <div class="header">
+                              <div class=" col-lg-9 col-md-8">
+                                 <p><b>1.  @Resources.OverSeveralYears</b></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.OverSeveralYearsScoreComment" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.OverSeveralYearsScoreId" id="overseveralyears-select" ng-change="updateTotalOfHumanRightsScore()" name="overseveralyearsSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.overseveralyearsSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in systematicOverServeralYearsScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class=" col-lg-9 col-md-8">
+                                 <p><b>2.  @Resources.SeveralLocations</b></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.SeveralLocationsScoreComment" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.SeveralLocationsScoreId" id="severallocations-select" ng-change="updateTotalOfHumanRightsScore()" name="severallocationsSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.severallocationsSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in systematicOverServeralLocationScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-9 col-md-8">
+                                 <p>@Resources.Ongoing</p>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <div class="header">
+                              <div class=" col-lg-9 col-md-8">
+                                 <p><b>1.  @Resources.IstheViolationStillOccurring </b> <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="ongoing-explain" data-tooltip-title=""></i></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.IsViolationScoreComment" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.IsViolationScoreId" id="istheviolationstilloccurring-select" ng-change="updateTotalOfHumanRightsScore()" name="istheviolationstilloccurringSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.istheviolationstilloccurringSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in ongoingViolationOccurringScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-9 col-md-8">
+                                 <p>@Resources.Confirmed</p>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <div class="header">
+                              <div class=" col-lg-9 col-md-8">
+                                 <p><b>1.  @Resources.IsTheCaseAgesConfirmedViolationOfInternationalNorms</b></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GesConfirmedViolationScoreComment" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.GesConfirmedViolationScoreId" id="isthecaseagesconfirmedviolationofinternationalnorms-select" ng-change="updateTotalOfHumanRightsScore()" name="isthecaseagesconfirmedviolationofinternationalnormsSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.isthecaseagesconfirmedviolationofinternationalnormsSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in confirmedViolationOfInternationalNormsScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-9 col-md-8">
+                                 <p>@Resources.GESGeneralComment <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="ges-comment" data-tooltip-title=""></i></p>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <textarea class="ges-content" style="font-style: italic;" id="gescommentgescommentsalienthumanright-input" name="GesCommentGesCommentSalientHumanRightInput" placeholder="Ges comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GesCommentSalientHumanRight" is-edit-state="isNewCaseProfileUNGP" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.GesCommentGesCommentSalientHumanRightInput.$invalid ? 'input-error':''"></textarea>
+                        </div>
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-12 col-md-8">
+                                 <div class="row">
+                                    <div class="col-sm-5"></div>
+                                    <div class="col-sm-6" align="right">
+                                       <p>@Resources.TotalScore  :</p>
+                                    </div>
+                                    <div class="col-sm-1" align="right">{{salientHumanRightsPotentialViolationTotalScore}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="salient-human-rights-potential-piolation-total-score" data-tooltip-title=""></i></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                        </div>
+                        
+                     </div>
+                  </div>
+                  <div class="tab-pane" id="company-preparedness-diaglog">
+                     <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-12 col-md-8">
+                                 <div class="row">
+                                    <div class="col-sm-5">
+                                       <p>
+                                       <p>@Resources.HumanRightsPolicy</p>
+                                    </div>
+                                    <div class="col-sm-6" align="right">
+                                       <p>@Resources.TotalScoreForHumanRightsPolicy: </p>
+                                    </div>
+                                    <div class="col-sm-1" align="right">{{totalScoreForHumanRightsPolicy}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="total-score-for-human-rights-policy" data-tooltip-title=""></i></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <div class="header">
+                              <div class="col-lg-12 col-md-8">
+                                 <p><b>1.  @Resources.APubliclyDisclosedHumanRightsPolicy </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-policy-publicly-disclosed" data-tooltip-title=""></i></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyPubliclyDisclosed" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyPubliclyDisclosedAddScoreId" id="humanrightspubliclydisclosed-select" ng-change="updateTotalScoreForHumanRightsPolicy()" name="humanrightspubliclydisclosedSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.humanrightspubliclydisclosedSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in humanRightsPubliclyDisclosedAdditionalScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class=" col-lg-12 col-md-8">
+                                 <p><b>2.  @Resources.HumanRightsPolicyCommunicated</b></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyCommunicated" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyCommunicatedScoreId" id="humanrightspolicycommunicated-select" ng-change="updateTotalScoreForHumanRightsPolicy()" name="humanrightspolicycommunicatedSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.humanrightspolicycommunicatedSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in humanRightsPubliclyDisclosedCommunicatedScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class=" col-lg-12 col-md-8">
+                                 <p><b>3.  @Resources.HumanRightsPolicyStipulates </b></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyStipulates" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyStipulatesScoreId" id="humanrightspolicystipulates-select" ng-change="updateTotalScoreForHumanRightsPolicy()" name="humanrightspolicystipulatesSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.humanrightspolicystipulatesSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in humanRightsPubliclyDisclosedExpectationsPersonnelScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class=" col-lg-12 col-md-8">
+                                 <p><b>4.  @Resources.HumanRightsPolicyApproved </b></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-8">
+                                    <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyApproved" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                 </div>
+                                 <div class="col-sm-4">
+                                    <select ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyApprovedScoreId" id="humanrightspolicyapproved-select" ng-change="updateTotalScoreForHumanRightsPolicy()" name="humanrightspolicyapprovedSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.humanrightspolicyapprovedSelect.$invalid ? 'ng-touched' : ''">
+                                       <option value="">Select a score</option>
+                                       <option ng-repeat=" item in humanRightsPubliclyDisclosedExpectationsPolicyApproved" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        @* ----- Human rights due diligence ------ *@
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-12 col-md-8">
+                                 <div class="row">
+                                    <div class="col-sm-5">
+                                       <p>@Resources.HumanRightsDueDiligence</p>
+                                    </div>
+                                    <div class="col-sm-6" align="right">
+                                       <p>@Resources.TotalScoreForHumanRightsDueDiligence :</p>
+                                    </div>
+                                    <div class="col-sm-1" align="right">{{totalScoreForHumanRightsDueDiligence}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="total-score-for-human-rights-duediligence" data-tooltip-title=""></i></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <div class="header">
+                              <div class="subtitle col-lg-12 col-md-8">
+                                 <p>@Resources.Governance</p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <p><b>1.  @Resources.AWrittenCommitment </b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GovernanceCommitment" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GovernanceCommitmentScoreId" id="governancecommitment-select" ng-change="updateTotalScoreForHumanRightsDueDiligence()" name="governancecommitmentSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.governancecommitmentSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in humanRightsGovernanceCommitment" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <p><b>2.   @Resources.GovernanceExamples </b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GovernanceExamples" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GovernanceExamplesScoreId" id="governanceexamples-select" ng-change="updateTotalScoreForHumanRightsDueDiligence()" name="governanceexamplesSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.governanceexamplesSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in humanRightsGovernanceProvidesExamples" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <p><b>3.   @Resources.GovernanceClearDivision</b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GovernanceClearDivision" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GovernanceClearDivisionScoreId" id="governancecleardivision-select" ng-change="updateTotalScoreForHumanRightsDueDiligence()" name="governancecleardivisionSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.governancecleardivisionSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in humanRightsGovernanceClearDivision" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class="subtitle col-lg-12 col-md-8">
+                                 <p>@Resources.BusinessPartners</p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <p><b>4.  @Resources.TheCompanyTakesHumanRights </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-due-diligence-business-partners-human-rights" data-tooltip-title=""></i></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.BusinessPartners"  is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.BusinessPartnersAddScoreId" id="companytakeshumanrights-select" ng-change="updateTotalScoreForHumanRightsDueDiligence()" name="companytakeshumanrightsSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.companytakeshumanrightsSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in humanRightsBusinessPartnersAdditionalScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class="subtitle col-lg-12 col-md-8">
+                                 <p>@Resources.IdentificationAndCommitment</p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <p><b>5. @Resources.IdentificationAndCommitmentTheCompanyDemonstrates</b> <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-due-diligence-identification-commitment-company-demonstrates" data-tooltip-title=""></i></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.IdentificationAndCommitment" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.IdentificationAndCommitmentScoreId" id="identificationandcommitment-select" ng-change="updateTotalScoreForHumanRightsDueDiligence()" name="identificationandcommitmentSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.identificationandcommitmentSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in humanRightsIdentificationCommitment" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class="subtitle col-lg-12 col-md-8">
+                                 <p>@Resources.StakeholderEngagement</p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <p><b>6. @Resources.StakeholderEngagementTheCompanyDemonstratesHow </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-due-diligence-stakeholder-engagement-company-demonstrates" data-tooltip-title=""></i></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.StakeholderEngagement" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.StakeholderEngagementAddScoreId" id="companydemonstrates-select" ng-change="updateTotalScoreForHumanRightsDueDiligence()" name="companydemonstratesSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.companydemonstratesSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in humanRightsStakeholderEngagementAdditionalScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class="subtitle col-lg-12 col-md-8">
+                                 <p>@Resources.HumanRightsTraining</p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <p><b>7. @Resources.HumanRightsTrainingIsConducted </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-due-diligence-human-rights-training" data-tooltip-title=""></i></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.HumanRightsTraining" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.HumanRightsTrainingScoreId" id="humanrightstraining-select" ng-change="updateTotalScoreForHumanRightsDueDiligence()" name="humanrightstrainingSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.humanrightstrainingSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in humanRightsTrainningAdditionalScore" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        @* Remediation of adverse human rights impacts *@
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-12 col-md-8">
+                                 <div class="row">
+                                    <div class="col-sm-5">
+                                       <p>@Resources.RemediationOfAdverseHumanRightsImpacts</p>
+                                    </div>
+                                    <div class="col-sm-6" align="right">
+                                       <p>@Resources.TotalScoreForRemediationOfAdverseHumanRightsImpacts:</p>
+                                    </div>
+                                    <div class="col-sm-1" align="right">{{totalScoreForRemediationOfAdverseHumanRightsImpacts}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="total-score-for-remediation-of-adverse-human-rights-impacts" data-tooltip-title=""></i></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <div class="header">
+                              <div class="subtitle col-lg-12 col-md-8">
+                                 <p>@Resources.RemedyProcessInPlace</p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <p><b>1. @Resources.TheCompanyhasAClearProcess </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="remediation-adverse-human-rights-impacts-clear-process" data-tooltip-title=""></i></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.RemedyProcessInPlace" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.RemedyProcessInPlaceScoreId" id="remedyprocessinplace-select" ng-change="updateTotalScoreForRemediationOfAdverseHumanRightsImpacts()" name="remedyprocessinplaceSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.remedyprocessinplaceSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in remediationAdverseHumanRightsImpactsRemedyProcess" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="header">
+                              <div class="subtitle col-lg-12 col-md-8">
+                                 <p>@Resources.GrievanceMechanism <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="remediation-adverse-human-rights-impacts-grievance-mechanism" data-tooltip-title=""></i></p>
+                              </div>
+                           </div>
+                           <div class="ges-content-block" style="padding-left: 20px;">
+                              <div class="row">
+                                 <div class="col-sm-12">
+                                    <p><b>2.  @Resources.GrievanceMechanismHasOperationalLevel</b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismHasOperationalLevel" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismHasOperationalLevelScoreId" id="grievancemechanismhasoperationallevel-select" ng-change="updateTotalScoreForRemediationOfAdverseHumanRightsImpacts()" name="grievancemechanismhasoperationallevelSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.grievancemechanismhasoperationallevelSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in remediationAdverseHumanRightsImpactsGrievancMechanismOperationalLevel" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <p><b>3. @Resources.GrievanceMechanismExistenceOfOperationalLevel</b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismExistenceOfOperationalLevel" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismExistenceOfOperationalLevelScoreId" id="grievancemechanismexistenceofoperationallevel-select" ng-change="updateTotalScoreForRemediationOfAdverseHumanRightsImpacts()" name="grievancemechanismexistenceofoperationallevelSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.grievancemechanismexistenceofoperationallevelSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in remediationAdverseHumanRightsImpactsGrievancMechanismExistenceOperationalLevel" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <p><b>4.  @Resources.GrievanceMechanismClearProcess</b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismClearProcess" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismClearProcessScoreId" id="grievancemechanismclearprocess-select" ng-change="updateTotalScoreForRemediationOfAdverseHumanRightsImpacts()" name="grievancemechanismclearprocessSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.grievancemechanismclearprocessSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in remediationAdverseHumanRightsImpactsGrievancMechanismDisclosesClearProcess" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <p><b>5.  @Resources.HumanRightsNorms</b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismRightsNorms" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismRightsNormsScoreId" id="grievancemechanismrightsnorms-select" ng-change="updateTotalScoreForRemediationOfAdverseHumanRightsImpacts()" name="grievancemechanismrightsnormsSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.grievancemechanismrightsnormsSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in remediationAdverseHumanRightsImpactsGrievancMechanismAddressesGrievance" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <p><b>6.  @Resources.GrievanceMechanismFilingGrievance</b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismFilingGrievance" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismFilingGrievanceScoreId" id="grievancemechanismfilinggrievance-select" ng-change="updateTotalScoreForRemediationOfAdverseHumanRightsImpacts()" name="grievancemechanismfilinggrievanceSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.grievancemechanismfilinggrievanceSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in remediationAdverseHumanRightsImpactsGrievancMechanismFilingGrievance" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <p><b>7.  @Resources.GrievanceMechanismReoccurringGrievances</b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismReoccurringGrievances" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismReoccurringGrievancesScoreId" id="grievancemechanismreoccurringgrievances-select" ng-change="updateTotalScoreForRemediationOfAdverseHumanRightsImpacts()" name="grievancemechanismreoccurringgrievancesSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.grievancemechanismreoccurringgrievancesSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in remediationAdverseHumanRightsImpactsGrievancMechanismReoccurringGrievances" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <br/>
+                                 </div>
+                                 <div class="col-sm-12">
+                                    <p><b>8.  @Resources.GrievanceMechanismFormatAndProcesse</b></p>
+                                    <div class="row">
+                                       <div class="col-sm-8">
+                                          <textarea class="ges-content" style="font-style: italic;" placeholder="Internal comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismFormatAndProcesse" is-edit-state="isNewCaseProfileUNGP"></textarea>
+                                       </div>
+                                       <div class="col-sm-4">
+                                          <select ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismFormatAndProcesseScoreId" id="grievancemechanismformatandprocesse-select" ng-change="updateTotalScoreForRemediationOfAdverseHumanRightsImpacts()" name="grievancemechanismformatandprocesseSelect" class="form-control" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.grievancemechanismformatandprocesseSelect.$invalid ? 'ng-touched' : ''">
+                                             <option value="">Select a score</option>
+                                             <option ng-repeat=" item in remediationAdverseHumanRightsImpactsGrievancMechanismFormatProcesses" value="{{item.GesUngpAssessmentScoresId}}">{{item.Name}}</option>
+                                          </select>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-9 col-md-8">
+                                 <p>@Resources.GESGeneralComment <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="ges-comment" data-tooltip-title=""></i></p>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                           <div class="row">
+                              <div class="col-sm-12">
+                                 <textarea class="ges-content" style="font-style: italic;" placeholder="Ges comment" click-to-edit-text-area ng-model="GesUngpAssessmentFormViewModel.GesCommentCompanyPreparedness" id="gescommentcompanypreparedness-input" name="GesCommentCompanyPreparednessInput" ng-required="isUngpPublishable" ng-class="isUngpPublishable && ungpForm.GesCommentCompanyPreparednessInput.$invalid ? 'input-error':''"></textarea>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="ges-content-block">
+                           <div class="header">
+                              <div class="title col-lg-12 col-md-8">
+                                 <div class="row">
+                                    <div class="col-sm-11" align="right">
+                                       <p>@Resources.TotalScoreForCompanyPreparedness:</p>
+                                    </div>
+                                    <div class="col-sm-1" align="right">{{totalScoreForCompanyPreparedness}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="total-score-for-company-preparedness" data-tooltip-title=""></i></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <hr class="style10"/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="tab-pane" id="ungp-sources-diaglog">
+                     <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                           <div class="col-sm-12" style="padding-left: 10px;">
+                              <button type="button" class="btn btn-primary add-new-t01" ng-click="addSource()" ng-disabled="isNotAllowAddSource"><i class="fa fa-plus"></i> Add new Source</button>
+                           </div>
+                           <div class="box-body" style="overflow-x: auto;">
+                              <table class="table table-bordered">
+                                 <thead>
+                                    <tr>
+                                       <th style="width: 43px; background-color: #68aaa3; color: white">@Resources.No</th>
+                                       <th style="width: 400px;background-color: #68aaa3; color: white">@Resources.SourcesName</th>
+                                       <th style="background-color: #68aaa3; color: white">@Resources.SourcesLink</th>
+                                       <th style="width: 60px;background-color: #68aaa3; color: white">@Resources.SourceDate</th>
+                                       <th style="width: 40px;background-color: #68aaa3; color: white"></th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr ng-repeat="editingSource in editingSources">
+                                       <td>
+                                          {{$index + 1}}
+                                       </td>
+                                       <td>
+                                          <input name="SourcesName{{$index}}" ng-required="true" click-to-edit-text-area ng-model="editingSource.SourcesName"/>
+                                       </td>
+                                       <td>
+                                          <input name="SourcesLink{{$index}}" ng-required="true" click-to-edit-text-area ng-model="editingSource.SourcesLink"/>
+                                       </td>
+                                       <td>
+                                          <input type="date" style="border: none; width: 100%; -webkit-box-shadow: none" name="SourceDate{{$index}}" id="SourceDate{{$index}}" ng-model="editingSource.SourceDate" ng-required="true" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd"/>
+                                       </td>
+                                       <td><a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteSource($index)"><i class="material-icons">&#xE872;</i></a></td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <input class="btn btn-success" type="button" value="@Resources.Save" data-dismiss="modal" id="btn-save-ungp" ng-click="saveUngp()" ng-disabled="ungpForm.$invalid" />
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="@Resources.Cancel" ng-click="reset()" />
+         </div>
+      </div>
+   </div>
+</div>

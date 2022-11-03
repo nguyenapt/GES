@@ -1,0 +1,4 @@
+
+- I_companies: Change PK_C_Companies from Non-Clustered to Clustered Index
+- I_PortfoliosG_Organizations: Change Index on Primary key from Clustered to Non-Clusterd
+- I_PortfoliosG_Organizations: Add Clusterd index IX_I_PortfoliosG_Organizations_OrgId for G_Organizations_Id column

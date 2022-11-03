@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.Subtitle = "Version 2.0";
+    ViewBag.PageClass = "page-dashboard page-dashboard-index";
+}
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-dashboard")
+}
+
+<script type="text/javascript">
+    var companyId = -1;
+</script>
+<div ng-controller="CaseProfileTemplateController">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Ongoing cases</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body" style="display: block;">
+                <div>
+                    <div style="float: right">
+                        <input type="button" class="btn btn-success" value="Add New Case Profile" data-toggle="modal" data-target="#case-profile-template-dialog" ng-click="" />
+                    </div>
+                    <br />
+                    <br />
+                    <table id="tblUserCases" class="table table-bordered table-striped"></table>
+                    <div id="myPager"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @{ Html.RenderPartial("..//CaseProfile/CaseProfileTemplateDialog"); }
+
+</div>

@@ -1,0 +1,21 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIncidentAnalysisComponent
+    
+@{
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">@Resources.ClosingDetails</h3>
+    </div>
+    <div class="box-body">
+        @Html.RenderBlockContent(m => m.IncidentAnalysisDialogueAndAnalysis)
+        @if (gesCaseReportType == GesCaseReportType.SrGovArchived || gesCaseReportType == GesCaseReportType.SrGovResolved)
+        {
+            @Html.RenderBlockContent(m => m.IncidentAnalysisConclusion)
+        }
+    </div>
+</div>

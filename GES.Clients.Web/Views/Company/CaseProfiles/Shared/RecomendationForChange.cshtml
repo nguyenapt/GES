@@ -1,0 +1,24 @@
+﻿@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@{
+    dynamic convertedModel = Convert.ChangeType(Model, Model.GetType());
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-RECOMENDATION-FOR-CHANGE"))
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.RecomendationForChange
+            </h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> an act of giving one's public approval or support to someone or something.</a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> Itochu has also expressed its commitment to provide sufficient compensation to those local residents who will suffer from job loss. - 2015-04-21</a></li>
+                <li><a href="#"><i class="fa fa-circle-o text-light-blue"></i> GES met with Adani Mining in June 2016, during the Extractives Summit in London. The company's Head of Environment & Sustainability </a></li>
+            </ul>
+        </div>
+    </div>
+}

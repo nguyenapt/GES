@@ -1,0 +1,12 @@
+
+App Pool:
+
+General 
+> Start Mode: AlwaysRunning
+
+Process Model 
+> Idle Time-out (minutes): 0
+> Idle Time-out Action: Suspend
+
+Recycling
+> Specific Times: 04:00:00

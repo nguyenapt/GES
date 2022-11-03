@@ -1,0 +1,10 @@
+﻿@using GES.Clients.Web.Models
+@model GES.Inside.Data.Models.CaseProfiles.FullAttributeCaseProfileCaseComponent
+@{
+    Model.CustomContent = Html.Partial("~/Views/Company/CaseProfiles/Shared/CaseProfileFullAttributeViewModel/_ConfirmedViolation.cshtml", new ConfirmedViolationModel
+    {
+        ConfirmedViolation = Model.ConfirmedViolation,
+        ConfirmedViolationDate = Model.ConfirmedViolationDate
+    }).ToString();
+    Html.RenderPartial("~/Views/Company/CaseProfiles/Shared/CaseProfileFullAttributeViewModel/CaseBase.cshtml", Model);
+}

@@ -1,0 +1,34 @@
+.btn {
+    border-radius: 40px !important;
+}
+.text-secondary {
+    color: #a0a2a5 !important;
+}
+.direct-chat-messages {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.callout {
+    border-radius: 3px;
+    margin: 0 0 20px 0;
+    padding: 10px 10px 25px 10px;
+    border: 1px solid #eee;
+}
+
+    .callout.callout-left {
+        margin-left: 20px;
+        width: 60%;
+        border-color: #f9e9cd;
+        background-color: #f9e9cd !important;
+        color: #525252 !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .callout.callout-right {
+        margin-right: 20px;
+        width: 60%;
+        border-color: #f9e9cd;
+        background-color: #fff !important;
+        color: #525252 !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    }

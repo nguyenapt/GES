@@ -1,0 +1,97 @@
+.input-row {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.btn-collapse:after {
+    font-family: "Glyphicons Halflings";
+    content: "\e113";
+    float: right;
+    margin-left: 15px;
+    font-size: 12px;
+    }
+    
+.hr-company-separate {
+    width: 120px;
+    color: #fcaf17;
+    }
+.mat-button-toggle-group {
+    margin-left: 0px;
+}
+
+.height100 {
+    height: 100px;
+    }
+
+/* Icon when the collapsible content is hidden */
+.btn-collapse.collapsed:after {
+    content: "\e114";
+}
+
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+.panel {
+    margin-bottom: 10px !important;
+}
+
+
+.mat-button-toggle-group {
+    
+} 
+
+.mat-button-toggle-group-appearance-standard {
+    border: 0px;
+}
+
+
+    .mat-button-toggle-group-appearance-standard .mat-button-toggle-button {
+        border: solid 1px;
+    }
+
+.outlook-button-toggle {
+    border: solid 1px #696969;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    outline: 0;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 6px;
+    line-height: 30px !important;
+}
+
+.mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
+    border: solid 0px;
+}
+
+.margin-left-8 {
+    margin-left: 8px;
+}
+
+.mat-button-toggle-label-content, .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 30px !important;
+    padding: 0 12px;
+}
+
+.overall-status-compliant {
+    background-image: url('/Content/img/icons/icon-compliant.png');
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    position:relative;
+    float: left;
+}
+
+.overall-status-not-compliant {
+    background-image: url('/Content/img/icons/icon-not-compliant.png');
+    width: 30px;
+    height: 30px;
+    background-size: 30px 30px;
+    border: none;
+}

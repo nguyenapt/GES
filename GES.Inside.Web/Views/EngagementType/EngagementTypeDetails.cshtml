@@ -1,0 +1,386 @@
+﻿@using GES.Common.Resources
+@model GES.Inside.Data.Models.EngagementTypeViewModel
+
+@{
+    ViewBag.PageClass = "page-engagement-type page-engagement-type-details";
+    ViewBag.Title = @Model.Name;
+    ViewBag.SubTitle = @Resources.CompanyDetails;
+
+    var companyId = ViewBag.Id ?? TempData["Id"];
+
+}
+@section styling {
+   @Styles.Render("~/bundles/page-engagement-type-css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-engagement-type-details")
+
+}
+
+<style>
+    .inputText {
+        width: 100% !important;
+    }
+    
+    .button-bottom {
+        position: fixed;
+        bottom: 70px;
+        right: 10px;
+        border: 2px solid #0081C0;
+        padding: 15px 20px 15px 20px;
+        border-radius: 4px;
+        z-index: 99;
+    }
+
+</style>
+
+@section contentHeader{
+    <section class="content-header" ng-form="engagementTypeHeaderForm">
+
+        <h1>
+            <input type="text" style="width: 60%"class="input-header" click-to-edit placeholder="Add Engagement Type name" ng-model="engagementTypeDetails.Name" ng-required="true" is-edit-state="isAddNew"/>
+        </h1>
+       
+        <div class="page-buttons hidden-print">
+            <button class="btn btn-success not-outer-right-btn" ng-click="UpdateEngagementTypeData()" ng-disabled="engagementTypeHeaderForm.$invalid || engagementTypeForm.$invalid || isSaving">
+                <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+            </button>
+            <input class="btn btn-warning not-outer-right-btn" type="button" value="{{activeOrDeactiveButtonLabel}}" id="deactive"
+                   data-confirm-title="Confirmation"
+                   data-confirm-message="Are you sure you want to change staus of the theme?"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Ok"
+                   data-confirm-cancel="Cancel"
+                   ng-disabled="!allowDelete"/>
+
+            <input class="btn btn-danger not-outer-right-btn" type="button" value="Delete" id="delete"
+                   data-confirm-title="Confirmation"
+                   data-confirm-message="Are you sure you want to delete the this theme?"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Delete"
+                   data-confirm-cancel="Cancel"
+                   ng-disabled="!allowDelete"/>
+            <input class="btn" type="button" value="Cancel" id="cancel-save"
+                   data-confirm-title="Do you want to leave this site?"
+                   data-confirm-message="Changes you made may not be saved"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay"/>
+        </div>
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<div class="row" ng-form="engagementTypeForm">
+<div class="col-md-12 col-xs-12">
+<div class="box box-primary">
+    <div class="box-body">
+                
+        <div class="ges-content-block">
+            <div class="header">
+                <dl class="dl-horizontal">
+                    <dt style="text-align: left">@Resources.EngagementTypeCategory</dt>
+                    <dd  ng-class="engagementTypeForm.engagementtypecategorySelect.$dirty && engagementTypeForm.engagementtypecategorySelect.$invalid ? 'required' : ''">
+                        <select style="width: 100%" ng-model="engagementTypeDetails.I_EngagementTypeCategories_Id" id="engagementtypecategory-select" name="engagementtypecategorySelect" class="form-control" ng-required="true">
+                            <option value="">Select Category</option>
+                            <option ng-repeat="category in engagementTypeCategories" value="{{category.I_EngagementTypeCategories_Id}}">{{category.Name}}</option>
+                        </select>
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeDescription</dt>
+                    <dd>
+                        <textarea class="ges-content" click-to-edit-text-area ng-model="engagementTypeDetails.Description" is-edit-state="isAddNew"></textarea>
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeGoal</dt>
+                    <dd>
+                        <textarea class="ges-content" click-to-edit-text-area ng-model="engagementTypeDetails.Goal" is-edit-state="isAddNew"></textarea>
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeNextStep</dt>
+                    <dd>
+                        <textarea class="ges-content" click-to-edit-text-area ng-model="engagementTypeDetails.NextStep" is-edit-state="isAddNew"></textarea>
+                    </dd>
+                    <br/>
+                    @* <dt style="text-align: left">@Resources.EngagementTypeLatestNews</dt> *@
+                    @* <dd> *@
+                    @*     <textarea class="ges-content" click-to-edit-text-area ng-model="engagementTypeDetails.LatestNews" is-edit-state="isAddNew"></textarea> *@
+                    @* </dd> *@
+                    @* <br/> *@
+                    <dt style="text-align: left">@Resources.EngagementTypeOtherInitiatives</dt>
+                    <dd>
+                        <textarea class="ges-content" click-to-edit-text-area ng-model="engagementTypeDetails.OtherInitiatives" is-edit-state="isAddNew"></textarea>
+                    </dd>
+                    <br/>
+                    @* <dt style="text-align: left">@Resources.EngagementTypeExternalSources</dt> *@
+                    @* <dd> *@
+                    @*     <textarea class="ges-content" click-to-edit-text-area ng-model="engagementTypeDetails.Sources" is-edit-state="isAddNew"></textarea> *@
+                    @* </dd> *@
+                    @* <br/> *@
+                    <dt style="text-align: left">@Resources.EngagementTypeGesReports</dt>
+                    <dd>
+                        <div class="control-group" id="fields" style="overflow-x:auto;">
+                            <div class="entry input-group col-xs-12">
+                                <input class="btn btn-default" type="file" style="width: 100%" accept=".xls,.xlsx,.pdf,jpg,.doc,.docx,.ppt,.pptx" id="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+                            </div>
+                            <table class="table table-striped" ng-table="fileTableParams">
+                                <thead>
+                                <tr>
+                                    <th>@Resources.EngagementTypeGesReportsName<span style="color: red">*</span></th>
+                                    <th style="width: 450px;">@Resources.EngagementTypeGesReportsFile</th>
+                                    @* <th style="width: 450px;">@Resources.EngagementTypeGesReportsFileType</th> *@
+                                    <th style="width: 180px;">@Resources.EngagementTypeGesReportsFileCreated</th>
+                                    <th style="width: 50px;"></th>
+                                </tr>
+                                </thead>
+                                <tr ng-repeat="file in $data">
+                                    <td style="border-bottom: 1px solid #ccc"><textarea click-to-edit-text-area ng-required="true" ng-model="file.Name"></textarea></td>
+                                    <td style="border-bottom: 1px solid #ccc">{{file.FileName}}</td>
+                                    @* <td style="border-bottom: 1px solid #ccc"> *@
+                                    @*     <select style="width: 100%" ng-model="file.DocumentTypeId" id="doctype-select{{$index}}" class="form-control" ng-required="true"> *@
+                                    @*         <option value="">Select report type</option> *@
+                                    @*         <option ng-repeat="doctype in documentTypes" value="{{doctype.GesDocTypesId}}">{{doctype.Name}}</option> *@
+                                    @*     </select> *@
+                                    @* </td> *@
+                                    <td style="border-bottom: 1px solid #ccc">{{file.Created}}</td>
+                                    <td align="right" style="border-bottom: 1px solid #ccc">
+                                        <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteFile($index)"><i class="material-icons">&#xE872;</i></a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeContact</dt>
+                    <dd>
+                        <div class="input-group">
+                            <div class="form-group has-feedback has-clear">
+                                <input type="text" class="form-control" id="txtContactFullName" ng-readonly="true" ng-model="engagementTypeDetails.ContactFullName" placeholder="Select Contact">
+                                <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                            </div>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary" id="btnContactSelect" data-toggle="modal" data-target="#engagement-type-contacts-dialog" ng-click="setValuesForPopup(engagementTypeDetails.ContactG_Users_Id)">Select</button>
+                            </span>
+                        </div>
+
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeParticipants</dt>
+                    <dd>
+                        <textarea class="ges-content" click-to-edit-text-area ng-model="engagementTypeDetails.Participants" is-edit-state="isAddNew"></textarea>
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeBannerImage <br/>
+                        <p style="font-size: 12px; font-style: italic; font-weight:normal;">(width:1620px, hight:250px)</p> </dt>
+                    <dd>
+                        <div style="overflow-x:auto;">
+                            <div class="entry input-group col-xs-12">
+                                <input class="btn btn-default" type="file" style="width: 100%" accept=".jpg,.png" id="imagefile" onchange="angular.element(this).scope().uploadImageFile(this.files)"/>
+                            </div>
+                            <table class="table table-striped" ng-show="hasThemeBanerImage">
+                                <tr>
+                                    <td style="width:300px;"><b>@Resources.EngagementTypeFileName:</b> {{themeBanerImagePath}}</td>
+                                    <td style="max-width:60%;"><img style="width: 100%; padding-top: 5px;"ng-src="data:image/jpeg;base64,{{themeBanerImage}}" id="photo-id"/></td>
+                                    <td align="right" style="width: 50px;">
+                                        <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteImageFile()"><i class="material-icons">&#xE872;</i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeShowInClientMenu</dt>
+                    <dd>
+                        <input type="checkbox" ng-model="engagementTypeDetails.IsShowInClientMenu" id="isShowInClientMenu" class="control-pointer">
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeShowInCaseProfileTemplate</dt>
+                    <dd>
+                        <input type="checkbox" ng-model="engagementTypeDetails.IsShowInCaseProfileTemplate" id="isShowInCaseProfileTemplate" class="control-pointer">
+                    </dd>
+                    <br/>
+                    <dt style="text-align: left">@Resources.EngagementTypeCreated</dt>
+                    <dd>
+                        <input type="text" date='yyyy/MM/dd HH:mm:ss a' ng-readonly="true" ng-model="engagementTypeDetails.Created" class="form-control form-control-text"/>
+                    </dd>
+                            
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="ges-content-block">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-newspaper-o" aria-hidden="true"></i> @Resources.EngagementTypeNews</h3>
+
+            </div>
+
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <br/>
+                        <button type="button" class="btn btn-info add-new-t01" ng-click="addNews()"><i class="fa fa-plus"></i> Add News</button>
+                    </div>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table id="newsTable" class="table table-bordered" ng-table="newsTableParams">
+
+                    <thead>
+                    <tr>
+                        <th >@Resources.EngagementTypeNewsDescription</th>
+                        <th style="width: 142px;">@Resources.EngagementTypeNewsPostDate</th>
+                        <th style="width: 50px;"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="news in $data">
+                        <td>
+                            <input name="EngagementTypeNewsDescription{{$index}}" ng-required="true" click-to-edit-text-area ng-model="news.EngagementTypeNewsDescription"/>
+                        </td>
+                        <td>
+                            <input type="date" style="border: none; width: 100%; -webkit-box-shadow: none" name="Created{{$index}}" id="Created{{$index}}" ng-model="news.Created" ng-required="true" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd"/>
+                                   
+                        </td>
+                        <td>
+                            <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteNews(news)"><i class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="ges-content-block">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-area-chart" aria-hidden="true"></i> @Resources.EngagementTypeKPIs</h3>
+            </div>
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <br/>
+                        <button type="button" class="btn btn-info add-new-t01" ng-click="addKpi()"><i class="fa fa-plus"></i> Add KPI</button>
+                    </div>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="table table-bordered" ng-table="kpisTableParams">
+                    <thead>
+                    <tr>
+                        <th>@Resources.EngagementTypeKPIsName</th>
+                        <th>@Resources.EngagementTypeKPIsDescription</th>
+                        <th style="width: 180px">@Resources.EngagementTypeKPIsCreated</th>
+                        <th style="width: 50px;"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="kpi in $data">
+                        <td >
+                            <input name="KpiName{{$index}}" ng-required="true" click-to-edit-text-area ng-model="kpi.KpiName"/>
+                        </td>
+                        <td >
+                            <input name="KpiDescription{{$index}}" click-to-edit-text-area ng-model="kpi.KpiDescription"/>
+                        </td>
+                        <td>
+                            {{kpi.Created}}
+                        </td>
+                        <td>
+                            <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteKpi(kpi)"><i class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="ges-content-block">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-newspaper-o" aria-hidden="true"></i> @Resources.EngagementTypeTimeline</h3>
+
+            </div>
+
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <br/>
+                        <button type="button" class="btn btn-info add-new-t01" ng-click="addTimeline()"><i class="fa fa-plus"></i> Add timeline</button>
+                    </div>
+                </div>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="table table-bordered" ng-table="timelinesTableParams">
+                    <thead>
+                    <tr>
+                        <th style="width: 142px;">@Resources.EngagementTypeTimelineDate</th>
+                        <th>@Resources.EngagementTypeTimelineDescription</th>
+                        <th style="width: 180px">@Resources.EngagementTypeTimelineCreated</th>
+                        <th style="width: 50px;"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="timeline in $data">
+                        <td>
+                            <input type="date" style="border: none; width: 100%; -webkit-box-shadow: none" name="EventDate{{$index}}" id="EventDate{{$index}}" ng-model="timeline.EventDate" ng-required="true" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd"/>
+                        </td>
+                        <td>
+                            <input name="Heading{{$index}}" click-to-edit-text-area ng-model="timeline.Heading"/>
+                        </td>
+                        <td>
+                            {{timeline.Created}}
+                        </td>
+                        <td>
+                            <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteTimeline(timeline)"><i class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div><!-- /.col -->
+</div>
+
+<div class="button-bottom">
+    <button class="btn btn-success not-outer-right-btn" ng-click="UpdateEngagementTypeData()" ng-disabled="engagementTypeHeaderForm.$invalid || engagementTypeForm.$invalid || isSaving">
+        <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+    </button>
+    <input class="btn btn-warning not-outer-right-btn" type="button" value="{{activeOrDeactiveButtonLabel}}" id="deactive-bottom"
+           data-confirm-title="Confirmation"
+           data-confirm-message="Are you sure you want to change staus of the theme?"
+           data-confirm-direction="ltr"
+           data-confirm-ok="Ok"
+           data-confirm-cancel="Cancel"
+           ng-disabled="!allowDelete"/>
+
+    <input class="btn btn-danger not-outer-right-btn" type="button" value="Delete" id="delete-bottom"
+           data-confirm-title="Confirmation"
+           data-confirm-message="Are you sure you want to delete the this theme?"
+           data-confirm-direction="ltr"
+           data-confirm-ok="Delete"
+           data-confirm-cancel="Cancel"
+           ng-disabled="!allowDelete"/>
+    <input class="btn" type="button" value="Cancel" id="cancel-save-bottom"
+           data-confirm-title="Do you want to leave this site?"
+           data-confirm-message="Changes you made may not be saved"
+           data-confirm-direction="ltr"
+           data-confirm-ok="Leave"
+           data-confirm-cancel="Stay"/>
+</div>
+
+
+
+@{ Html.RenderPartial("ContactList"); }
+

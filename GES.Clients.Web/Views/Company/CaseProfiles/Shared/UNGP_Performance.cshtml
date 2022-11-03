@@ -1,0 +1,84 @@
+﻿@using GES.Common.Helpers
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileUNGPAssessmentComponent
+@{
+    var scoreCompanyPreparedness = "";
+    var scoreSalient = "";
+    var rangeHelper = new RangeHelper();
+
+    if (Model.TotalScoreForCompanyPreparedness.HasValue)
+    {
+        rangeHelper.Add(0, 13, "Low");
+        rangeHelper.Add(14, 27, "Medium");
+        rangeHelper.Add(28, 38, "High");
+        scoreCompanyPreparedness = rangeHelper.GetResult(Model.TotalScoreForCompanyPreparedness);
+    }
+
+    if (Model.SalientHumanRightsPotentialViolationTotalScore.HasValue)
+    {
+        rangeHelper = new RangeHelper();
+        rangeHelper.Add(1, 4, "Low");
+        rangeHelper.Add(5, 7, "Medium");
+        rangeHelper.Add(8, 10, "High");
+        scoreSalient = rangeHelper.GetResult(Model.SalientHumanRightsPotentialViolationTotalScore);
+    }
+}
+@if (Model.SalientHumanRightsPotentialViolationTotalScore.HasValue && Model.TotalScoreForCompanyPreparedness.HasValue)
+{
+    <div style="max-width:27%;min-width:270px">
+        <div class="row row-ungp-performance">
+            <div class="col-md-11 col-md-offset-1 col-lg-11 col-lg-offset-1 col-sm-11 col-sm-offset-1">
+                <div class="sqr vertical-text-preparedness ungp-heading">High</div>
+                <div class="square ungp-performance-orange" id="ungp_level_3_3">
+                    <div class="@(scoreSalient== "High" &&  scoreCompanyPreparedness == "High" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+                <div class="square ungp-performance-red" id="ungp_level_3_2">
+                    <div class="@(scoreSalient == "High" && scoreCompanyPreparedness == "Medium" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+                <div class="square ungp-performance-gradient-red " id="ungp_level_3_1">
+                    <div class="@(scoreSalient == "High" && scoreCompanyPreparedness == "Low" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+
+                <!-- 2nd row verticaly centered images in square columns -->
+
+                <div class="sqr vertical-text-preparedness ungp-heading hrs-medium">Medium</div>
+                <div class="square ungp-performance-green " id="ungp_level_2_3">
+                    <div class="@(scoreSalient == "Medium" && scoreCompanyPreparedness == "High" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+                <div class="square ungp-performance-orange " id="ungp_level_2_2">
+                    <div class="@(scoreSalient == "Medium" && scoreCompanyPreparedness == "Medium" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+                <div class="square ungp-performance-red " id="ungp_level_2_1">
+                    <div class="@(scoreSalient == "Medium" && scoreCompanyPreparedness == "Low" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+
+                <!-- 3rd row responsive images in background with centered content -->
+                <div class="sqr vertical-text-preparedness ungp-heading">Low</div>
+                <div class="square ungp-performance-gradient-green " id="ungp_level_1_3">
+                    <div class="@(scoreSalient == "Low" && scoreCompanyPreparedness == "High" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+                <div class="square ungp-performance-green " id="ungp_level_1_2">
+                    <div class="@(scoreSalient == "Low" && scoreCompanyPreparedness == "Medium" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+                <div class="square ungp-performance-orange " id="ungp_level_1_1">
+                    <div class="@(scoreSalient == "Low" && scoreCompanyPreparedness == "Low" ? "ungp-level-seleted" : "0")"></div>
+                </div>
+
+                <!-- 4th row responsive images in background with centered content -->
+                <div class="sqr"></div>
+                <div class="square-bottom-headling ungp-heading">
+                    High
+                </div>
+                <div class="square-bottom-headling ungp-heading">
+                    Medium
+                </div>
+                <div class="square-bottom-headling ungp-heading">
+                    Low
+                </div>
+            </div>
+        </div>
+        <div class="row ungp-vertical-title rotated-text">Human rights salience</div>
+        <div class="row">
+            <div class="col-md-9 col-md-offset-3 ungp-hoz-title col-lg-9 col-lg-offset-3 col-sm-9 col-sm-offset-3">Company preparedness</div>
+        </div>
+    </div>
+}

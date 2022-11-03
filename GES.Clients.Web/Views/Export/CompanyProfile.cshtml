@@ -1,0 +1,276 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.ExportCompanyDetailViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout_Export.cshtml";
+    var companyDetail = Model.CompanyDetailViewModel;
+}
+
+@section styling {
+    @Styles.Render("~/Content/plugins/flag-icon-css/flag-css-bundle")
+    @Styles.Render("~/Content/plugins/eventify/eventify-css-bundle")
+    @Styles.Render("~/bundles/page-company-profile-print-css")
+    @*<link rel="stylesheet" href="/Content/css/page-company-profile-print.css" media="print" />*@
+}
+
+<script type="text/javascript">
+    var i_companyId = @Html.Raw(Json.Encode(companyDetail.CompanyId));
+    var i_companyName = @Html.Raw(Json.Encode(companyDetail.CompanyName));
+    var i_gesCompanyId = @Html.Raw(Json.Encode(companyDetail.GesCompanyId));
+    var i_orgId = @Html.Raw(Json.Encode(companyDetail.OrganizationId));
+    var i_individualId = @Html.Raw(Json.Encode(companyDetail.IndividualId));
+
+    var isNew = @Html.Raw(Json.Encode(ViewBag.IsNew));
+</script>
+
+
+<!-- Content Header (Page header) -->
+<section class="content-export-header">
+    <h1 style="padding-top: 15px">
+        <span>@Html.Raw(ViewBag.Title)</span>
+        
+        <!-- Preload ges-logo to use in rasterize -->
+        <span style="display: none">
+            <img src="~/Content/img/logo.png" />
+        </span>
+    </h1>
+</section>
+
+
+<section class="content">
+  
+@if (Model.ShowCompanyInfo || Model.ShowDialogue)
+{
+    <div class="row">
+        <div class="col-md-6 col-md-6-left">
+            <div class="box box-primary box-company-info">
+                @if (Model.ShowCompanyInfo)
+                {
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i> @Resources.CompanyInfo
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <strong>ISIN</strong>
+                        <span class="text-muted">@companyDetail.Isin</span>
+                        <br />
+                        <strong>@Resources.HQCountry</strong>
+                        <span class="text-muted">@companyDetail.Country <span class="flag-icon flag-icon-@companyDetail.CountryCode"></span></span>
+                        <br />
+                        <strong>@Resources.Website</strong>
+                        <span class="text-muted"><a href="@companyDetail.Website" target="_blank">@companyDetail.Website</a></span>
+                        <br />
+                        <strong>@Resources.Industry</strong>
+                        <span class="text-muted">@companyDetail.Industry</span>
+                        <br />
+                        <strong>@Resources.SubIndustry</strong>
+                        <span class="text-muted">@companyDetail.MsciIndustry</span>
+                        <br />
+                    </div><!-- /.box-body -->
+                }
+            </div><!-- /.box -->
+        </div>
+        <div class="col-md-6 col-md-6-right">
+            <div class="box box-primary">
+                @if (Model.ShowDialogue)
+                {
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <i class="fa fa-comments-o" aria-hidden="true"></i> @Resources.Dialogue
+                        </h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <strong>@Resources.NumberOfContacts</strong>
+                        <span class="text-muted">@companyDetail.Dialogues</span>
+                        <br />
+                        <strong>
+                            <i class="fa fa-star class-a-star" aria-hidden="true" data-tooltip-content="class-a-hint"></i> @Resources.CorrespondenceCount
+                        </strong>
+                        <span class="text-muted">@companyDetail.Correspondence</span>
+                        <br/>
+                        <strong>@Resources.ConferenceCalls</strong>
+                        <span class="text-muted">@companyDetail.ConferenceCalls</span>
+                        <br />
+                        <strong>@Resources.MeetingsInPerson</strong>
+                        <span class="text-muted">@companyDetail.Meetings</span>
+                    </div><!-- /.box-body -->
+                }
+            </div><!-- /.box -->
+        </div>
+    </div>
+    <br />
+}
+
+@if (Model.ShowCompanyOverview)
+{
+    <div class="box box-primary box-company-overview">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-circle-o-notch" aria-hidden="true"></i> @Resources.CompanyOverview</h3>
+        </div>
+        <div class="box-body">
+            <p class="text-justify">@companyDetail.Overview</p>
+        </div>
+    </div>
+    <br />
+}
+
+@if (Model.ShowCaseProfiles)
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-briefcase"></i> @Resources.CaseProfiles @GetCounting(Model.CaseReportListViewModels)</h3>
+        </div>
+        <div class="box-body">
+            @if (Model.CaseReportListViewModels != null && Model.CaseReportListViewModels.Any())
+            {
+                foreach (var caseReportListViewModel in Model.CaseReportListViewModels)
+                {
+                    <div>
+                        <div>
+                            <a target="_blank" href="@(Url.Action("CaseReport", "Company", new {id = caseReportListViewModel.Id}, Request?.Url?.Scheme))" class="case-profile-title @(caseReportListViewModel.IsResolved || caseReportListViewModel.IsArchived ? "case-profile-title-resolved" : "")">@caseReportListViewModel.IssueName</a>
+                        </div>
+                        <div class="media">
+                            <div class="media-left media-export-left">
+                                <p><strong>@Resources.ServiceEngagementThemeNorm:</strong> @caseReportListViewModel.ServiceEngagementThemeNorm</p>
+                                <p><strong>@Resources.EngagementStatus:</strong> @caseReportListViewModel.Recommendation</p>
+                                <p><strong>@Resources.Location:</strong> @caseReportListViewModel.Location</p>
+                                <p><strong>@Resources.Published:</strong> @(caseReportListViewModel.EntryDate?.ToString(Configurations.DateFormat))</p>
+                                <p><strong>@Resources.LastModified:</strong> @(caseReportListViewModel.LastModified?.ToString(Configurations.DateFormat))</p>
+                                @if (caseReportListViewModel.IsResolved)
+                                {
+                                    <img src="/Content/img/Stamp_BcResolved.png" alt="" class="stamp-export"/>
+                                }
+                                else if (caseReportListViewModel.IsArchived)
+                                {
+                                    <img src="/Content/img/Stamp_BcArchived.png" alt="" class="stamp-export"/>
+                                }
+                            </div>
+                            <div class="media-body media-export-body">
+                                @if (!string.IsNullOrWhiteSpace(caseReportListViewModel.Description))
+                                {
+                                    <p>@caseReportListViewModel.Description</p>
+                                }
+                            </div>
+                        </div>
+                        @if (Model.CaseReportListViewModels.IndexOf(caseReportListViewModel) != Model.CaseReportListViewModels.Count - 1)
+                        {
+                            <hr>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                @:There are currently no case profiles
+            }
+        </div>
+    </div>
+    <br />
+}
+
+@if (Model.ShowAlerts)
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-bell"></i> @Resources.Alerts @GetCounting(Model.AlertListViewModels)</h3>
+        </div>
+        <div class="box-body">
+            @if (Model.AlertListViewModels != null && Model.AlertListViewModels.Any())
+            {
+                foreach (var alertListViewModel in Model.AlertListViewModels)
+                {
+                    <div>
+                        <div>
+                            <strong>@alertListViewModel.Heading</strong>
+                        </div>
+                        <div class="media">
+                            <div class="media-left media-export-left">
+                                <p><strong>@Resources.Norm:</strong> @alertListViewModel.Norm</p>
+                                <p><strong>@Resources.Location:</strong> @alertListViewModel.Location</p>
+                                <p><strong>@Resources.AlertDate:</strong> @(alertListViewModel.LastModified?.ToString(Configurations.DateFormat))
+                                </p>
+                                @if (!string.IsNullOrEmpty(alertListViewModel.Source) || alertListViewModel.Date.HasValue)
+                                {
+                                    <p>
+                                        (@string.Join(" ", alertListViewModel.Source, alertListViewModel.Date?.ToString(Configurations.DateFormat)))
+                                    </p>
+                                }
+                            </div>
+                            <div class="media-body media-export-body">
+                                @if (!string.IsNullOrWhiteSpace(alertListViewModel.Summary))
+                                {
+                                    <p>@alertListViewModel.Summary</p>
+                                }
+                            </div>
+                        </div>
+                        @if (Model.AlertListViewModels.IndexOf(alertListViewModel) != Model.AlertListViewModels.Count - 1)
+                        {
+                            <hr>
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                @:There are currently no alerts
+            }
+
+        </div>
+    </div>
+    <br />
+}
+
+@if (Model.ShowCompanyEvents)
+{
+    @Html.Partial("~/Views/Export/ExportUpcomingEvents.cshtml", companyDetail.Events)
+}
+
+@if (Model.ShowDocuments)
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@Resources.Documents @GetCounting(companyDetail.Documents)</h3>
+        </div>
+        <div class="box-body">
+            @if (companyDetail.Documents != null && companyDetail.Documents.Any())
+            {
+                <table class="table table-hover table-documents">
+                    @foreach (var doc in companyDetail.Documents)
+                    {
+                        var faFileIcon = CommonHelper.GetFaFileStr(doc.FileExtension);
+                        var dtStr = doc.Created?.ToString(Configurations.DateFormat) ?? "";
+                        <tr>
+                            <td style="width: 24px"><a href="@CommonHelper.GetDocDownloadUrl(doc.FileName)" target="_blank"><i class="fa fa-fw fa-file-@faFileIcon-o"></i></a></td>
+                            <td><a href="@CommonHelper.GetDocDownloadUrl(doc.FileName)" target="_blank">@doc.Name</a></td>
+                            <td style="width: 150px; text-align: right">@dtStr</td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                @:There are currently no documents
+            }
+        </div>
+    </div>
+}
+
+</section>
+
+@functions
+{
+    private static string GetCounting<T>(IList<T> items)
+    {
+        return items != null && items.Any() ? $"({items.Count})" : "";
+    }
+}
+
+<script>
+    @if (Model.ShowCoverPage)
+    {
+        @:console.log("Has cover page");
+    }
+</script>

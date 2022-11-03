@@ -1,0 +1,42 @@
+<div *ngIf="gssCompanyResearch">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-comment" aria-hidden="true"></i> Internal Comments</h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <br />
+                <span class="pull-right"><button type="button" class="btn btn-primary add-new-t01" (click)="addComment()"><i class="fa fa-plus"></i> Add Comment</button></span>
+                <br />
+                <select style="width: 100%;margin-top: 20px;border-radius:5px" class="form-control" (change)="filterItem($event.target.value)">
+                    <option value="-1">Select Section</option>
+                    <option value="0">Company Level</option>
+                    <option value="1">Department Level</option>
+                    <option value="2">Staff Level</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="direct-chat-messages">
+            <div *ngFor="let comment of (filteredInternalComments ? filteredInternalComments : gssCompanyResearch.GssInternalCommentViewModels); let i = index">
+                <div *ngIf="i % 2 ===0;else else_comment">
+                    <div class="row">
+                        <div class="callout callout-left">
+                            <strong>{{comment.UserName}}</strong><br />
+                            {{comment.Comment}}<br />
+                            <div class="pull-right text-secondary">{{ReviveDateTime(comment.DateModified) | date:'yyyy-MM-dd'}}</div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #else_comment>
+                    <div class="row">
+                        <div class="callout callout-right pull-right" role="alert">
+                            <strong>{{comment.UserName}}</strong><br />
+                            {{comment.Comment}}<br />
+                            <div class="pull-right text-secondary">{{ReviveDateTime(comment.DateModified)| date:'yyyy-MM-dd'}}</div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

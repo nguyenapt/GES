@@ -1,0 +1,205 @@
+﻿@using System.Web.Configuration
+@using System.Web.Mvc.Html
+@using GES.Inside.Web.Helpers
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.ConventionModel
+
+@{
+    ViewBag.PageClass = "page-convention page-convention-details";
+   // ViewBag.Title = @Model.Name;
+   // ViewBag.SubTitle = @Resources.GesServicesDetails;
+
+
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-convention-details")
+}
+
+<style>
+    .inputText {
+        width: 100% !important;
+        overflow-x: -moz-scrollbars-none;
+
+    }
+    
+    .ta-editor,
+    .ta-editor > .ta-bind {
+        min-height: 300px;
+
+        overflow-x: scroll;
+    }
+    h1 small {
+        font-size: 60%;
+    }
+    .red {
+        color: red;
+    }
+    .statictoolbar {
+        position: fixed;
+        top: 12px;
+        z-index: 200;
+        left: 0;
+        right: 0;
+    }
+
+</style>
+
+
+@section contentHeader{
+    <section class="content-header" ng-form="conventionHeaderForm">
+        <h1>
+            <input type="text" style="width: 80%" class="input-header" click-to-edit placeholder="Add convention name" ng-model="conventionDetails.Name" ng-required="true" is-edit-state="isAddNew"/>
+        </h1>
+        
+        <div class="page-buttons hidden-print">
+            <button class="btn btn-success not-outer-right-btn" ng-click="UpdateConvention()" ng-disabled="conventionHeaderForm.$invalid || conventionForm.$invalid || isSaving">
+                <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+            </button>
+            <input class="btn btn-danger" type="button" value="Delete" id="delete-convention" 
+                   data-confirm-title="Delete Convention"
+                   data-confirm-message="Are you sure you want to delete selected convention?"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Delete" 
+                   data-confirm-cancel="Cancel" 
+                   ng-disabled="isNewConvention"/>
+            <input class="btn" type="button" value="Cancel" id="cancel-save"
+                   data-confirm-title="Do you want to leave this site?"
+                   data-confirm-message="Changes you made may not be saved"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay" />
+        </div>
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <!-- Company Summary Box -->
+        <div class="box box-primary box-company-overview">
+            <div class="box-body" ng-form="conventionForm">
+                <div class="row">
+                    <div class="col-lg-9 col-md-8">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.ConventionCategory</p>
+                                </div>
+                            </div>
+
+                            <select style="width: 60%"ng-model="conventionDetails.I_ConventionCategories_Id" id="category-select" name="categorySelect" ng-required="true" class="form-control">
+                                <option value="">Select Category value</option>
+                                <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.Name}}</option>
+                            </select>
+
+                        </div>
+                        
+                    </div> 
+                </div>
+
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionShortName</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.ShortName" is-edit-state="isAddNew"></textarea>
+                </div>
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionText</p>
+                        </div>
+                    </div><br/>
+
+                    <div text-angular="text-angular"name="htmlcontent" ng-model="conventionDetails.Text" ta-disabled='disabled'></div>
+                </div>
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionType</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.Type" is-edit-state="isAddNew"></textarea>
+                </div>                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionBackground</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.Background" is-edit-state="isAddNew"></textarea>
+                </div>                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionGuidelines</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.Guidelines" is-edit-state="isAddNew"></textarea>
+                </div>                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionPurpose</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.Purpose" is-edit-state="isAddNew"></textarea>
+                </div>                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionAdministration</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.Administration" is-edit-state="isAddNew"></textarea>
+                </div>                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionGesCriteria</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.GesCriteria" is-edit-state="isAddNew"></textarea>
+                </div>               
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionGesScope</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.GesScope" is-edit-state="isAddNew"></textarea>
+                </div>           
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionGesRiskIndustry</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.GesRiskIndustry" is-edit-state="isAddNew"></textarea>
+                </div>         
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionManagementSystems</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.ManagementSystems" is-edit-state="isAddNew"></textarea>
+                </div>                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.ConventionLinks</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="conventionDetails.Links" is-edit-state="isAddNew"></textarea>
+                </div>
+                <hr class="style10"/>
+
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+    </div><!-- /.col -->
+   
+</div><!-- /.row -->

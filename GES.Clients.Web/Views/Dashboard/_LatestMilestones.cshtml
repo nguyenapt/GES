@@ -1,0 +1,19 @@
+﻿@using System.Globalization
+@using GES.Common.Resources
+@model IEnumerable< GES.Inside.Data.Models.MilestoneModel>
+
+@foreach (var item in Model)
+{
+    var dateStr = item.MilestoneModified?.ToString("yyyy-MM-dd") ?? "N/A";
+    <div class="dashboard-item dashboard-milestone-item sidebar-cell">
+        <span>@dateStr</span><br />
+        <strong>@Html.ActionLink(item.CompanyName, "Profile", "Company", new { id = item.CompanyId }, new { target = "_blank", @class = "company-anchor" })</strong><br />
+        @Html.ActionLink(item.CaseReportHeading, "CaseReport", "Company", new { id = item.CaseReportId }, new { target = "_blank", @class = "cases-anchor", data_parts = $"{item.CaseReportId}-{item.EngagementTypeId}-{item.CompanyId}-{item.EngagementTypeCategoriesId}-{item.ForumMessagesTreeId}-{item.ParentForumMessagesId}" })
+        <p class="dashboard-milestone-desc">@item.MilestoneDescription</p>
+        <hr>
+    </div>
+}
+@if (!Model.Any())
+{
+    <p>@Resources.NoDataAvailable</p>
+}

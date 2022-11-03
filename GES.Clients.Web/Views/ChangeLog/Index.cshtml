@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Changelog";
+}
+@section styling
+{
+    @Styles.Render("~/bundles/page-changlog-css")
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-default">
+            <div class="box-body">
+
+                <p>All notable changes to GES Engagement Forum are documented in this log.</p>
+
+
+                <p class="text-bold"># Curent version [4.0.0] - 2017-04-14</p>
+
+                <p class="text-bold">The main navigation and general updates</p>
+                <ul class="changelog-ul">
+                    <li>Expandable side bar <span><img class="changelog-content-image-icon" alt="" src="~/Content/img/changelogContentImg/expand-sider-bar.jpg" /> </span></li>
+                    <li>Search field based on company names, issues or keywords, with auto-suggestion</li>
+                    <li>Access to all sections, divided in engagement <span><img class="changelog-content-image-icon" alt="" src="~/Content/img/changelogContentImg/engagement-icon.jpg" /> </span> and research <span><img class="changelog-content-image-icon" alt="" src="~/Content/img/changelogContentImg/research-icon.jpg" /> </span> headings (pages that are not yet developed, refers back to the existing Engagement Forum)</li>
+                    <li>An account for personal settings*</li>
+                    <li>Hovering explanations where needed</li>
+                    <li>A Changes log has been added to the side foot with information about updates</li>
+                    <li>A GES Reports section with current and past engagement reports as well as position papers</li>
+                </ul>
+                
+                <p class="text-bold">The landing page &ndash; Dashboard</p>
+                <ul class="changelog-ul">
+                    <li>The Home button <span><img class="changelog-content-image-icon" alt="" src="~/Content/img/changelogContentImg/home-button-icon.jpg" /> </span> in the main navigation always leads to the Dashboard</li>
+                    <li>Visual overview (doughnut charts and case heat map) based on selected Indices, Portfolios or Focus list &ndash; all segments are clickable to provide a list of on-going engagements (companies/cases)</li>
+                    <li>Selected portfolios/indices are remembered for quick access next time you visit the page</li>
+                    <li>Calendar, latest news and latest milestones, again narrowed down to selected indices, portfolios or focus list</li>
+                    <li>Most recent posts from GES&rsquo; blog</li>
+                    <li>One or more indices/portfolios are selectable &ndash; the info box below provides further information such as total holdings and also the last update time of the selection made</li>
+                    <li>Calendar of events</li>
+                </ul>
+                
+                <p class="text-bold">The search page &ndash; Search and analysis</p>
+                <ul class="changelog-ul">
+                    <li>Extensive search and filter features</li>
+                    <li>Result list with companies and cases (click on the arrow to unfold cases associated to companies)</li>
+                    <li>Export to Excel feature for selected or all search results</li>
+                    <li>Overview of number of cases and alerts for each company</li>
+                    <li>Possibility to add companies or cases to the focus list. Two circles <span><img class="changelog-content-image-icon" alt="" src="~/Content/img/changelogContentImg/focus-list-icon.jpg" /> </span> means company is added to focus list, one circle <span><img class="changelog-content-image-icon" alt="" src="~/Content/img/changelogContentImg/un-focus-list-icon.jpg" /></span> means case is added to focus list</li>
+                    <li>Possibility to sign-up to cases (will be further developed in upcoming releases&ndash; will replace endorsement function)</li>
+                    <li>
+                        Auto suggest to help finding results &ndash; priority order is:
+                        <ul class="changelog-subul">
+                            <li>Market cap</li>
+                            <li>Full word (i.e. "cocoa ")</li>
+                            <li>Contains (i.e. "coc")</li>
+                            <li>Alphabetically</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <p class="text-bold">An export function*</p>
+                <ul class="changelog-ul">
+                    <li>An excel file based on the selected companies, portfolio or index</li>
+                </ul>
+                
+                <p class="text-bold">Focus list*</p>
+                <ul class="changelog-ul">
+                    <li>Individual focus list in table format</li>
+                    <li>Add or remove companies/cases from the focus list</li>
+                    <li>Export feature</li>
+                </ul>
+                
+                <p class="text-bold">Company profile*</p>
+                <ul class="changelog-ul">
+                    <li>General company info and description of business</li>
+                    <li>Possibility to quickly add to focus list</li>
+                    <li>GES&rsquo; engagement dialogue statistics (number of contacts, meetings in person or conference calls)</li>
+                    <li>List of cases including recommendation and performance indicators (choice to include archived and resolved cases)</li>
+                    <li>List of all company specific alerts</li>
+                    <li>Company calendar</li>
+                    <li>Print feature</li>
+                    <li>First version: more features to be added</li>
+                </ul>
+                
+                <p class="text-bold">GES Reports</p>
+                <ul class="changelog-ul">
+                    <li>Lists Annual Engagement Reports, Quarterly Engagement Reports and Position Papers*</li>
+                </ul>
+
+                <p>* Will be further developed in upcoming releases.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

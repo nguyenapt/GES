@@ -1,0 +1,169 @@
+﻿@using GES.Common.Resources
+@{
+
+    var eventId = @ViewBag.CompanyEventId;
+}
+<style>
+    .table-wrapper {
+        width: 700px;
+        /*margin: 30px auto;*/
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+    .table-title {
+        padding-bottom: 10px;
+        margin: 0 0 10px;
+    }
+    .table-title h2 {
+        margin: 6px 0 0;
+        font-size: 22px;
+    }
+    .table-title .add-new-t01 {
+        /*float: right;*/
+        height: 30px;
+        font-weight: bold;
+        font-size: 12px;
+        text-shadow: none;
+        min-width: 100px;
+        border-radius: 50px;
+        line-height: 13px;
+    }
+    .table-title .add-new-t01 i {
+        margin-right: 4px;
+    }
+    table.table {
+        table-layout: fixed;
+    }
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+    }
+    table.table th i {
+        font-size: 13px;
+        /*margin: 0 5px;*/
+        cursor: pointer;
+    }
+    table.table th:last-child {
+        width: 100px;
+    }
+    table.table td a {
+        cursor: pointer;
+        display: inline-block;
+        /*margin: 0 5px;*/
+        min-width: 24px;
+    }
+    table.table td a.edit-t01{
+        color: #FFC107;
+    }
+    table.table td a.delete-t01 {
+        color: #E34724;
+    }
+</style>
+
+<script> var companyId = '@ViewBag.Id' </script>
+
+<div class="box box-primary box-management-systems">
+    <div class="box-header with-border">
+        <h3 class="box-title">Events ({{companyEvents.length}})</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="ges-content-block">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                            
+                        <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="AddOrUpdateEvent(null)" data-toggle="modal" data-target="#company-event-dialog" ng-disabled="isSaving"><i class="fa fa-plus"></i>Add New Company Event</button>
+                    </div>
+                </div>
+            </div>
+
+                    
+            <div style="overflow-x: auto;">
+                <table class="table table-bordered" ng-table="companyEventsTableParams">
+                    <thead>
+                    <tr>
+                        <th style="width: 200px; background-color: #68aaa3; color: white">Title</th>
+                        <th style="width: 75px; background-color: #68aaa3; color: white">GES Event</th>
+                        <th style="width: 70px; background-color: #68aaa3; color: white">Date</th>
+                        <th style="width: 70px; background-color: #68aaa3; color: white">Start time</th>
+                        <th style="width: 70px; background-color: #68aaa3; color: white">End time</th>
+                        <th style="width: 75px; background-color: #68aaa3; color: white">All day event</th>
+                        <th style="width: 120px; background-color: #68aaa3; color: white">Location</th>
+                        <th style="width: 70px; background-color: #68aaa3; color: white">Attendees</th>
+                        <th style="width: 60px; background-color: #68aaa3; color: white"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="event in $data">
+                        <td>
+                            {{event.EventTitle}}
+                        </td>
+                        <td align="center">
+                            <i class="fa {{event.IsGesEvent?'fa-check':''}}"></i>
+                        </td>
+                        <td>
+                            {{event.EventDateString | date: "yyyy-MM-dd"}}
+                        </td>
+                        <td>
+                            {{event.StartTime}}
+                        </td>
+                        <td>
+                            {{event.EndTime}}
+                        </td>
+                        <td align="center">
+                            <i class="fa {{event.AllDayEvent?'fa-check':''}}"></i>
+                        </td>
+                        <td>
+                            {{event.EventLocation}}
+                        </td>
+                        <td align="center">
+                            <a title="Attendees details" data-toggle="modal" data-target="#attendees-dialog" ng-click="GesEventAttendees(event)">{{event.Attendees.length}}</a>
+                        </td>
+                        <td>
+                            <a class="edit-t01" title="Edit" data-toggle="modal" data-target="#company-event-dialog" ng-click="AddOrUpdateEvent(event)"><i class="material-icons">&#xe22b;</i></a>
+                            <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="DeleteCompanyEvent(event)"><i class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <i>Editing or Deleting calendar event sends an automatic email notification to all Attendees</i>
+            </div>
+        </div>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<div class="modal fade" id="attendees-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 800px; height: auto">
+        <div class="modal-content" ng-form="kpiForm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">Attendees</h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+                <div class="row" >
+                    <div class="col-sm-12">
+                        <table class="table table-status" style="width: 100%">
+                            <thead>
+                            <th style="width: 200px">Name</th>
+                            <th style="width: 200px">Email</th>
+                            <th style="width: 200px">Request Date</th>
+                            </thead>
+                            <tbody ng-repeat="item in Attendees">
+                            <tr>
+                                <td style="text-align:left">{{item.FullName}}</td>
+                                <td>{{item.Email}}</td>
+                                <td>{{item.SendDate}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="@Resources.Close" />
+            </div>
+        </div>
+    </div>
+</div>

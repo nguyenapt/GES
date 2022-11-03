@@ -1,0 +1,17 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model IEnumerable<GES.Inside.Data.Models.ReferenceViewModel>
+
+@if (Model.Any())
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.References
+            </h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            @{ Html.RenderPartial("CaseProfiles/Shared/References", Model); }
+        </div>
+    </div>
+}

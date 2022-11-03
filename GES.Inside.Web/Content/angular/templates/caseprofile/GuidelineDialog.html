@@ -1,0 +1,30 @@
+﻿<div ng-form="guidelineForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelGuideline(ngDialogData.editingGuideline)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingGuideline.I_GesCaseReportsI_Norms_Id == 0 ? "Add New" : "Edit"}} Guideline</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12 required-field" style="font-weight:bold">Name</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <select class="form-control guideline-select"
+                        ng-model="ngDialogData.editingGuideline.I_Norms_Id"
+                        ng-options="value.I_Norms_Id as value.SectionTitle for (key, value) in ngDialogData.norms" ng-required="true">
+                    <option value="">-- Select --</option>
+                </select>
+            </div>
+        </div>        
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isGuidelineslistDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-save-guideline" ng-click="saveGuideline(ngDialogData.editingGuideline)" ng-disabled="guidelineForm.$invalid" />
+            <input class="btn btn-success" style="margin-right:15px" type="button" value="Save & add new" id="btn-save-guideline" ng-click="saveGuideline(ngDialogData.editingGuideline,true)" ng-disabled="guidelineForm.$invalid" />
+            <span ng-if="ngDialogData.editingGuideline.I_GesCaseReportsI_Norms_Id !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-guideline" ng-click="deleteGuideline(ngDialogData.editingGuideline,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelGuideline(ngDialogData.editingGuideline)" />
+    </div>
+</div>

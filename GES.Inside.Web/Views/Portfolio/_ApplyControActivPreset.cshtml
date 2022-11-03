@@ -1,0 +1,74 @@
+﻿@model GES.Inside.Web.Models.ApplyControActivPresetViewModel
+@{
+    const string title = "Apply a Preset for Controversial Activities";
+    const string submitBtnText = "Apply";
+}
+
+<script type="text/javascript" charset="utf-8">
+    window.presetsData = @Html.Raw(Json.Encode(@TempData["PresetsData"]));
+</script>
+
+<div class="modal fade" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">@title</h3>
+            </div>
+
+            <div>
+                @using (Ajax.BeginForm("ApplyControActivPreset", "Portfolio", FormMethod.Post,
+                    new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        HttpMethod = "POST",
+                        OnBegin = "$('.btn-apply-preset').button('loading')",
+                        OnComplete = "resetApplyPresetButton()"
+                        //UpdateTargetId = "table"
+                    }))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(model => model.PortfolioOrganizationId)
+
+                    <div class="modal-body">
+                        @Html.ValidationSummary()
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.PresetId):
+                            </div>
+                            <div class="editor-field">
+                                @Html.DropDownListFor(m => m.PresetId, Model.Presets, "Please select a Preset", new { @id = "presetsDropdown", @class = "form-control" })
+                            </div>
+                        </div>
+                        <hr/>
+                        
+                        <div class="form-group preview-values">
+                            <div class="editor-label control-label">
+                                <strong>@Html.DisplayNameFor(m => m.PreviewValues):</strong>
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.PreviewValues, new { @id = "ControActivPreview", @disabled = true, @class = "form-control", @placeholder = "Preview will appear here..." })
+                            </div>
+                        </div>
+                        <hr/>
+                        <strong>Options:</strong>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.OverwriteExistingValues)
+                                    @Html.DisplayNameFor(m => m.OverwriteExistingValues)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-apply-preset" id="save" data-loading-text="Processing..." type="submit">@submitBtnText</button>
+                    </div>
+                }
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

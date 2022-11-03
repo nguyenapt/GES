@@ -1,0 +1,42 @@
+﻿@using GES.Common.Configurations
+@model string
+
+@{
+    Layout = "~/Views/Shared/_Layout_Export.cshtml";
+}
+
+@section styling {
+    @Styles.Render("~/bundles/page-company-profile-print-css")
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-export-header">
+    <div class="row" style="width: 100%; height: 1122px; margin: 0; position: relative">
+        <div class="cover-header">
+            <a href="https://www.gesinternational.com/" style="position: relative">
+                <img src="~/Content/img/logo.png" style="margin-top: 80px;width: 250px;" alt=""/>
+            </a>
+        </div>
+        
+        <div class="cover-body">
+            @*<h1 style="padding: 0 15px 0 15px; font-size: 40px">*@
+            <div style="display: table-cell;vertical-align: middle;">
+                <div style="font-size: 28px; color: white; text-decoration: underline; width: calc(100% - 260px);">@Html.Raw(ViewBag.Title)</div>
+                <div style="font-size: 18px; color: white !important;">Company dialogue report</div>
+                <div style="font-size: 14px; color: white !important;">@Html.Raw(ViewBag.DateRange)</div>                
+            </div>
+            
+            @*</h1>*@
+            
+        </div>
+            
+        <div class="cover-footer">
+            <div style="font-size: 18px;font-weight:bold">@Html.Raw(ViewBag.EngagementTheme)</div>
+            Generated: @DateTime.Now.ToString(Configurations.DateFormat)
+        </div>
+            
+        <div class="cover-background">
+            <img src="/Content/img/cover-background.png" alt="" />
+        </div>
+    </div>    
+</section>

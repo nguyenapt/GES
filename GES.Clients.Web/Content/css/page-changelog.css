@@ -1,0 +1,17 @@
+﻿
+.changelog-ul {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-left: 20px;
+}
+
+.changelog-subul {
+    list-style-type: circle;
+    list-style-position: inside;
+    margin-left: 60px;
+}
+
+.changelog-content-image-icon {
+    width: 22px;
+    height: 20px;
+}

@@ -1,0 +1,1 @@
+﻿update GesMilestoneTypes set Description = 'Company is at an advanced stage of implementing the strategy' where MilestoneCode = 'Mst5'

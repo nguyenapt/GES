@@ -1,0 +1,14 @@
+﻿@using GES.Common.Resources
+@using GES.Inside.Data.Models.CaseProfiles
+@model CaseProfileIssueComponent
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            @Resources.CompanyDialogue
+        </h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        @Html.Partial("CaseProfiles/Shared/CompanyDialogueWithDownload", Model)
+    </div>
+</div>

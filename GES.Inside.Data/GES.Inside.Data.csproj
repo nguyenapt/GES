@@ -1,0 +1,1919 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E431BD8A-2059-425B-91EA-29100FCAAF93}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GES.Inside.Data</RootNamespace>
+    <AssemblyName>GES.Inside.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dev|AnyCPU'">
+    <OutputPath>bin\Dev\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DevNewVM|AnyCPU'">
+    <OutputPath>bin\DevNewVM\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PROD.Rackspace|AnyCPU'">
+    <OutputPath>bin\PROD.Rackspace\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Clients.HTTP.PROD.Rackspace|AnyCPU'">
+    <OutputPath>bin\Clients.HTTP.PROD.Rackspace\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Live|AnyCPU'">
+    <OutputPath>bin\Live\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Stage|AnyCPU'">
+    <OutputPath>bin\Stage\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.BulkInsert, Version=6.0.2.8, Culture=neutral, PublicKeyToken=630a17433349cb76, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.BulkInsert-ef6.6.0.2.8\lib\Net45\EntityFramework.BulkInsert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.MappingAPI, Version=6.0.0.7, Culture=neutral, PublicKeyToken=7ee2e825d201459e, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.MappingAPI.6.0.0.7\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Utilities, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EFUtilities.1.0.2\lib\EntityFramework.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.14.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.14\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.AWT.WinForms, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.AWT.WinForms.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Beans, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Beans.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Charsets, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Charsets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Cldrdata, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Cldrdata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Corba, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Corba.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Jdbc, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Jdbc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Localedata, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Localedata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Management, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Management.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Media, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Media.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Misc, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Misc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Naming, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Naming.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Nashorn, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Nashorn.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Remoting, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Remoting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Security, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.SwingAWT, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.SwingAWT.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Text, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Text.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Tools, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Tools.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Util, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.Util.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.API, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.API.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Bind, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.Bind.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Crypto, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Parse, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.Parse.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Transform, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.Transform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.WebServices, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.WebServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.XPath, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.OpenJDK.XML.XPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.Runtime, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IKVM.Runtime.JNI, Version=8.1.5717.0, Culture=neutral, PublicKeyToken=13235d27fcbfff58, processorArchitecture=MSIL">
+      <HintPath>..\packages\IKVM.8.1.5717.0\lib\IKVM.Runtime.JNI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin.Security.Providers, Version=1.25.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.Security.Providers.1.27\lib\net45\Owin.Security.Providers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.0.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.0.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.2.5.0\lib\net46\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="slf4j-api, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stanford.NLP.POSTagger.3.6.0.0\lib\slf4j-api.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="stanford-postagger-3.6.0, Version=3.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stanford.NLP.POSTagger.3.6.0.0\lib\stanford-postagger-3.6.0.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=1.4.23.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Plus.EF6.1.4.23\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configs\AutoMapperDataConfiguration.cs" />
+    <Compile Include="Configs\Settings.cs" />
+    <Compile Include="DataContexts\AlertRatings.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\ContextKeys.cs" />
+    <Compile Include="DataContexts\ControversialRatings.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Countries.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\EngagementRatings.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\E_MessageContent.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\E_MessageContentG_Individuals.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\E_Messages.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\E_MessagesR_Lists.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\F_CreditReportStates.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesAnnouncement.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesCaseProfileInvisibleEntities.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesCaseProfileTemplates.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesCaseReportSdg.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesCaseReportSignUp.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesCaseReports_Audit.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesCaseReports_Audit_Details.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesCompanyProfiles.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesDocTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesDocument.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesDocumentService.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesEventCalendarUserAccept.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesMilestoneTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GesModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GesModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesUNGPAssessmentForm.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesUNGPAssessmentFormResources.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesUNGPAssessmentFormResource_Audit.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesUNGPAssessmentFormResource_Audit_Details.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesUNGPAssessmentForm_Audit.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesUNGPAssessmentForm_Audit_Details.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\GesUNGPAssessmentScores.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Bills.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ClientDialogue.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Cultures.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Departments.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_DocumentManagementTaxonomies.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_DocumentManagementTaxonomiesG_ManagedDocuments.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_FileExtensions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Forms.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ForumMessages.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ForumMessages_Tree.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Genders.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Individuals.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_IndividualsGroups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_IndividualsG_Services.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Industries.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_IntNameIds.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_IntNames.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Languages.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_LocalizedLongTexts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_LocalizedLongTextTranslations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_LocalizedTexts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_LocalizedTextTranslations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ManagedDocumentApprovalStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ManagedDocumentItems.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ManagedDocumentRiskLevels.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ManagedDocuments.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ManagedDocumentServices.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ManagedDocumentsG_ManagedDocumentTaggs.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ManagedDocumentTaggs.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_MarketingMethods.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_MimeTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_MultiLangDescriptions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_MultiLangNames.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_News.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_NewsCategories.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_NewsTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Organizations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_OrganizationsCalenderEvents.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_OrganizationsG_ManagedDocuments.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_OrganizationsG_Services.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_OrganizationsI_ClientStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Organizations_GesDocument.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Pages.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_PaymentMethods.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Provinces.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_QualityPolicies.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Reminders.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ReportingPageModules.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ReportingTemplates.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ReportingTemplatesG_ReportingModules.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_SalesRatings.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_SaleStates.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Searches.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_SecurityGroups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_SecurityGroupsG_Forms.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_SecurityGroupsG_Pages.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_SecurityGroupsG_SecurityRights.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_SecurityRights.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Services.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_ServiceStates.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_StandardTextCategories.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_StandardTexts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Texts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_TimeZones.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Titles.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Uploads.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Urls.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_UserLoginLog.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_Users.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_UsersG_SecurityGroups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\G_WebServiceUsers.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\IssueHeading.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\IssueHeadingGroup.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ActivityForms.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Answers.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_BurmaRecommendations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CalenderEvents.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CalenderEvents_Audit.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Categories.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CharScores.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ClientProgressStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ClientStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Companies.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CompaniesG_ManagedDocuments.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CompaniesG_Organizations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CompaniesG_Services.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CompaniesImport.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CompaniesI_CompanyListTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CompaniesI_ManagementSystems.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CompanyListTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ContactDirections.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ContactTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialActivites.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialActivitesGroups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialActivitesPresets.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialActivitesPresetsItems.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialComments.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialCompanies.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialCompaniesI_ControversialActivites.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialInvolvementTexts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialScreening.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialSources.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ControversialSourceTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ConventionCategories.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Conventions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ConventionSignatories.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CountriesOfOperation.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CountryRisk.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_CountryRiskScores.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementActivityOptions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementDiscussionPoints.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementGap.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementGoal.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementIssuesInfo.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementOtherStakeholderViews.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementProfiles.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementStandards.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementSwots.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementTypeCategories.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementTypeNews.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_EngagementTypes_GesDocument.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_FtseGroups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_FtseSectors.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_FtseSubSectors.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Ftse_Tree.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesAssociatedCorporations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseProfileEntities.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseProfileEntitiesGroup.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportAvailabilityStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportHistory.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportReferences.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReports.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsExtra.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsG_Individuals.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsG_ManagedDocuments.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_Conventions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_EngagementTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_GesAssociatedCorporations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_GesRevisionTexts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_GesRevisionTexts_Audit.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_Kpis.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_Kpis_Audit.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_Norms.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_ProcessStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportsI_ProcessStatuses_Audit.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportSources.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportSourceTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportSupplementaryReading.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReports_Audit.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCaseReportUpdates.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCommentary.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCompanies.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCompanyDialogues.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCompanyDialoguesG_Individuals.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesCompanyWatcher.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesLatestNews.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesRevisionTexts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesSourceDialogues.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GesSourceDialoguesG_Individuals.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_GSSLink.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_HighRiskZones.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_HrCommunityRatingsConversionTable.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_HrEmployeesRatingsConversionTable.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_HrRatingsConversionTable.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_HrSuppliersRatingsConversionTable.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_HrTotalRatingsConversionTable.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_IndividualLists.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_IndividualListsG_Individuals.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_InformationQuality.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_KpiPerformance.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Kpis.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ManagementSystems.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ManagementSystemTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Milestones.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_MsciIndustries.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_MsciIndustryGroups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_MsciI_Questions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_MsciSectors.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_MsciSubIndustries.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Msci_Tree.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_NaArticles.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Nas.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_NasI_IndividualLists.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_NasI_NaArticles.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_NaTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_NormAreas.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_NormCategories.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Norms.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_PdfExportSettings.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_PortfolioCompaniesImport.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Portfolios.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_PortfoliosG_Organizations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_PortfoliosG_OrganizationsG_Services.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_PortfoliosG_OrganizationsI_ControversialActivites.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_PortfoliosI_Companies.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_PortfoliosI_ControversialActivites.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_PortfolioTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ProcessMembers.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ProcessStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ProgressStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ProxyResolutions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Questions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_QuestionsByRisk.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_RatingsConversionTable.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_RelatedCases.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ReportFiles.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_ResponseStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_RiskCompanies.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_RiskCompaniesStatistics.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_RiskIndustryAverageScores.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_RiskMatrixTexts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_RiskRankTexts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_RiskStatistics.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Scores.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Sections.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_SecurityEvents.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_SecurityStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_SecurityTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Sources.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Swots.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_SwotScores.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_SwotTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_Themes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\I_TimelineItems.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\L_UsersUsers.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PeerGroups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Regions.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\M_Messages.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\M_MessagesI_IndividualLists.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\M_MessageTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_AlertStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_AnalysisLevels.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_Comments.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_Groups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_Inboxes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_Links.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_NewsItemFiles.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_NewsItemLinks.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_NewsItems.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_NewsItemsArchive.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_NewsItemsG_Services.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_NewsItemsI_Companies.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_NewsItemsO_Taxonomy.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_ResultTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_SearchTerms.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_Sources.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_Taxonomy.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_TaxonomyTree.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\O_Texts.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\RiskRatings.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\R_EmailSource.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\R_Lists.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\R_ListsG_Individuals.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\R_ListsG_Organizations.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\Sdg.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\SubPeerGroups.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\StandardRatings.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\T_Activites.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\T_ActivitesI_GesCaseReports.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\T_ActivityTypes.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\T_ActMan_Start.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\T_ApprovalStatuses.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\T_Projects.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\T_Translate.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\T_Translated.cs">
+      <DependentUpon>GesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExportModels\GesExportModel.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Exceptions\FileSharingException.cs" />
+    <Compile Include="Exceptions\SyncServiceException.cs" />
+    <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Helpers\JqGridHelper.cs" />
+    <Compile Include="Helpers\CommonProcess.cs" />
+    <Compile Include="Helpers\DataHelper.cs" />
+    <Compile Include="Helpers\LinkHelper.cs" />
+    <Compile Include="Models\Anonymous\KeyValueAttributeObject.cs" />
+    <Compile Include="Models\Auth\GesAccountRoleViewModel.cs" />
+    <Compile Include="Models\CaseProfileBcArchivedViewModel.cs" />
+    <Compile Include="Models\CaseProfileFullAttributeViewModel.cs" />
+    <Compile Include="Models\CaseProfileBcResolvedViewModel.cs" />
+    <Compile Include="Models\CaseProfileGenerationViewModel.cs" />
+    <Compile Include="Models\CaseProfileSrEmeViewModel.cs" />
+    <Compile Include="Models\CaseProfileSrGovViewModel.cs" />
+    <Compile Include="Models\CaseProfileBespokeViewModel.cs" />
+    <Compile Include="Models\CaseProfileStandardViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileExportSDGViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileIncidentAnalysisComponent.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileSdgAndGuidelineConventionComponent.cs" />
+    <Compile Include="Models\AlertViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileUNGPAssessmentComponent.cs" />
+    <Compile Include="Models\CaseProfiles\GesUNGPAssessmentFormAuditDetailsViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\GesUNGPAssessmentFormAuditViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\GesUNGPAssessmentFormResourceAuditDetailsViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\GesUNGPAssessmentFormResourceAuditViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\GesUNGPAuditViewModel.cs" />
+    <Compile Include="Models\CaseReportSupplementaryViewModel.cs" />
+    <Compile Include="Models\CheckMasterCompanyViewModel.cs" />
+    <Compile Include="Models\CompanyManagementSystemModel.cs" />
+    <Compile Include="Models\CompanyPortfolioModel.cs" />
+    <Compile Include="Models\ContactTypeViewModel.cs" />
+    <Compile Include="Models\ConventionModel.cs" />
+    <Compile Include="Models\AssociatedCorporationsViewModel.cs" />
+    <Compile Include="Models\DiscussionPointsViewModel.cs" />
+    <Compile Include="Models\EngagementTypeCategoryView.cs" />
+    <Compile Include="Models\EngagementTypeGesDocumentViewModel.cs" />
+    <Compile Include="Models\EngagementTypeViewModel.cs" />
+    <Compile Include="Models\ConfirmationInformationViewModel.cs" />
+    <Compile Include="Models\EngagementTypeNewsViewModel.cs" />
+    <Compile Include="Models\EventAttendeeModel.cs" />
+    <Compile Include="Models\ExcelCaseDetail.cs" />
+    <Compile Include="Models\GesBlogModel.cs" />
+    <Compile Include="Models\GesAnnouncementModel.cs" />
+    <Compile Include="Models\GesCaseAuditLogsViewModel.cs" />
+    <Compile Include="Models\GesCaseProfileEntitiesGroupViewModel.cs" />
+    <Compile Include="Models\GesCaseProfileEntitiesViewModel.cs" />
+    <Compile Include="Models\GesCaseProfileInvisibleEntitiesViewModel.cs" />
+    <Compile Include="Models\GesCaseProfileTemplatesViewModel.cs" />
+    <Compile Include="Models\GesCaseReportKpiViewModel.cs" />
+    <Compile Include="Models\CaseReportSourceReferenceViewModel.cs" />
+    <Compile Include="Models\GesUngpAssessmentScoresViewModel.cs" />
+    <Compile Include="Models\GesUngpAssessmentScoresViewModels.cs" />
+    <Compile Include="Models\CommentDetailsViewModel.cs" />
+    <Compile Include="Models\GssResearchInternalCommentViewModel.cs" />
+    <Compile Include="Models\GssResearchPrincipleGeneralItemViewModel.cs" />
+    <Compile Include="Models\GssResearchPrincipleIssueIndicatorViewModel.cs" />
+    <Compile Include="Models\GssResearchSourceViewModel.cs" />
+    <Compile Include="Models\GssResearchPrincipleCompanyContactViewModel.cs" />
+    <Compile Include="Models\GssResearchPrincipleUpgradeCriteriaViewModel.cs" />
+    <Compile Include="Models\GssResearchPrincipleGeneralViewModel.cs" />
+    <Compile Include="Models\GssResearchPrincipleAssessmentViewModel.cs" />
+    <Compile Include="Models\GssResearchCompanyUNGuidingPrinciplesViewModel.cs" />
+    <Compile Include="Models\GssResearchCompanyViewModel.cs" />
+    <Compile Include="Models\KpiViewModel.cs" />
+    <Compile Include="Models\StoredProcedureParams\CheckMasterCompanyParams.cs" />
+    <Compile Include="Models\SubPeerGroupModel.cs" />
+    <Compile Include="Models\ManagementSystemModel.cs" />
+    <Compile Include="Models\MsciFtseViewModel.cs" />
+    <Compile Include="Models\RolePermissionModel.cs" />
+    <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\OrganizationsServicesViewModel.cs" />
+    <Compile Include="Models\NormModel.cs" />
+    <Compile Include="Models\OrganizationViewModel.cs" />
+    <Compile Include="Models\OtherStakeholderViewModel.cs" />
+    <Compile Include="Models\ScreeningReportInfoViewModel.cs" />
+    <Compile Include="Models\ScreeningReportInputData.cs" />
+    <Compile Include="Models\ServicesModel.cs" />
+    <Compile Include="Models\TimeLineModel.cs" />
+    <Compile Include="Models\TimeLinePointModel.cs" />
+    <Compile Include="Models\ReferenceViewModel.cs" />
+    <Compile Include="Models\RevisionViewModel.cs" />
+    <Compile Include="Models\SdgViewModel.cs" />
+    <Compile Include="Repository\GesAnnouncementRepository.cs" />
+    <Compile Include="Repository\GesCaseProfileInvisibleEntitiesRepository.cs" />
+    <Compile Include="Repository\GesCaseReportSdgRepository.cs" />
+    <Compile Include="Repository\GesCaseReportsManagedDocumentsRepository.cs" />
+    <Compile Include="Repository\GesEventCalendarAttendeesRepository.cs" />
+    <Compile Include="Repository\GesRolePermissionRepository.cs" />
+    <Compile Include="Repository\GesUngpAssessmentFormRepository.cs" />
+    <Compile Include="Repository\GesUNGPAssessmentFormResourcesRepository.cs" />
+    <Compile Include="Repository\GesUngpAssessmentScoresRepository.cs" />
+    <Compile Include="Repository\GSSResearchCompaniesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesCaseProfileInvisibleEntitiesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesCaseReportSdgRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesCaseReportsManagedDocumentsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesEventCalendarAttendeesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesRolePermissionRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesUngpAssessmentFormRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesUNGPAssessmentFormResourcesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesUngpAssessmentScoresRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesCaseProfileTemplatesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGSSResearchCompaniesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportSupplementaryReadingRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesCaseReports_Audit_DetailRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GSSLinkRepository.cs" />
+    <Compile Include="Repository\Interfaces\I_GesEventCalendarUserAcceptRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportReferencesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportSourcesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesAssociatedCorporationsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_EngagementDiscussionPointsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_EngagementOtherStakeholderViewsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportsI_ConventionsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportsI_NormsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportsKpisRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_CompaniesI_ManagementSystemsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCommentaryRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesLatestNewsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesSourceDialogueRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCompanyDialogueRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_KpiPerformanceRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_KpisRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_MilestonesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_NormsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_TimeLineItemsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_EngagementTypeNewsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_EngagementTypesRepository.cs" />
+    <Compile Include="Repository\Interfaces\ISdgRepository.cs" />
+    <Compile Include="Repository\Interfaces\I_GesAnnouncementRepository.cs" />
+    <Compile Include="Repository\GesCaseProfileTemplatesRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportSupplementaryReadingRepository.cs" />
+    <Compile Include="Repository\GesEventCalendarUserAcceptRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportReferencesRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportSourcesRepository.cs" />
+    <Compile Include="Repository\I_GesAssociatedCorporationsRepository.cs" />
+    <Compile Include="Repository\I_EngagementDiscussionPointsRepository.cs" />
+    <Compile Include="Repository\I_EngagementOtherStakeholderViewsRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportsI_ConventionsRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportsI_NormsRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportsKpisRepository.cs" />
+    <Compile Include="Repository\I_CompaniesI_ManagementSystemsRepository.cs" />
+    <Compile Include="Repository\I_GSSLinkRepository.cs" />
+    <Compile Include="Repository\I_GesCommentaryRepository.cs" />
+    <Compile Include="Repository\GesCaseReports_Audit_DetailRepository.cs" />
+    <Compile Include="Repository\I_GesLatestNewsRepository.cs" />
+    <Compile Include="Repository\I_GesSourceDialogueRepository.cs" />
+    <Compile Include="Repository\I_GesCompanyDialogueRepository.cs" />
+    <Compile Include="Repository\I_KpiPerformanceRepository.cs" />
+    <Compile Include="Repository\I_KpisRepository.cs" />
+    <Compile Include="Repository\I_MilestonesRepository.cs" />
+    <Compile Include="Repository\I_NormsRepository.cs" />
+    <Compile Include="Repository\I_TimeLineItemsRepository.cs" />
+    <Compile Include="Repository\I_EngagementTypeNewsRepository.cs" />
+    <Compile Include="Repository\I_EngagementTypesRepository.cs" />
+    <Compile Include="Repository\SdgRepository.cs" />
+    <Compile Include="Services\Auth\MachineKeyDataProtector.cs" />
+    <Compile Include="Services\Auth\MachineKeyProtectionProvider.cs" />
+    <Compile Include="Services\GesEventCalendarUserAcceptService.cs" />
+    <Compile Include="Services\GesAnnouncementService.cs" />
+    <Compile Include="Services\GesUngpAssessmentScoresService.cs" />
+    <Compile Include="Services\GSSResearchCompaniesService.cs" />
+    <Compile Include="Services\G_ManagedDocumentsService.cs" />
+    <Compile Include="Services\G_OrganizationsG_ServicesService.cs" />
+    <Compile Include="Services\Interfaces\IGesCaseReports_Audit_DetailService.cs" />
+    <Compile Include="Services\Interfaces\IGSSResearchCompaniesService.cs" />
+    <Compile Include="Services\Interfaces\IG_ManagedDocumentsService.cs" />
+    <Compile Include="Services\Interfaces\I_GesEventCalendarUserAcceptService.cs" />
+    <Compile Include="Services\Interfaces\IGesUngpAssessmentScoresService.cs" />
+    <Compile Include="Services\Interfaces\IG_OrganizationsG_ServicesService.cs" />
+    <Compile Include="Services\Interfaces\II_ConventionsService.cs" />
+    <Compile Include="Services\Interfaces\II_CompaniesI_ManagementSystemsService.cs" />
+    <Compile Include="Services\Interfaces\II_GesSourceDialogueService.cs" />
+    <Compile Include="Services\Interfaces\II_GesCompanyDialogueService.cs" />
+    <Compile Include="Services\Interfaces\II_KpisService.cs" />
+    <Compile Include="Services\Interfaces\II_NormsService.cs" />
+    <Compile Include="Services\Interfaces\II_TimelineItemsService.cs" />
+    <Compile Include="Services\Interfaces\II_EngagementTypeNewsService.cs" />
+    <Compile Include="Services\Interfaces\II_EngagementTypesService.cs" />
+    <Compile Include="Services\Interfaces\II_GesCaseReportsI_KpisService.cs" />
+    <Compile Include="Services\Interfaces\I_GesAnnouncementService.cs" />
+    <Compile Include="Services\I_ConventionsService.cs" />
+    <Compile Include="Services\I_GesCaseReportsI_KpisService.cs" />
+    <Compile Include="Services\I_CompaniesI_ManagementSystemsService.cs" />
+    <Compile Include="Services\GesCaseReports_Audit_DetailService.cs" />
+    <Compile Include="Services\I_GesSourceDialogueService.cs" />
+    <Compile Include="Services\I_GesCompanyDialogueService.cs" />
+    <Compile Include="Services\I_KpisServicesService.cs" />
+    <Compile Include="Services\I_NormsService.cs" />
+    <Compile Include="Services\I_TimelineItemsService.cs" />
+    <Compile Include="Services\I_EngagementTypeNewsService.cs" />
+    <Compile Include="Helpers\PosTagger.cs" />
+    <Compile Include="Migrations\GesEntities\Configuration.cs" />
+    <Compile Include="Migrations\GesRefresh\201607080800352_AddGlosarriesTable.cs" />
+    <Compile Include="Migrations\GesRefresh\201607080800352_AddGlosarriesTable.Designer.cs">
+      <DependentUpon>201607080800352_AddGlosarriesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\GesRefresh\201607150706476_ChangeGlossarySchema.cs" />
+    <Compile Include="Migrations\GesRefresh\201607150706476_ChangeGlossarySchema.Designer.cs">
+      <DependentUpon>201607150706476_ChangeGlossarySchema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\GesRefresh\Configuration.cs" />
+    <Compile Include="Models\Anonymous\KeyValueObject.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileEngagementInformationViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileStatisticViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileStatusViewModel.cs" />
+    <Compile Include="Models\CaseReportSignUpUserViewModel.cs" />
+    <Compile Include="Models\CaseReportSignUpListViewModel.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileBaseComponent.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileCaseComponent.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileComponent.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileEndorementComponent.cs" />
+    <Compile Include="Models\CaseProfiles\CaseProfileIssueComponent.cs" />
+    <Compile Include="Models\CaseProfiles\PublishedComponent.cs" />
+    <Compile Include="Models\CaseProfileDetailAdditionalDocument.cs" />
+    <Compile Include="Models\CaseProfileDetailAdditionalIncident.cs" />
+    <Compile Include="Models\CaseProfileDetailAggregate.cs" />
+    <Compile Include="Models\CaseProfileDetailBaseCaseIssueModel.cs" />
+    <Compile Include="Models\CaseProfileDetailCalendar.cs" />
+    <Compile Include="Models\CaseProfileDetailCaseStatus.cs" />
+    <Compile Include="Models\CaseProfileDetailEngagementInfor.cs" />
+    <Compile Include="Models\CaseProfileDetailGesContactInfo.cs" />
+    <Compile Include="Models\CaseProfileDetailStatistic.cs" />
+    <Compile Include="Models\CompanyBriefInfo.cs" />
+    <Compile Include="Models\DialogueModel.cs" />
+    <Compile Include="Models\DashboardInfoBoxModel.cs" />
+    <Compile Include="Models\DashboardInformationModel.cs" />
+    <Compile Include="Models\ChartModel.cs" />
+    <Compile Include="Models\GesDocumentViewModel.cs" />
+    <Compile Include="Models\PrimaryAndForeignKeyModel.cs" />
+    <Compile Include="Models\Reports\ReportViewModel.cs" />
+    <Compile Include="Models\SidebarModel.cs" />
+    <Compile Include="Models\PersonalSettingCategories.cs" />
+    <Compile Include="Models\PersonalSettings.cs" />
+    <Compile Include="Models\MilestoneModel.cs" />
+    <Compile Include="Models\GesLatestNewsModel.cs" />
+    <Compile Include="Models\CaseProfileSrEngageCropGovernance.cs" />
+    <Compile Include="Models\CaseProfileSrEngageEmeViewModel.cs" />
+    <Compile Include="Models\CaseProfileSrViewModel.cs" />
+    <Compile Include="Models\CaseProfileSrEvaluateViewModel.cs" />
+    <Compile Include="Models\CaseProfileStandardAlertIndicationViewModel.cs" />
+    <Compile Include="Models\CaseProfileStandardBcCoreViewModel.cs" />
+    <Compile Include="Models\CaseProfileStandardCoreViewModel.cs" />
+    <Compile Include="Models\DocumentViewModel.cs" />
+    <Compile Include="Models\EventListViewModel.cs" />
+    <Compile Include="Models\Auth\GesForm.cs" />
+    <Compile Include="Models\Auth\GesRole.cs" />
+    <Compile Include="Models\Auth\GesRolePermission.cs" />
+    <Compile Include="Models\Auth\GesUser.cs" />
+    <Compile Include="Models\Auth\GesUserClaim.cs" />
+    <Compile Include="DataContexts\GesUserDbContext.cs" />
+    <Compile Include="Models\Auth\GesUserLogin.cs" />
+    <Compile Include="Models\Auth\GesUserRole.cs" />
+    <Compile Include="Models\CaseProfileBcDisengageViewModel.cs" />
+    <Compile Include="Models\CaseProfileBcEvaluateViewModel.cs" />
+    <Compile Include="Models\CaseProfileBcEngageViewModel.cs" />
+    <Compile Include="Models\CaseProfileBcViewModel.cs" />
+    <Compile Include="Models\CaseProfileIssueNewsViewModel.cs" />
+    <Compile Include="Models\CaseProfileConventionViewModel.cs" />
+    <Compile Include="Models\CaseProfileCoreViewModel.cs" />
+    <Compile Include="Models\AlertListViewModel.cs" />
+    <Compile Include="Models\ExcelCaseProfle.cs" />
+    <Compile Include="Models\CompanyDetailViewModel.cs" />
+    <Compile Include="Models\CaseReportSummaryViewModel.cs" />
+    <Compile Include="Models\CaseReportListViewModel.cs" />
+    <Compile Include="Models\CreateUpdateGlossaryResult.cs" />
+    <Compile Include="Models\GesContact.cs" />
+    <Compile Include="Models\Glossary.cs" />
+    <Compile Include="Models\GlossaryViewModel.cs" />
+    <Compile Include="Models\RelatedReportViewModel.cs" />
+    <Compile Include="Models\RelatedIssueViewModel.cs" />
+    <Compile Include="Models\ClientViewModel.cs" />
+    <Compile Include="Models\CaseReportViewModel.cs" />
+    <Compile Include="Models\CompanyListViewModel.cs" />
+    <Compile Include="Models\CompanyViewModel.cs" />
+    <Compile Include="Models\ExcelConfigModel.cs" />
+    <Compile Include="Models\BasicControActivPresetItemModel.cs" />
+    <Compile Include="Models\IdNameModelPresetsExtendedModel.cs" />
+    <Compile Include="Models\Portfolio\GesStandardUniverseViewModel.cs" />
+    <Compile Include="Models\Portfolio\MsciSectorModel.cs" />
+    <Compile Include="Models\Portfolio\PortfolioControActivityViewModel.cs" />
+    <Compile Include="Models\Portfolio\PortfolioControActivPresetListViewModel.cs" />
+    <Compile Include="Models\Auth\GesAccountViewModel.cs" />
+    <Compile Include="Models\AutoCompleteModel.cs" />
+    <Compile Include="Models\ServiceSelectListItemConfiguration.cs" />
+    <Compile Include="Models\StoredProcedureParams\AdvancedSearchParams.cs" />
+    <Compile Include="Models\StoredProcedureParams\FocusListParams.cs" />
+    <Compile Include="Models\StoredProcedureParams\NormalSearchParams.cs" />
+    <Compile Include="Models\StoredProcedureParams\StoredProcedureParams.cs" />
+    <Compile Include="Models\StoredProcedureParams\StoredProcedureParamHelper.cs" />
+    <Compile Include="Models\ChartDatasetModel.cs" />
+    <Compile Include="Models\ValueTextModel.cs" />
+    <Compile Include="Models\Anonymous\IdNameModel.cs" />
+    <Compile Include="Models\PaginatedResults.cs" />
+    <Compile Include="Models\Portfolio\PendingCompanyViewModel.cs" />
+    <Compile Include="Models\Portfolio\CompanyPortfolioViewModel.cs" />
+    <Compile Include="Models\Portfolio\PortfolioViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CompaniesManagedDocumentsRepository.cs" />
+    <Compile Include="Repository\GesCompanyProfileRepository.cs" />
+    <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportsI_EngagementTypesRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportsI_EngagementTypesRepository.cs" />
+    <Compile Include="Repository\G_Organizations_GesDocumentRepository.cs" />
+    <Compile Include="Repository\GesDocumentsRepository.cs" />
+    <Compile Include="Repository\G_OrganizationsG_ServicesRepository.cs" />
+    <Compile Include="Repository\Interfaces\ICompaniesManagedDocumentsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IG_Organizations_GesDocumentRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesDocumentsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IG_OrganizationsG_ServicesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesCompanyProfileRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_ConventionsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IStoredProcedureRunner.cs" />
+    <Compile Include="Repository\Interfaces\IUploadRepository.cs" />
+    <Compile Include="Repository\I_ConventionsRepository.cs" />
+    <Compile Include="Repository\PersonalSettingCategoriesRepository.cs" />
+    <Compile Include="Repository\PersonalSettingsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IPersonalSettingCategoriesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IPersonalSettingsRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportsG_IndividualsRepository.cs" />
+    <Compile Include="Repository\I_GesCompanyWatcherRepository.cs" />
+    <Compile Include="Repository\GesRolesRepository.cs" />
+    <Compile Include="Repository\GesUserClaimsRepository.cs" />
+    <Compile Include="Repository\GesUserRolesRepository.cs" />
+    <Compile Include="Repository\GlossaryRepository.cs" />
+    <Compile Include="Repository\GesCaseReportSignUpRepository.cs" />
+    <Compile Include="Repository\G_NewsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportsG_IndividualsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCompanyWatcherRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesCaseReportSignUpRepository.cs" />
+    <Compile Include="Repository\Interfaces\IG_NewsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IG_ManagedDocumentsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_CalendarEventsRepository.cs" />
+    <Compile Include="Repository\G_ManagedDocumentsRepository.cs" />
+    <Compile Include="Repository\I_CalendarEventsRepository.cs" />
+    <Compile Include="Repository\I_NaArticlesRepository.cs" />
+    <Compile Include="Repository\G_IndividualsRepository.cs" />
+    <Compile Include="Repository\G_UsersRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesUserClaimsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesUserRolesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesRolesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGlossaryReporsitory.cs" />
+    <Compile Include="Repository\Interfaces\II_NaArticlesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IG_IndividualsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportsExtraRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_GesCaseReportsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_ControversialActivitesPresetsItemsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGesUserRepository.cs" />
+    <Compile Include="Repository\Interfaces\IG_UserRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportsExtraRepository.cs" />
+    <Compile Include="Repository\I_GesCaseReportsRepository.cs" />
+    <Compile Include="Repository\I_ControversialActivitesPresetsItemsRepository.cs" />
+    <Compile Include="Repository\I_ControversialActivitesPresetsRepository.cs" />
+    <Compile Include="Repository\G_OrganizationsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IGenericRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_ControversialActivitesPresetsRepository.cs" />
+    <Compile Include="Repository\Interfaces\IG_ServicesRepository.cs" />
+    <Compile Include="Repository\Interfaces\IG_OrganizationsRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_PortfoliosG_OrganizationsI_ControversialActivitesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_PortfoliosI_ControversialActivitesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_ControversialActivitesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_PortfoliosG_OrganizationG_ServicesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_PortfolioTypesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_CompaniesRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_PortfolioCompaniesImportRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_PortfolioRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_PortfoliosG_OrganizationRepository.cs" />
+    <Compile Include="Repository\Interfaces\II_PortfoliosI_CompaniesRepository.cs" />
+    <Compile Include="Repository\G_ServicesRepository.cs" />
+    <Compile Include="Repository\GesUserRepository.cs" />
+    <Compile Include="Repository\I_PortfoliosG_OrganizationsI_ControversialActivitesRepository.cs" />
+    <Compile Include="Repository\I_PortfoliosI_ControversialActivitesRepository.cs" />
+    <Compile Include="Repository\I_ControversialActivitesRepository.cs" />
+    <Compile Include="Repository\I_PortfoliosG_OrganizationG_ServicesRepository.cs" />
+    <Compile Include="Repository\I_PortfolioTypesRepository.cs" />
+    <Compile Include="Repository\I_CompaniesRepository.cs" />
+    <Compile Include="Repository\I_PortfolioCompaniesImportRepository.cs" />
+    <Compile Include="Repository\I_PortfoliosG_OrganizationRepository.cs" />
+    <Compile Include="Repository\I_PortfoliosI_CompaniesRepository.cs" />
+    <Compile Include="Repository\UploadRepository.cs" />
+    <Compile Include="Services\ExportExcelService.cs" />
+    <Compile Include="Services\Interfaces\IExportExcelService.cs" />
+    <Compile Include="Services\Interfaces\ISyncService.cs" />
+    <Compile Include="Repository\StoredProcedureRunner.cs" />
+    <Compile Include="Services\Interfaces\IUploadService.cs" />
+    <Compile Include="Services\I_EngagementTypesService.cs" />
+    <Compile Include="Services\OrganizationDocumentService.cs" />
+    <Compile Include="Services\GesDocumentService.cs" />
+    <Compile Include="Services\Interfaces\IOrganizationDocumentService.cs" />
+    <Compile Include="Services\GesFileStorageService.cs" />
+    <Compile Include="Services\Interfaces\IGesDocumentService.cs" />
+    <Compile Include="Services\Interfaces\IGesFileStorageService.cs" />
+    <Compile Include="Services\Interfaces\ISharingFileSystemService.cs" />
+    <Compile Include="Services\Interfaces\IPermissionService.cs" />
+    <Compile Include="Models\ReportQueryResult.cs" />
+    <Compile Include="Services\SFTPFileSystemService.cs" />
+    <Compile Include="Services\PersonalSettingsService.cs" />
+    <Compile Include="Services\Interfaces\IPersonalSettingsService.cs" />
+    <Compile Include="Services\I_GesCaseReportsG_IndividualsService.cs" />
+    <Compile Include="Services\I_GesCompanyWatcherService.cs" />
+    <Compile Include="Services\GesCaseReportSignUpService.cs" />
+    <Compile Include="Services\DashboardService.cs" />
+    <Compile Include="Services\DocumentService.cs" />
+    <Compile Include="Services\CalendarService.cs" />
+    <Compile Include="Services\EntityService.cs" />
+    <Compile Include="Services\GesRolesService.cs" />
+    <Compile Include="Services\AlertService.cs" />
+    <Compile Include="Services\GlossaryService.cs" />
+    <Compile Include="Services\Interfaces\II_GesCaseReportsG_IndividualsService.cs" />
+    <Compile Include="Services\Interfaces\II_GesCompanyWatcherService.cs" />
+    <Compile Include="Services\Interfaces\IGesCaseReportSignUpService.cs" />
+    <Compile Include="Services\Interfaces\IAlertService.cs" />
+    <Compile Include="Services\Interfaces\IDashboardService.cs" />
+    <Compile Include="Services\Interfaces\IDocumentService.cs" />
+    <Compile Include="Services\Interfaces\IGlossaryService.cs" />
+    <Compile Include="Services\Interfaces\IG_IndividualsService.cs" />
+    <Compile Include="Services\G_IndividualsService.cs" />
+    <Compile Include="Services\Interfaces\ICalendarService.cs" />
+    <Compile Include="Services\Interfaces\II_GesCaseReportsExtraService.cs" />
+    <Compile Include="Services\Interfaces\II_GesCaseProfilesService.cs" />
+    <Compile Include="Services\I_GesCaseReportsExtraService.cs" />
+    <Compile Include="Services\I_GesCaseProfilesService.cs" />
+    <Compile Include="Services\OldUserService.cs" />
+    <Compile Include="Services\GesUserClaimsService.cs" />
+    <Compile Include="Services\GesUserRolesService.cs" />
+    <Compile Include="Services\Interfaces\IEntityService.cs" />
+    <Compile Include="Services\Interfaces\IGesUserClaimsService.cs" />
+    <Compile Include="Services\Interfaces\IGesRolesService.cs" />
+    <Compile Include="Services\Interfaces\IGesUserRolesService.cs" />
+    <Compile Include="Services\Interfaces\II_ControversialActivitesPresetsItemsService.cs" />
+    <Compile Include="Services\Interfaces\II_ControversialActivitesPresetsService.cs" />
+    <Compile Include="Services\Interfaces\II_PortfoliosG_OrganizationG_ServicesService.cs" />
+    <Compile Include="Services\Interfaces\II_PortfoliosG_OrganizationsI_ControversialActivitesService.cs" />
+    <Compile Include="Services\Interfaces\II_ServicesService.cs" />
+    <Compile Include="Services\Interfaces\II_CompaniesService.cs" />
+    <Compile Include="Services\Interfaces\II_PortfolioCompaniesImportService.cs" />
+    <Compile Include="Services\Interfaces\II_PortfoliosG_OrganizationService.cs" />
+    <Compile Include="Services\Interfaces\II_PortfoliosI_CompaniesService.cs" />
+    <Compile Include="Services\Interfaces\IOldUserService.cs" />
+    <Compile Include="Services\Interfaces\IOrganizationService.cs" />
+    <Compile Include="Services\Interfaces\II_PortfoliosI_ControversialActiviteService.cs" />
+    <Compile Include="Services\Interfaces\IGesUserService.cs" />
+    <Compile Include="Services\Interfaces\IPortfolioTypesService.cs" />
+    <Compile Include="Services\Interfaces\IService.cs" />
+    <Compile Include="Repository\Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Repository\I_PortfolioRepository.cs" />
+    <Compile Include="Repository\UnitOfWork.cs" />
+    <Compile Include="Services\Auth\GesRoleStore.cs" />
+    <Compile Include="Services\Auth\GesUserManager.cs" />
+    <Compile Include="Services\Auth\GesUserStore.cs" />
+    <Compile Include="Services\Interfaces\IPortfolioService.cs" />
+    <Compile Include="Services\I_ControversialActivitesPresetsItemsService.cs" />
+    <Compile Include="Services\I_ControversialActivitesPresetsService.cs" />
+    <Compile Include="Services\I_CompaniesService.cs" />
+    <Compile Include="Services\I_PortfolioCompaniesImportService.cs" />
+    <Compile Include="Services\I_PortfoliosG_OrganizationG_ServicesService.cs" />
+    <Compile Include="Services\I_PortfoliosG_OrganizationService.cs" />
+    <Compile Include="Services\I_PortfoliosI_CompaniesService.cs" />
+    <Compile Include="Services\I_PortfoliosG_OrganizationsI_ControversialActivitesService.cs" />
+    <Compile Include="Services\I_PortfoliosI_ControversialActiviteService.cs" />
+    <Compile Include="Services\GesUserService .cs" />
+    <Compile Include="Services\PermissionService.cs" />
+    <Compile Include="Helpers\QueryCacheExtensions.cs" />
+    <Compile Include="Services\ServicesService.cs" />
+    <Compile Include="Services\OrganizationService.cs" />
+    <Compile Include="Services\PortfolioTypesService.cs" />
+    <Compile Include="Services\PortfolioService.cs" />
+    <Compile Include="Services\UploadService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DataContexts\GesModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GesModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="DataContexts\GesModel.edmx.diagram">
+      <DependentUpon>GesModel.edmx</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DataContexts\GesModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GesModel.edmx</DependentUpon>
+      <LastGenOutput>GesModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DataContexts\GesModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GesModel.edmx</DependentUpon>
+      <LastGenOutput>GesModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="DBScripts\20160302_AddPrimaryKeyFor_I_PortfoliosI_Companies.sql" />
+    <Content Include="DBScripts\20160302_RemoveDuplicateDataInI_PortfoliosI_Companies.sql" />
+    <Content Include="DBScripts\20160316_UpdateServiceName.sql" />
+    <Content Include="DBScripts\20160317_RemoveCompaniesWithNoNameAndNoISIN.sql" />
+    <Content Include="DBScripts\20160318_RemoveWrongForeignKeyBetweenI_FtseSectorsAndI_Companies.sql" />
+    <Content Include="DBScripts\20160321_O_Sources_Set_PortfolioId_Null_On_Portfolio_Delete.sql" />
+    <Content Include="DBScripts\20160322_I_Companies_ISIN_Uppercase.sql" />
+    <Content Include="DBScripts\20160321_RepairIsinCodes.txt" />
+    <Content Include="DBScripts\20160325_Create_ControActivPresets_Related_Tables.sql" />
+    <Content Include="DBScripts\20170104_Add_Index_For_GesCaseReportExtra_and_PortfolioOrganizationServices.txt" />
+    <Content Include="DBScripts\20170105_Delete_Portfolio_And_PortfolioCompanies_Not_Used.sql" />
+    <Content Include="DBScripts\20170713_Add_Column_HashCodeDocument_To_GesDocument.sql" />
+    <Content Include="DBScripts\20170420_Delete_Engagement_Types.sql" />
+    <Content Include="DBScripts\20170417_Update_Master_CompanyId_To_Null_If_Equal_CompanyId.sql" />
+    <Content Include="DBScripts\20170315_Config_Warm_Up_For_Application_Pool.txt" />
+    <Content Include="DBScripts\20170111_Run_Market_Cap_Sync.txt" />
+    <Content Include="DBScripts\20161213_UpdateSortOrderDropdownItems.sql" />
+    <Content Include="DBScripts\20161221_Countries_AddMissingIsoAlpha2.sql" />
+    <Content Include="DBScripts\20161125_Tbl_For_Personal_Settings.txt" />
+    <Content Include="DBScripts\20161111_AddUpdateNewServicesEngagementTypesNorms.sql" />
+    <Content Include="DBScripts\20160823_AddGesCaseReportsExtra_Tbl.sql" />
+    <Content Include="DBScripts\20160715_NewTbl_Glossary.txt" />
+    <Content Include="DBScripts\20160704_AllNamesToUpperCase_Companies.sql" />
+    <Content Include="DBScripts\20160622_Update_SortOrder_For_I_GesCaseReportStatuses.sql" />
+    <Content Include="DBScripts\20160426_Add.JoaKim.To.SuperAdmin.Role.sql" />
+    <Content Include="DBScripts\20160421_UpdateDatabase.txt" />
+    <Content Include="DBScripts\20160331_UpdateDatabase.txt" />
+    <Content Include="DBScripts\20160420_Add.GesStandardUniverse.Col.To.Portfolios.Tbl.sql" />
+    <Content Include="DBScripts\20160404_Add.Screened.Col.To.PortfolioCompaniesImport.Tbl.sql" />
+    <Content Include="DBScripts\20161115_AddGesCaseReportSignUp_table.sql" />
+    <Content Include="DBScripts\20161115_UpdateGICIndustry.sql" />
+    <Content Include="DBScripts\20161212_I_Companies_Change_PK_C_Companies_To_Clustered_Index.txt" />
+    <Content Include="DBScripts\20170112_Add_Column_LastUpdated_To_I_Portfolio.sql" />
+    <Content Include="DBScripts\20170111_Add_Column_MarketCap_To_I_Companies.sql" />
+    <Content Include="DBScripts\20170621_Add_Table_Documents.sql" />
+    <Content Include="DBScripts\20170523_Add_Coloumn_Created_Modified_To_SignUp_Table.sql" />
+    <Content Include="DBScripts\20170519_Update_OrganizationId_To_SignUp_Table.sql" />
+    <Content Include="DBScripts\20170517_Add_Coloumn_Active_Passive_To_SignUp_Table.sql" />
+    <Content Include="DBScripts\20170717_Add_Table_GesCompanyProfile.sql" />
+    <Content Include="DBScripts\20170906_Add_Indexes_For_I_companies_And_GesCaseReports.sql" />
+    <Content Include="DBScripts\20170901_AdvancedSearchStoredProcedure.sql" />
+    <Content Include="DBScripts\20171204_Add_PrimaryKey_For_I_CompaniesG_ManagedDocuments.sql" />
+    <Content Include="DBScripts\20171215_Add_Indexes_For_I_GesCaseReports_Audit.sql" />
+    <Content Include="DBScripts\20171116_Update_GesDocument_And_Engagement_Type.sql" />
+    <Content Include="DBScripts\20171110_Add_Document_Service_Oekom.sql" />
+    <Content Include="DBScripts\20171110_Add_Document_Service_Oekom.sql" />
+    <Content Include="DBScripts\20171023_Add_Some_Columns_For_I_GesCaseReports.sql" />
+    <Content Include="DBScripts\20171003_FocusListStoredProcedure.sql" />
+    <Content Include="DBScripts\20170914_NormalSearchStoredProcedure.sql" />
+    <Content Include="DBScripts\20180420_Dont_Check_Services_In_Search_Analysis.sql" />
+    <Content Include="DBScripts\20180102_Script_For_Sdg.sql" />
+    <Content Include="DBScripts\20180718_Update_trigger_update_for_GesCaseReport.sql" />
+    <Content Include="DBScripts\20180718_Add_Columns_EngagementSince_To_I_GesCaseReportExtra.sql" />
+    <Content Include="DBScripts\20180711_Add_tables_GesUNGPAssessmentForm_GesUNGPAssessmentCores.sql" />
+    <Content Include="DBScripts\20180706_Update_Advanced_Search_For_GlobalEthicalStandard.sql" />
+    <Content Include="DBScripts\20180524_Update_Advanced_Search_For_Governance.sql" />
+    <Content Include="DBScripts\20180606_Add_Table_Engagement_Type_GesDocument.sql" />
+    <Content Include="DBScripts\20180613_EngagementTypeUploadedDocMigrateScript.sql" />
+    <Content Include="DBScripts\20180614_Add_Columns_ThemeImage_Deactive_To_I_EngagementTypes.sql" />
+    <Content Include="DBScripts\20180712_Update Trigger_Delete_for_I_Milestones.sql" />
+    <Content Include="DBScripts\20180712_Update Trigger_Update_for_I_Milestones.sql" />
+    <Content Include="DBScripts\20180712_Update Trigger_Insert_for_I_Milestones.sql" />
+    <Content Include="DBScripts\20180712_Add_column_GesMilestoneTypesId _into_table_I_Milestones_Audit.sql" />
+    <Content Include="DBScripts\20180712_Add_table_GesMilestoneTypes_and_add_column_GesMilestoneTypesId _into_table_I_Milestones .sql" />
+    <Content Include="DBScripts\20180727_14_Add_Column_TransactionId_To_I_GesCaseReports_Audit.sql" />
+    <Content Include="DBScripts\20180727_10_Create Trigger_I_GesCompanyDialogues_Delete.sql" />
+    <Content Include="DBScripts\20180727_11_Create Trigger_I_GesCompanyDialogues_Insert.sql" />
+    <Content Include="DBScripts\20180727_12_Create Trigger_I_GesCompanyDialogues_Update.sql" />
+    <Content Include="DBScripts\20180727_2_Create_Function_fnCalcDevelopmentGrade.sql" />
+    <Content Include="DBScripts\20180727_13_Create_Trigger_I_Companies_Update.sql" />
+    <Content Include="DBScripts\20180727_1_Create_Type_GesCaseReports_Audit_Columns_list.sql" />
+    <Content Include="DBScripts\20180727_3_GesCaseReports_Audit_And_details.sql" />
+    <Content Include="DBScripts\20180727_7_Update Trigger_Delete_for_I_Milestones.sql" />
+    <Content Include="DBScripts\20180727_8_Update Trigger_Insert_for_I_Milestones.sql" />
+    <Content Include="DBScripts\20180727_4_Update Trigger_I_GesCaseReports_Delete.sql" />
+    <Content Include="DBScripts\20180727_5_Update Trigger_I_GesCaseReports_Insert.sql" />
+    <Content Include="DBScripts\20180727_6_Update Trigger_I_GesCaseReports_Update.sql" />
+    <Content Include="DBScripts\20180727_9_Update Trigger_Update_for_I_Milestones.sql" />
+    <Content Include="DBScripts\20180730_Add_Columns_UnGlobalCompact_and_GriAlignedDisclosure_To_I_Companies.sql" />
+    <Content Include="DBScripts\20180824_Add_tables_GesUNGPAssessmentForm_GesUNGPAssessmentCores.sql" />
+    <Content Include="DBScripts\20180824_GesUpdateGesCaseReportsAudit.sql" />
+    <Content Include="DBScripts\20180828_Add table GesDocTypes.sql" />
+    <Content Include="DBScripts\20180904_Add_Table_GesAnnoucement.sql" />
+    <Content Include="DBScripts\20180911_Update_Advanced_Search.sql" />
+    <Content Include="DBScripts\20180905_Add_tables_GesUNGPAssessmentForm_GesUNGPAssessmentCores.sql" />
+    <Content Include="DBScripts\20180911_Update_GesReportName.sql" />
+    <Content Include="DBScripts\20180912_Increase-GES_Comment_fileds_inUNGP.sql" />
+    <Content Include="DBScripts\20180919_Separate_Governance_To_New_Category.sql" />
+    <Content Include="DBScripts\20180918_10_UNGP_Audit_Feature_GesUNGPAssessmentForm_Delete_Trigger_Scripts.sql" />
+    <Content Include="DBScripts\20180918_11_UNGP_Audit_Feature_GesUNGPAssessmentFormResource_Insert_Trigger_Script.sql" />
+    <Content Include="DBScripts\20180918_12_UNGP_Audit_Feature_GesUNGPAssessmentFormResources_Update_Trigger_Script.sql" />
+    <Content Include="DBScripts\20180918_13_UNGP_Audit_Feature_GesUNGPAssessmentFormResources_Delete_Trigger_Script - Copy.sql" />
+    <Content Include="DBScripts\20180918_1_UNGP_Audit_Feature_Create_Tables_Scripts.sql" />
+    <Content Include="DBScripts\20180918_2_UNGP_Audit_Feature_GetUserFullName_Procedure_Script.sql" />
+    <Content Include="DBScripts\20180928_2_UNGP_Audit_Feature_Procedure_Script.sql" />
+    <Content Include="DBScripts\20180918_3_UNGP_Audit_Feature_GesUNGPAssessmentForm_Function_GetUNGPSCores_Scripts.sql" />
+    <Content Include="DBScripts\20180918_4_UNGP_Audit_Feature_GesUNGPAssessmentForm_Function_isUNGPSCoreChanged_Script.sql" />
+    <Content Include="DBScripts\20180918_5_UNGP_Audit_Feature_GesUNGPAssessmentForm_Function_isUNGPStringValueChanged_Script.sql" />
+    <Content Include="DBScripts\20180918_6_UNGP_Audit_Feature_Procedure_Script.sql" />
+    <Content Include="DBScripts\20180918_7_UNGP_Audit_Feature_UpdateGesUNGPAssessmentFormResource_Audit_Procedure_Script.sql" />
+    <Content Include="DBScripts\20180918_8_UNGP_Audit_Feature_GesUNGPAssessmentForm_Insert_Trigger_Scripts.sql" />
+    <Content Include="DBScripts\20180918_9_UNGP_Audit_Feature_GesUNGPAssessmentForm_Update_Trigger_Scripts.sql" />
+    <Content Include="DBScripts\20180920_Update_Search_Store_Procedure.sql" />
+    <Content Include="DBScripts\20180913_Update_Trigger_I_GesCaseReports_Delete.sql" />
+    <Content Include="DBScripts\20180928_1_Add_Columns_ColumnNameDescription_For_UNGP_Audit_Tables.ql.sql" />
+    <Content Include="DBScripts\20180928_3-1-1_GesUNGPAssessmentFormResource_Audit_Details_Script.sql" />
+    <Content Include="DBScripts\20180928_3_UNGP_Audit_Feature_UpdateGesUNGPAssessmentFormResource_Audit_Procedure_Script.sql" />
+    <Content Include="DBScripts\20180928_4_UNGP_Audit_Feature_GesUNGPAssessmentForm_Insert_Trigger_Scripts.sql" />
+    <Content Include="DBScripts\20180928_5_UNGP_Audit_Feature_GesUNGPAssessmentForm_Update_Trigger_Scripts.sql" />
+    <Content Include="DBScripts\20181023_Search_With_Isin.sql" />
+    <Content Include="DBScripts\20180928_6_UNGP_Audit_Feature_GesUNGPAssessmentForm_Delte_Trigger_Scripts.sql" />
+    <Content Include="DBScripts\20181010_Create_Store_FTSE_MSCI.sql" />
+    <Content Include="DBScripts\20181010_ Add_columns_into_I_CalenderEvents_table.sql" />
+    <Content Include="DBScripts\20181029_ Add_columns_into_I_CalenderEvents_Audit_table.sql" />
+    <Content Include="DBScripts\20181029_ Update_Trigger_I_CalenderEvents_Delete.sql" />
+    <Content Include="DBScripts\20181029_ Update_Trigger_I_CalenderEvents_Insert.sql" />
+    <Content Include="DBScripts\20181101_ MigrateRecommendationHistory.sql" />
+    <Content Include="DBScripts\20181029_ Update_Trigger_I_CalenderEvents_Update.sql" />
+    <Content Include="DBScripts\20190523_Update_Table_Invisible_GSS.sql" />
+    <Content Include="DBScripts\20190307_Add_Export_Excel_To_GesForm.sql" />
+    <Content Include="DBScripts\20190201_Insert_GesForm_Data.sql" />
+    <Content Include="DBScripts\20190108_ Replace_GES_to_Sustainalytics_In_Db.sql" />
+    <Content Include="DBScripts\20190108_ Replace_Email_Contact.sql" />
+    <Content Include="DBScripts\20181217_ Inside_case_profile_entities.sql" />
+    <Content Include="DBScripts\20190228_Update_Table_Invisible.sql" />
+    <Content Include="DBScripts\20190422_CDDB_Integration.sql" />
+    <Content Include="DBScripts\20190514_update_issue_heading_standard_final_list.sql" />
+    <Content Include="DBScripts\20190417_CDDB_Integration.sql" />
+    <Content Include="DBScripts\20190510_update_issue_heading_standard_case_uppercase.sql" />
+    <Content Include="DBScripts\20190508_update_issue_heading_standard_case_v1.sql" />
+    <Content Include="DBScripts\20190426_update_issue_heading_standard_case.sql" />
+    <Content Include="DBScripts\20190426_update_issue_heading.sql" />
+    <Content Include="DBScripts\20190411_Add_issue_heading_table.sql" />
+    <Content Include="DBScripts\20190325_Update_table_GesCaseProfileTemplates_And_default_template.sql" />
+    <Content Include="DBScripts\20190401_Create_Table_I_I_GesCaseReports_GesDocument.sql" />
+    <Content Include="DBScripts\20190422_2_Update_fnCalcDevelopmentGrade.sql" />
+    <Content Include="DBScripts\20190422_1_CreateFunctionGetRecommendationNameBefore.sql" />
+    <Content Include="DBScripts\20190422_3_CreateScreeningReportView.sql" />
+    <Content Include="DBScripts\20190425_CDDB_Integration.sql" />
+    <Content Include="DBScripts\201905009_Rebranding_remove_Global Ethical Standards.sql" />
+    <Content Include="DBScripts\20190503_Rename_Milestone_5.sql" />
+    <Content Include="DBScripts\20190502_Rename_Business_Conduct_to_Global_Standards_and_rename_Norms_themes.sql" />
+    <Content Include="DBScripts\20190510_Update_Advance_Normal_search.sql" />
+    <Content Include="DBScripts\20190520_Update_CompanyAdvancedSearch.sql" />
+    <Content Include="DBScripts\20190528_Add_store_check_master_company.sql" />
+    <Content Include="DBScripts\20190529_Update_Table_Dialogue_Milestone.sql" />
+    <Content Include="DBScripts\20190523_Update_Table_Invisible_Internal_Comments.sql" />
+    <Content Include="DBScripts\20190603_Update_GES_to_Sustainalystic_in_UNGP.sql" />
+    <Content Include="DBScripts\20190612_Rename_Privacy_breaches_into_Privacy_Breaches.sql" />
+    <Content Include="DBScripts\20190604_Fix-bug-771.sql" />
+    <Content Include="DBScripts\20190529_Update_Advance_Normal_search.sql" />
+    <Content Include="DBScripts\20190603_Add_Columns_IsShowInCaseProfileTemplate_To_I_EngagementTypes.sql" />
+    <Content Include="DBScripts\DeployScripts\20171121_DeployScript.sql" />
+    <Content Include="DBScripts\DeployScripts\20171005_DeployScript.sql" />
+    <Content Include="DBScripts\DeployScripts\20170929_DeployScript.sql" />
+    <Content Include="DBScripts\DeployScripts\20170922_DeployScript.sql" />
+    <Content Include="DBScripts\Migrations\20180613_EngagementTypeUploadedDocMigrateScript.sql" />
+    <Content Include="DBScripts\Migrations\MigrationGuidelinesOfCaseReport\20170823.2_MigrateDataToGuidelines_Column_From_Summary.sql" />
+    <Content Include="DBScripts\Migrations\MigrationGuidelinesOfCaseReport\20170823.1__Add_Guidelines_Column_In_I_GesCaseReports.sql" />
+    <Content Include="DBScripts\Migrations\MigrationGuidelinesOfCaseReport\20170823.3_Trigger - I_GesCaseReports_Delete.sql" />
+    <Content Include="DBScripts\Migrations\MigrationGuidelinesOfCaseReport\20170823.4_Trigger - I_GesCaseReports_Insert.sql" />
+    <Content Include="DBScripts\Migrations\MigrationGuidelinesOfCaseReport\20170823.5_Trigger - I_GesCaseReports_Update.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GES.Common\GES.Common.csproj">
+      <Project>{23b6e6a5-beb1-45cf-88db-d4c55c40c7c1}</Project>
+      <Name>GES.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\GesRefresh\201607080800352_AddGlosarriesTable.resx">
+      <DependentUpon>201607080800352_AddGlosarriesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\GesRefresh\201607150706476_ChangeGlossarySchema.resx">
+      <DependentUpon>201607150706476_ChangeGlossarySchema.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Synchronization\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

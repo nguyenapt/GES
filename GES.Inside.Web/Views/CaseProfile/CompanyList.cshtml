@@ -1,0 +1,26 @@
+﻿@using GES.Common.Resources
+<script type="text/javascript">
+    var countries = @Html.Raw(Json.Encode(ViewBag.Countries));
+</script>
+
+<div class="modal fade" id="case-profile-company-dialog" style="display: none;z-index:1000000000">
+    <div class="modal-dialog modal-lg" style="width: 800px; height: auto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">@Resources.SelectCompanyInformation</h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">           
+                <table id="tblcompaniesList" class="table table-bordered table-striped"></table>
+                <div id="myPager"></div>
+           
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-success" type="button" value="@Resources.Select" data-dismiss="modal" id="btn-company-select" ng-click="companySelect()"  />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Resources.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Dashboard" controller="Dashboard" action="Index">
+    <mvcSiteMapNode title="Clients" clickable="false">
+      <mvcSiteMapNode title="All Clients" controller="Client" action="List" />
+      <mvcSiteMapNode title="Client Details" controller="Client" action="Details" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Portfolios" clickable="false">
+      <mvcSiteMapNode title="Portfolio List" controller="Portfolio" action="List" />
+      <mvcSiteMapNode title="Controversial Activities Presets" controller="Portfolio" action="ControActivPresets" />
+      <mvcSiteMapNode title="Portfolio Details" controller="Portfolio" action="Details" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Companies" clickable="false">
+      <mvcSiteMapNode title="Company List" controller="Company" action="List" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Utilities" clickable="false">
+      <mvcSiteMapNode title="Format ISINs" controller="Utility" action="FormatIsins" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Accounts" clickable="false">
+      <mvcSiteMapNode title="Account List" controller="AccountMgmt" action="List" />
+    </mvcSiteMapNode>
+    <mvcSiteMapNode title="Configurations" clickable="false">
+      <mvcSiteMapNode title="Glossary" controller="Glossary" action="List" />
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

@@ -1,0 +1,24 @@
+﻿@using GES.Inside.Data.Models
+@model DialogueAndLogModel
+
+@if (Model != null && Model.DialogueModels.Any())
+{
+    var maxOfList = Math.Min(10, Model.DialogueModels.Count);
+    var halfOfList = (int)Math.Ceiling(maxOfList / 2D);
+
+    <div class="direct-chat-messages">
+        <div style="float: left; width: 50%; padding-right: 10px; border-right: 1px solid #d3d3d3">
+            @Html.Partial("_GenerateDiglogueLog", new DialogueAndLogModel { DialogueModels = Model.DialogueModels.Take(halfOfList).ToList() , ShowDocument = Model.ShowDocument })
+        </div>
+        <div style="float: right; width: 50%; padding-left: 10px;">
+            @Html.Partial("_GenerateDiglogueLog", new DialogueAndLogModel { DialogueModels = Model.DialogueModels.Skip(halfOfList).Take(maxOfList - halfOfList).ToList(), ShowDocument = Model.ShowDocument })
+        </div>
+        @if (Model.DialogueModels.Count > 10)
+        {
+            <br/>
+            <div style="text-align: center;font-style: italic;float: left;width: 100%;margin-top: 10px;">
+                For full dialogue, please go to the company case profile <a href="@ViewBag.CaseProfileLink" target="_blank">online</a>.
+            </div>
+        }
+    </div>
+}

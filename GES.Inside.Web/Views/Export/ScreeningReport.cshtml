@@ -1,0 +1,140 @@
+﻿@using System.Web.Configuration
+@using System.Web.Mvc.Html
+@using GES.Inside.Web.Helpers
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.ConventionModel
+
+@{
+    ViewBag.PageClass = "page-screening-report";
+    var title = ViewBag.Title;
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-screening-report")
+}
+
+<style>
+    .inputText {
+        width: 100% !important;
+        overflow-x: -moz-scrollbars-none;
+
+    }
+    
+    .ta-editor,
+    .ta-editor > .ta-bind {
+        min-height: 300px;
+
+        overflow-x: scroll;
+    }
+    h1 small {
+        font-size: 60%;
+    }
+    .red {
+        color: red;
+    }
+    .statictoolbar {
+        position: fixed;
+        top: 12px;
+        z-index: 200;
+        left: 0;
+        right: 0;
+    }
+
+</style>
+
+
+@section contentHeader{
+    <section class="content-header" ng-form="screeningReportHeaderForm">
+        <h1>@title</h1>
+
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <!-- Company Summary Box -->
+        <div class="box box-primary box-company-overview">
+            <div class="box-body" ng-form="screeningReportForm">
+                <div class="row">
+                    <div class="col-lg-6 col-md-4">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-6 col-md-4">
+                                    <p>@Resources.Client</p>
+                                </div>
+                            </div>
+                            <select ng-change="clientSelect(selectedScreeningReports.clientId)" ng-model="selectedScreeningReports.clientId" id="client-select" name="clientSelect" class="form-control">
+                                <option value="">Select client value</option>
+                                <option ng-repeat="client in clients" value="{{client.Id}}">{{client.Name}}</option>
+                            </select>
+                        </div>
+                    </div> 
+                    <div class="col-lg-6 col-md-4">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-6 col-md-4">
+                                    <p>@Resources.PortfolioIndex</p>
+                                </div>
+                            </div>
+                            <div isteven-multi-select max-labels="4" max-height="250px" input-model="portfolios" output-model="selectedportfolios" button-label="Name" item-label="Name" tick-property="ticked"></div>
+                            
+                            
+                        </div>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-4">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.From</p>
+                                </div>
+                            </div>
+                            <input type="text" date-picker ng-required="true" ng-model="selectedScreeningReports.fromDate" class="form-control form-control-text"/>  
+                        </div>
+                    </div>                     
+                    <div class="col-lg-6 col-md-4">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.To</p>
+                                </div>
+                            </div>
+                            <input type="text" readonly max-height="250px" ng-model="selectedScreeningReports.ToDate" class="form-control form-control-text"/>  
+                        </div>
+                    </div> 
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6 col-md-4">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.ScreeningNormTheme</p>
+                                </div>
+                            </div>
+                            <div isteven-multi-select ng-required="true" input-model="screeningNormThemes" output-model="selectedScreeningNormThemes" button-label="icon text" item-label="icon text" tick-property="ticked"></div> 
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12 col-md-8">
+                        <div class="ges-content-block" style="float: right">
+                            <button class="btn btn-default not-outer-right-btn" ng-click="Reset()">Reset</button>
+                            <a class="btn btn-success export-btn" ng-disabled="screeningReportForm.$invalid || (selectedportfolios.length == 0) || (selectedScreeningNormThemes.length == 0)" data-loading-text="@Resources.Processing..."><i class="fa fa-refresh fa-spin" ng-show="isExporting"></i><i class="fa fa-fw fa-upload" ng-show="!isExporting"></i>&nbsp;@Resources.ScreeningExcel</a>
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+    </div><!-- /.col -->
+   
+</div><!-- /.row -->
+

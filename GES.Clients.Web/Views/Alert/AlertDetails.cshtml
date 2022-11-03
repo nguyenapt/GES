@@ -1,0 +1,101 @@
+﻿@using GES.Common.Enumeration
+@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.AlertListViewModel
+
+@{
+    var normImage = "/Content/img/icons/norm_area_" + Model.NormId + "_32.png";
+}
+
+<div class="row">
+    <div class="col-md-8 col-xs-12">
+        <div class="box box-primary box-company-info">
+            <div class="box-body">
+                <div class="ges-content-block">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-xs-6">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-xs-6">
+                                    <p class="title">@Resources.AlertDate:</p>
+                                </div>
+                                @string.Format("{0:yyyy-MM-dd}", Convert.ToDateTime(Html.DisplayFor(model => model.Date).ToString()))
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-xs-6">
+                                    <p class="title">@Resources.Location:</p>
+                                </div>
+                                @Model.Location
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-xs-6">
+                                    <p class="title">@Resources.NormArea:</p>
+                                </div>
+                                @Model.Norm
+                               @if (Model.NormId != null)
+                               {
+                                   <br/>
+                                   <img class="Icon32" src='@normImage' style="border-width:0px;">
+                               }
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-xs-12">
+                            <p class="title">@Resources.Summary:</p>
+                            <hr class="style10" />
+                            @Model.Summary
+                        </div>
+                    </div>
+                    @if (Model.Notices != null)
+                    {
+                        <div class="ges-content-block">
+                            <br/>
+                            <p><b>@Resources.Notices: </b><span  style="font-style: italic;">@Model.Notices</span></p>
+                        </div>
+                    }
+                    
+                    <div class="ges-content-block">
+                        <h4 class="box-title">
+                            @Resources.Sources
+                        </h4>
+                        <hr class="style10"/>
+                        <p>@Model.Source, @string.Format("{0:yyyy-MM-dd}", Convert.ToDateTime(Html.DisplayFor(model => model.SourceDate).ToString()))</p>
+                    </div>
+
+                </div>
+
+                
+            </div><!-- /.box-body -->
+        </div>
+    </div>
+
+    <div class="col-md-4 col-xs-12">
+        <!-- Company Info Box -->
+        <div class="box box-primary box-company-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <i class="fa fa-circle-o-notch" aria-hidden="true"></i> @Resources.CompanyInfo
+                </h3>
+            </div>
+            <div class="box-body">
+
+                <dl class="dl-horizontal company-info-dl">
+                    <dt>Name</dt>
+                    <dd>@Model.CompanyViewModel.Name</dd>
+                    <dt>ISIN</dt>
+                    <dd>@Model.CompanyViewModel.Isin</dd>
+
+                    <dt>@Resources.HomeCountry</dt>
+                    <dd>@Model.CompanyViewModel.Location <span class="flag-icon flag-icon-@Model.CompanyViewModel.CountryCode"></span></dd>
+
+                    <dt>@Resources.Website</dt>
+                    <dd><a href="@Model.CompanyViewModel.WebsiteUrl" target="_blank">@Model.CompanyViewModel.WebsiteUrl</a></dd>
+
+                    <dt>@Resources.Industry</dt>
+                    <dd>@Model.CompanyViewModel.Industry</dd>
+                </dl>
+            </div><!-- /.box-body -->
+        </div>
+    </div>
+</div>

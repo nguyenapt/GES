@@ -1,0 +1,30 @@
+﻿@model GES.Inside.Data.Models.CaseProfiles.CaseProfileStatisticViewModel
+@using GES.Common.Resources
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i> @Resources.Statistics
+        </h3>
+    </div>
+    <div class="box-body">
+        <dl class="dl-horizontal">
+
+            <dt>@Html.DisplayNameFor(m => m.ConferenceCount)</dt>
+            <dd>@Model.ConferenceCount</dd>
+
+            <dt>
+                @Html.DisplayNameFor(m => m.MeetingCount)
+            </dt>
+            <dd>@Model.MeetingCount</dd>
+
+            @if (!string.IsNullOrEmpty(Model.LatestMeeting))
+            {
+                <dt>
+                    @Html.DisplayNameFor(m => m.LatestMeeting)
+                </dt>
+                <dd>@Model.LatestMeeting</dd>
+            }
+        </dl>
+</div>
+</div>

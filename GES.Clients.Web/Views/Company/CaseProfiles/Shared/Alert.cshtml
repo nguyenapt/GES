@@ -1,0 +1,20 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIssueComponent
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isStCase = gesCaseReportType == GesCaseReportType.StAlert || gesCaseReportType == GesCaseReportType.StandardAlertAndIndication || gesCaseReportType == GesCaseReportType.StArchived || gesCaseReportType == GesCaseReportType.StConfirmed || gesCaseReportType == GesCaseReportType.StIndicationOfViolation || gesCaseReportType == GesCaseReportType.StResolved;
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-ALERT-TEXT") || isStCase)
+{
+    @Html.RenderBlockContent(m => m.AlertText, Model.AlertDate, blockTitle: "")
+}
+
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-ALERT-SOURCE") || isStCase)
+{
+    @Html.RenderBlockContent(m => m.AlertSource)
+}

@@ -1,0 +1,122 @@
+﻿@model GES.Inside.Data.Models.GlossaryViewModel
+
+@{
+    var title = Model.Id == new Guid()? "New Term/Category" : "Edit Term/Category";
+    var submitBtnText = Model.Id == new Guid()? "Create" : "Save";
+}
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="CreateUpdateGlossaryModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">@title</h3>
+            </div>
+
+            <div>
+                @using (Ajax.BeginForm("CreateUpdateGlossary", "Glossary", FormMethod.Post,
+                new AjaxOptions
+                {
+                    InsertionMode = InsertionMode.Replace,
+                    HttpMethod = "POST",
+                    OnBegin = "$('.btn-create-edit-glossary').button('loading')",
+                    OnComplete = "resetNewGlossaryButton()"
+                    //UpdateTargetId = "table"
+                },
+                new
+                {
+                    @id = "form-create-glossary"
+                }))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    <div class="modal-body">
+                        @Html.HiddenFor(m=>m.Id)
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.Title):
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.Title, new {@class = "form-control", @id = "new-glossary-title", @placeholder = "Title..."})
+                                @Html.ValidationMessageFor(m => m.Title, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.Slug):
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.Slug, new {@class = "form-control", @id = "new-glossary-slug", @placeholder = "Slug..."})
+                                @Html.ValidationMessageFor(m => m.Slug, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.CategoryId, "Category"):
+                            </div>
+                            <div class="editor-field">
+                                @Html.DropDownListFor(m => m.CategoryId, (List<SelectListItem>)ViewBag.glossaryCategory, new { @class = "form-control", @id = "new-glossary-category" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.Description):
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextAreaFor(m => m.Description, new {@class = "form-control tiny-mce", @id = "new-glossary-description", @placeholder = "Description..."})
+                                @Html.ValidationMessageFor(m => m.Description, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        @if (Model.Id == new Guid()) // new
+                        {
+                            <input type="hidden" name="Order" value="@int.MaxValue" />
+                            //                            Html.HiddenFor(m => m.Order, new { Value =  });
+                        }
+                        else // edit
+                        {
+                            <input type="hidden" name="Order" value="@Model.Order" />
+                            //                            Html.HiddenFor(m => m.Order);
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-create-edit-glossary" id="btn-save-glossary" data-loading-text="Processing..." type="submit">@submitBtnText</button>
+                    </div>
+                }
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    tinymce.init({
+        selector: '.tiny-mce',
+        skin_url: '/Content/plugins/tinymce/skins/lightgray',
+
+        //height: 500,
+        //plugins: [
+        //  'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        //  'searchreplace wordcount visualblocks visualchars code fullscreen',
+        //  'insertdatetime media nonbreaking save table contextmenu directionality',
+        //  'emoticons template paste textcolor colorpicker textpattern imagetools codesample'
+        //],
+        //toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+        //toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+        //image_advtab: true,
+        ////theme: 'modern',
+        //templates: [
+        //  { title: 'Test template 1', content: 'Test 1' },
+        //  { title: 'Test template 2', content: 'Test 2' }
+        //],
+        //content_css: [
+        //  '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+        //  '//www.tinymce.com/css/codepen.min.css'
+        //]
+    });
+    $('#CreateUpdateGlossaryModal').on('hide.bs.modal', function() {
+        tinymce.editors = [];
+    });
+</script>
+
+@Scripts.Render("~/bundles/page-create-glossary")

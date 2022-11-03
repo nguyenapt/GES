@@ -1,0 +1,142 @@
+﻿@using GES.Inside.Web.Helpers
+@{
+    ViewBag.PageClass = "page-portfolio page-portfolio-details";
+
+    var portfolioId = ViewBag.PortfolioId ?? TempData["portfolioId"];
+    var portfolioOrgId = ViewBag.PortfolioOrgId ?? -1;
+    var invalidIds = ViewBag.InvalidIds;
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-portfolio-details")
+}
+<script type="text/javascript">
+    var portfolioId = @portfolioId;
+    var portfolioOrgId = @portfolioOrgId;
+    var invalidIds = '@invalidIds';
+
+</script>
+
+
+@if (portfolioOrgId != -1)
+{
+<a class="btn btn-left-first" href='@Url.Action("List", "Portfolio", new {orgid = ViewBag.OrgId})'>
+    <i class="fa fa-arrow-up"></i> Back to Portfolio List
+</a>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#tab_companies" data-toggle="tab">Companies</a></li>
+    <li><a href="#tab_controactivities" data-toggle="tab">Controversial Activities</a></li>
+</ul>
+}
+<div class="tab-content">
+    <div class="tab-pane active" id="tab_companies">
+        @*<h4>Pane A</h4>*@
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Companies</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <input class="btn batch-edit-clear-portfolios btn-danger pull-right" disabled type="button" data-loading-text="Processing..." value="Clear Portfolio Companies" />
+                        <input class="btn btn-large batch-edit-portfolio-clear-all btn-danger not-outer-right-btn pull-right" type="button" data-loading-text="Processing..." value="CLEAR PORTFOLIO"/>
+                        <br/><br/>
+
+                        <table id="tblportfoliodetails" class="table table-bordered table-striped"></table>
+                        <div id="myPager"></div>
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <div class="row">
+            
+            <div class="col-xs-12">
+                <!-- Import via Excel -->
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Import from Excel</h3>
+                    </div><!-- /.box-header -->
+                    @using (Html.BeginForm("UploadExcelFile", "Portfolio", new {id = ViewBag.PortfolioId}, FormMethod.Post,
+                        new {enctype = "multipart/form-data"}))
+                    {
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <label for="excelfileinput">File input</label>
+                                <input type="file" id="excelfileinput" name="FileUpload" accept=".xls,.xlsx"/>
+                                <p class="help-block">Select an Excel file and click "Submit" button below.</p>
+                            </div>
+
+
+                        </div><!-- /.box-body -->
+                        <div class="box-footer">
+                            <input type="submit" class="btn btn-primary" id="btn-submit-import-via-excel" disabled value="Submit"/>
+                        </div><!-- /.box-footer -->
+                    }
+                </div><!-- /.box -->
+                <!-- Pending companies -->
+                @* <div class="box pending-companies-box"> *@
+                @*     <div class="box-header"> *@
+                @*         <h3 class="box-title">Pending Companies</h3> *@
+                @*     </div><!-- /.box-header --> *@
+                @* *@
+                @*     <div class="box-body"> *@
+                @*         <input class="btn batch-edit-btn batch-edit-start btn-primary" type="button" value="Edit"/> *@
+                @*         <input class="btn batch-edit-btn batch-edit-save btn-warning" disabled type="button" value="Save All"/> *@
+                @* *@
+                @*         <input class="btn batch-edit-clear-pending btn-danger pull-right" disabled type="button" data-loading-text="Processing..." value="Clear Pending Companies"/> *@
+                @*         <input class="btn export-pending-list-btn btn-primary not-outer-right-btn pull-right" disabled type="button" data-loading-text="Processing..." value="Export to Excel"/> *@
+                @*         <br/><br/> *@
+                @* *@
+                @*         <table id="tblportfoliodetails-pending" class="table table-bordered table-striped"></table> *@
+                @*         <div id="myPager-pending"></div> *@
+                @*     </div><!-- /.box-body --> *@
+                @* </div><!-- /.box --> *@
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div>
+    @if (portfolioOrgId != -1)
+    {
+    <div class="tab-pane" id="tab_controactivities">
+        @*<h4>Pane B</h4>*@
+        <!-- Pending companies -->
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Controversial Threshold Values</h3>
+            </div><!-- /.box-header -->
+
+            <div class="box-body">
+                <div id="applyControActivPresetModalDialog" class="inline-div" title=""></div>
+                <input class="btn batch-edit-contro-btn batch-edit-contro-start btn-primary" type="button" value="Edit"/>
+                <input class="btn batch-edit-contro-btn batch-edit-contro-save btn-warning" disabled type="button" value="Save All"/>
+
+                <input class="btn batch-edit-contro-clear btn-danger pull-right" disabled type="button" data-loading-text="Processing..." value="Clear all values"/>
+
+                @Ajax.ActionLink("Apply a Preset", "ApplyControActivPresetForm", "Portfolio",
+                    new
+                    {
+                        poId = portfolioOrgId
+
+                    }, new AjaxOptions
+                    {
+                        UpdateTargetId = "applyControActivPresetModalDialog",
+                        HttpMethod = "Post",
+                        OnBegin = "applyPresetBegin(this)",
+                        OnSuccess = "OpenApplyControActivPresetDialog()",
+                        OnComplete = "resetApplyPresetButton()"
+                    }, new
+                    {
+                        @class = "btn apply-preset-btn disabled-action btn-primary pull-right margin-r-5",
+                        @data_loading_text = "Processing..."
+                    })
+
+                
+                <br/><br/>
+
+                <table id="tblportfoliodetails-contro" class="table table-bordered table-striped"></table>
+                <div id="myPager-contro"></div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+    }
+</div><!-- tab content -->

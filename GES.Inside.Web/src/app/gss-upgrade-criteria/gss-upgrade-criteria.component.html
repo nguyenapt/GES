@@ -1,0 +1,25 @@
+<div *ngIf="issueIndicator">
+    <div class="ges-content-block">
+        <div class="header">
+            <div class="title">
+                <mat-checkbox>The violation has ceased.</mat-checkbox>
+            </div>
+        </div>
+        <hr class="style10" />
+        <div>
+            <textarea matInput rows="5" [(ngModel)]="issueIndicator.UpgradeCriteria.TheViolationHasCeasedDescription"></textarea>
+        </div>
+    </div>
+
+    <div class="ges-content-block" ng-hide="isHideCompanydialogue">
+        <div class="header">
+            <div class="title">
+                <mat-checkbox>The company has adopted a responsible course of action.</mat-checkbox>
+            </div>
+        </div>
+        <hr class="style10" />
+        <div>
+            <textarea matInput rows="5" [(ngModel)]="issueIndicator.UpgradeCriteria.TheCompanyHasAdoptedaResponsibleCourseOfActionDescription"></textarea>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@using GES.Inside.Data.Helpers
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileStatusViewModel
+
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isSrEmeCase = gesCaseReportType == GesCaseReportType.SrEmeEngage || gesCaseReportType == GesCaseReportType.SrEmeArchived;
+
+    var hasResponse = !string.IsNullOrEmpty(Model.ResponseName);
+    var hasProgress = !string.IsNullOrEmpty(Model.ProgressName);
+    var hasStatus = hasResponse && hasProgress;
+
+    var milestoneIcon = CommonHelper.GetMilestoneIcon(Model.LatestMilestone, Model.LatestMilestoneLevel);
+
+    var hasMilestone = milestoneIcon != "milestone_0.png" && hasStatus && !isSrEmeCase;
+
+    var developmentGrade = DataHelper.ConvertDevelopmentGradeToText(Model.Development);
+    var hasDevelopmentGrade = !string.IsNullOrEmpty(developmentGrade) && !isSrEmeCase;
+}
+
+@if (hasStatus)
+{
+    <table class="table table-status-verticle hidden-lg hidden-sm hidden-xs">
+        @if (hasMilestone && !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CASE-INFORMATION-MILESTONE"))
+        {
+            <tr>
+                <td>@Resources.MilestoneStatus</td>
+                <td>
+                    <img class="tooltip-hint status-icon" alt="milestone" data-tooltip-title="@Resources.MilestoneStatus"
+                         data-tooltip-content="milestone-hint" src="/Content/img/icons/@CommonHelper.GetMilestoneIcon(Model.LatestMilestone, Model.LatestMilestoneLevel)" />
+                </td>
+            </tr>
+        }
+        @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "RESPONSE"))
+        {
+            <tr>
+                <td>@Resources.ResponseStatus</td>
+                <td>
+                    <div class="tooltip-hint status-value @Model.ResponseName.ToLower() response-status" data-tooltip-title="@Resources.ResponseStatus" data-tooltip-content="response-hint" style="background-image: url('/Content/img/icons/response_@(Model.ResponseName.ToLower()).png')">@Model.ResponseName</div>
+                </td>
+            </tr>
+        }
+        @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "PROGRESS"))
+        {
+            <tr>
+                <td>@Resources.ProgressStatus</td>
+                <td>
+                    <div class="tooltip-hint status-value @Model.ProgressName.ToLower() progress-status" data-tooltip-title="@Resources.ProgressStatus" data-tooltip-content="progress-hint" style="background-image: url('/Content/img/icons/progress_@(Model.ProgressName.ToLower()).png')">@Model.ProgressName</div>
+                </td>
+            </tr>
+        }
+        @if (hasDevelopmentGrade && !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "DEVELOPMENT"))
+        {
+            <tr>
+                <td>@Resources.PerformanceStatus</td>
+                <td>
+                    <img class="tooltip-hint performance-icon" alt="development status" data-tooltip-title="@Resources.DevelopmentStatus"
+                         data-tooltip-content="development-hint" src="~/Content/img/icons/development_@(developmentGrade.ToLower()).png" />
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <table class="table table-status hidden-md">
+        <thead>
+            <tr>
+                @if (hasMilestone && !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CASE-INFORMATION-MILESTONE"))
+                {
+                    <th class="azure-background">@Resources.MilestoneStatus</th>
+                }
+                @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "RESPONSE"))
+                {
+                    <th class="azure-background">@Resources.ResponseStatus</th>
+                }
+                @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "PROGRESS"))
+                {
+                    <th class="azure-background">@Resources.ProgressStatus</th>
+                }
+                @if (hasDevelopmentGrade && !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "DEVELOPMENT"))
+                {
+                    <th class="azure-background">@Resources.PerformanceStatus</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @if (hasMilestone && !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CASE-INFORMATION-MILESTONE"))
+                {
+                    <td>
+                        <img class="tooltip-hint status-icon" alt="milestone" data-tooltip-title="@Resources.MilestoneStatus"
+                             data-tooltip-content="milestone-hint" src="/Content/img/icons/@CommonHelper.GetMilestoneIcon(Model.LatestMilestone, Model.LatestMilestoneLevel)" />
+                    </td>
+                }
+                @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "RESPONSE"))
+                {
+                    <td>
+                        <div class="tooltip-hint status-value @Model.ResponseName.ToLower() response-status" data-tooltip-title="@Resources.ResponseStatus" data-tooltip-content="response-hint" style="background-image: url('/Content/img/icons/response_@(Model.ResponseName.ToLower()).png')">@Model.ResponseName</div>
+                    </td>
+                }
+                @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "PROGRESS"))
+                {
+                    <td>
+                        <div class="tooltip-hint status-value @Model.ProgressName.ToLower() progress-status" data-tooltip-title="@Resources.ProgressStatus" data-tooltip-content="progress-hint" style="background-image: url('/Content/img/icons/progress_@(Model.ProgressName.ToLower()).png')">@Model.ProgressName</div>
+                    </td>
+                }
+                @if (hasDevelopmentGrade && !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "DEVELOPMENT"))
+                {
+                    <td>
+                        <img class="tooltip-hint performance-icon" alt="development status" data-tooltip-title="@Resources.DevelopmentStatus"
+                             data-tooltip-content="development-hint" src="~/Content/img/icons/development_@(developmentGrade.ToLower()).png" />
+                    </td>
+                }
+            </tr>
+        </tbody>
+    </table>
+}

@@ -1,0 +1,110 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Models
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@using GES.Inside.Data.Models.Anonymous
+@using GES.Inside.Data.Models.CaseProfiles
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+@model GES.Inside.Data.Models.CaseProfiles.FullAttributeCaseProfileCaseComponent
+
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isSrCase = gesCaseReportType == GesCaseReportType.SrEngage || gesCaseReportType == GesCaseReportType.SrArchived || gesCaseReportType == GesCaseReportType.SrCarbonRiskEngage || gesCaseReportType == GesCaseReportType.SrCarbonRiskArchived || gesCaseReportType == GesCaseReportType.SrCarbonRiskResolved;
+}
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <i class="fa fa-briefcase" aria-hidden="true"></i>
+            @Resources.CaseInfo
+        </h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <dl class="dl-horizontal">
+            @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "ENTRY-DATE"))
+            {
+                <dt>@Html.DisplayNameFor(m => m.AlertEntryDate)</dt>
+                <dd>@(Model.AlertEntryDate?.ToString(Configurations.DateFormat) ?? "")</dd>
+            }
+            @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "ENGAGEMENT-TYPE"))
+            {
+                <dt>@Html.DisplayNameFor(m => m.EngagementTheme)</dt>
+                <dd>@Model.EngagementTheme</dd>
+            }
+
+            @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "NORM"))
+            {
+                if (isSrCase)
+                {
+                    if (!string.IsNullOrEmpty(Model.Theme))
+                    {
+                        <dt>@Html.DisplayNameFor(m => m.Theme)</dt>
+                        <dd><strong>@Model.Theme</strong></dd>
+                    }
+                }
+                else
+                {
+                    <dt>@Html.DisplayNameFor(m => m.Norm)</dt>
+                    <dd><strong>@Model.Norm</strong></dd>
+                }
+            }
+
+            @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "LOCATION"))
+            {
+                <dt>@Html.DisplayNameFor(m => m.Location)</dt>
+                <dd><strong>@Model.Location</strong> <span class="flag-icon flag-icon-@Model.CountryCode"></span></dd>
+            }
+
+            @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "RECOMMENDATION"))
+            {
+                <dt><strong>@Html.RenderProperty(m => m.Recommendation)</strong></dt>
+                <dd>
+                    @if (!string.IsNullOrEmpty(Model.Recommendation))
+                    {
+                        @SharedComponents.BuildViewArchivedLink(Resources.EngagementStatusHistory, Resources.ViewHistory)
+                    }
+                </dd>
+            }
+            @*@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CASE-INFORMATION-CONCLUSION"))
+            {
+                <dt><strong>@Html.RenderProperty(m => m.Conclusion)</strong></dt>
+                <dd>
+                    @if (!string.IsNullOrEmpty(Model.Conclusion))
+                    {
+                        @SharedComponents.BuildViewArchivedLink(Resources.ConclusionHistory, Resources.ViewHistory)
+                    }
+                </dd>
+                <dd></dd>
+            }*@
+
+            @*@if (!string.IsNullOrEmpty(Model.CustomContent))
+            {
+                @Html.Raw(Model.CustomContent)
+            }*@
+        </dl>
+
+        @if (Model.StatusComponent != null && (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CASE-INFORMATION-MILESTONE") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "RESPONSE") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "PROGRESS") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "DEVELOPMENT")))
+        {
+            Html.RenderPartial("CaseProfiles/Shared/Status", Model.StatusComponent as CaseProfileStatusViewModel);
+        }
+    </div>
+    <!-- /.box-body -->
+</div>
+
+@{ Html.RenderPartial("~/Views/Shared/_Dialog.cshtml", new ModalPopupViewModel
+    {
+        ModalTitle = Resources.EngagementStatusHistory,
+        DateContentPairs = Model.RecommendationArchive?.Select(o => new KeyValueObject<string, string>(o.PublishedDate.ToString(Configurations.DateFormat), o.Content)).ToList()
+    });
+}
+
+@{ Html.RenderPartial("~/Views/Shared/_Dialog.cshtml", new ModalPopupViewModel
+    {
+        ModalTitle = Resources.ConclusionHistory,
+        DateContentPairs = Model.ConclusionArchive?.Select(o => new KeyValueObject<string, string>(o.PublishedDate.ToString(Configurations.DateFormat), o.Content)).ToList()
+    });
+}
+
+@Html.Partial("~/Views/Company/_StatusTooltip.cshtml")

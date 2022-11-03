@@ -1,0 +1,12 @@
+﻿<div class="templateRoot templateRootTextArea">
+    <div class="hover-edit-trigger" title="click to edit">
+        <div class="hover-text-field" ng-show="!editState" ng-click="setDisabled?'':toggle()">{{model}}<div class="{{setDisabled?'': 'edit-pencil glyphicon glyphicon-pencil'}}"></div></div>
+        <textarea class="inputText input-text-area" spellcheck="true" maxlength="{{maxLengthValue!= 'undefined'&& maxLengthValue!= ''?maxLengthValue:''}}" placeholder="{{placeholder}}" ng-model="model" ng-change="change(model)"  ng-show="editState" ng-disabled="setDisabled" ng-required="required"></textarea>
+    </div>
+    <div class="edit-button-group pull-right" ng-show="editState">
+        <div style="display: inline-block;">{{inputValue}}</div>
+        <div class="glyphicon glyphicon-ok" ng-click="save()"></div>
+        <div class="glyphicon glyphicon-remove" ng-click="cancel()"></div>
+    </div>
+</div>
+

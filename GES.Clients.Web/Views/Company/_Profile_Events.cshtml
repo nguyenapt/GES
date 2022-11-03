@@ -1,0 +1,33 @@
+﻿@using GES.Common.Resources
+@using ikvm.extensions
+@model IEnumerable<GES.Inside.Data.Models.EventListViewModel>
+
+<div id="ei-events" >
+    @foreach (var item in Model)
+    {
+        var unixEpoch = new DateTime(1970, 1, 1);
+        var localNow = "";
+        DateTime dDate;
+        var eventdaytype = "";
+        
+        if (DateTime.TryParse(item.EventDate.toString(), out dDate))
+        {
+            
+            localNow = "/Date(" + (dDate - unixEpoch).Ticks / TimeSpan.TicksPerMillisecond + ")/";
+            if (dDate.Hour == 0)
+            {
+                eventdaytype = "Day Event";
+            }
+        }
+       
+        var eventType = item.IsGesEvent ? "ges" : "nonges";	
+
+        <div class="ei-event" data-start='@localNow' data-end="@item.EventEndDate" data-loc="@item.Id" data-eventtype="@eventType" data-parts="@item.CompanyId-@item.EngagementTypeId">
+            <div class="ei-name">@item.Heading</div>
+            <div class="ei-description">@item.Description</div>
+            <div class="ei-event-download-link">@item.Id</div>
+            <div class="eventdaytype">@eventdaytype</div>
+        </div>
+        
+    }
+</div>      

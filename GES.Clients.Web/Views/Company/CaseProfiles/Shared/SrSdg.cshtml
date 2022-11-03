@@ -1,0 +1,23 @@
+﻿@using GES.Common.Resources
+@model IList<GES.Inside.Data.DataContexts.Sdg>
+
+@if (Model != null && Model.Any())
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.SustainableDevelopmentGoals
+            </h3>
+        </div>
+        <div class="box-body">
+            @foreach (var sdg in Model)
+            {
+                <div class="sdg-thumbnail">
+                    <a href="@sdg.Sdg_Link" target="_blank">
+                        <img src="@Url.Action("Download", "Report", new { documentId = sdg.DocumentId })" alt="sdg icon" />
+                    </a>
+                </div>
+            }
+        </div>
+    </div>   
+}

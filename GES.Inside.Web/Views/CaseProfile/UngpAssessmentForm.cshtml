@@ -1,0 +1,890 @@
+﻿@using GES.Common.Resources
+<script> var caseId = '@ViewBag.CaseProfileId' </script>
+<style>
+
+    .ellipsis {
+        max-width: 400px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+.switch {
+         position: relative;
+         display: inline-block;
+         width: 60px;
+         height: 34px;
+     }
+
+    .switch input {display:none;}
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2B7DA6;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2B7DA6;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    
+    input.submitted.ng-invalid
+    {
+        border:1px solid #f00;
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    .parent ~ .cchild {
+        display: none;
+    }
+    .open .parent ~ .cchild {
+        display: table-row;
+    }
+    .parent {
+        cursor: pointer;
+    }
+    tbody {
+        color: #212121;
+    }
+    .open {
+        background-color: #e6e6e6;
+    }
+
+    .open .cchild {
+        background-color: #999;
+        color: white;
+    }
+    .parent > *:last-child {
+        width: 30px;
+    }
+    .parent i {
+        transform: rotate(0deg);
+        transition: transform .3s cubic-bezier(.4,0,.2,1);
+        margin: -.5rem;
+        padding: .5rem;
+ 
+    }
+    .open .parent i {
+        transform: rotate(180deg)
+    }
+</style>
+<div class="box-header with-border">
+    <div class="row">
+        <div class="col-sm-6">
+            <h3 class="box-title"><i class="fa fa-check-square" aria-hidden="true"></i> @Resources.UngpAssessmentForm</h3></div>
+        <div class="col-sm-6" align="right" ng-hide="isUNGPassessmentformDisabled">
+            <div class="row" >
+                <div class="col-sm-12">
+                    <label ng-show="showUngp" class="switch tooltip-hint" data-tooltip-content="show-in-client-tip" data-tooltip-title="">
+                        <input type="checkbox" ng-model="GesUngpAssessmentFormViewModel.IsPublished" id="ungpVisibleInClient" ng-change="ShowHideOnclient(false)" ng-disabled="isSaving||isNewCaseProfile">
+                        <span class="slider round"></span>
+                    </label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="=row">
+        <div class="col-sm-12">
+            <div class="box box-primary" style="border-top-color:red" ng-show="isFormInvalid">
+                <div class="box-header with-border" >
+                    <h3 class="box-title"><i class="fa fa-warning" style="font-size:32px;color:red" aria-hidden="true"></i> @Resources.PublishingErrorList</h3>
+                </div>
+                <div class="box-body">
+                    <div ng-repeat="error in validateMessage">
+                        <p style="color: red">- {{error.text}}</p>
+                    </div>
+                    <div>
+                        <p>- @Resources.PublishingQuestion
+                            <button type="button" class="btn btn-primary add-new-t01" ng-click="ShowHideOnclient(true)"> @Resources.Yes</button>
+                            @* <button type="button" data-tooltip-content="ungp-update-button-tip" data-tooltip-title="" class="btn btn-primary" id="btnUngpSelectEdit" data-toggle="modal" data-target="#ungp-dialog" ng-click="GetUpdateUngp(@ViewBag.CaseProfileId)" ><i class="fa fa-plus"></i> @Resources.No</button> *@
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-sm-12">
+            <br ng-show="!showUngp" />
+            <button type="button" ng-hide="isUNGPassessmentformDisabled" data-tooltip-content="ungp-update-button-tip" data-tooltip-title="" class="btn btn-primary add-new-t01 tooltip-hint" id="btnUngpSelect" data-toggle="modal" data-target="#ungp-dialog" ng-click="GetUpdateUngp(@ViewBag.CaseProfileId)" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> {{GesUngpAssessmentFormViewModel.GesUNGPAssessmentFormId == '00000000-0000-0000-0000-000000000000' ? "Add New" : "Edit"}} UNGP assessment</button>
+        </div>
+    </div>
+    <div class="row" ng-show="showUngp">
+        <br/>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <div class="editor-field">
+                    <label style="font-weight: normal"><b>@Resources.UngpAssessmentCreated: </b>{{GesUngpAssessmentFormViewModel.Created}} </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+                <div class="editor-field">
+                    <label style="font-weight: normal"><b>@Resources.UngpAssessmentModified by:</b> {{GesUngpAssessmentFormViewModel.ModifiedByString}}</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="!showUngp">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <br/>
+                <p style="font-style: italic;"><i class="fa fa-warning"></i>@Resources.NoUngp</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box-body" style="padding-left: 0px">
+<div class="nav-tabs-custom" ng-show="showUngp">
+<ul class="nav nav-tabs hidden-print">
+    <li class="active">
+        <a href="#assessment-form-salient-human-rights-potential-violation" data-toggle="tab">@Resources.SalientHumanRightsPotentialViolation</a>
+    </li>
+    <li>
+        <a href="#company-preparedness" data-toggle="tab">@Resources.CompanyPreparedness</a>
+    </li>
+    <li>
+        <a href="#ungp-sources" data-toggle="tab">@Resources.Sources</a>
+    </li>
+    <li>
+        <a href="#ungp-history" data-toggle="tab">@Resources.UngpHistory</a>
+    </li>
+
+</ul>
+
+<div class="tab-content hidden-print">
+<div class="active tab-pane" id="assessment-form-salient-human-rights-potential-violation">
+    <div class="tab-wrapper">
+        <div class="ges-content-block">
+            <div class="header">
+                <div class="title col-lg-9 col-md-8">
+                    <p>@Resources.Scale</p>
+                </div>
+            </div>
+            <hr class="style10"/>
+            <div class="header">
+                <div class=" col-lg-9 col-md-8">
+                    <p><b>1.  @Resources.TheExtentOfHarm </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="scale-extent-harm" data-tooltip-title=""></i></p>
+                </div>
+                
+            </div>
+            <div class="ges-content-block" style="padding-left: 20px;">
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.TheExtentOfHarmesScoreComment}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.TheExtentOfHarmesScoreValue" ng-readonly="true" id="theextentofharmesscorevalue-input"  /> 
+                            @* ng-required="isUngpPublishable" ng-class="{submitted:isUngpPublishable}" *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header">
+                <div class=" col-lg-9 col-md-8">
+                    <p><b>2.  @Resources.TheNumberofPeopleAffected </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="scale-the-number-of-people-affected" data-tooltip-title=""></i></p>
+                </div>
+            </div>
+            <div class="ges-content-block" style="padding-left: 20px;">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.TheNumberOfPeopleAffectedScoreComment}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.TheNumberOfPeopleAffectedScoreValue" ng-readonly="true" id="thenumberofpeopleaffectedscorevalue-input"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ges-content-block">
+            <div class="header">
+                <div class="title col-lg-9 col-md-8">
+                    <p>@Resources.Systematic <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="systematic-tip" data-tooltip-title=""></i></p>
+                </div>
+            </div>
+            <hr class="style10"/>
+            <div class="header">
+                <div class=" col-lg-9 col-md-8">
+                    <p><b>1.  @Resources.OverSeveralYears</b></p>
+                </div>
+            </div>
+            <div class="ges-content-block" style="padding-left: 20px;">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.OverSeveralYearsScoreComment}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" id="overseveralyearsscore-input" ng-model="GesUngpAssessmentFormViewModel.OverSeveralYearsScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header">
+                <div class=" col-lg-9 col-md-8">
+                    <p><b>2.  @Resources.SeveralLocations</b></p>
+                </div>
+            </div>
+            <div class="ges-content-block" style="padding-left: 20px;">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.SeveralLocationsScoreComment}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.SeveralLocationsScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ges-content-block">
+            <div class="header">
+                <div class="title col-lg-9 col-md-8">
+                    <p>@Resources.Ongoing</p>
+                </div>
+            </div>
+            <hr class="style10"/>
+            <div class="header">
+                <div class=" col-lg-9 col-md-8">
+                    <p><b>1.  @Resources.IstheViolationStillOccurring </b> <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="ongoing-explain" data-tooltip-title=""></i></p>
+                </div>
+            </div>
+            <div class="ges-content-block" style="padding-left: 20px;">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.IsViolationScoreComment}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.IsViolationScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="ges-content-block">
+            <div class="header">
+                <div class="title col-lg-9 col-md-8">
+                    <p>@Resources.Confirmed</p>
+                </div>
+            </div>
+            <hr class="style10"/>
+            <div class="header">
+                <div class=" col-lg-9 col-md-8">
+                    <p><b>1.  @Resources.IsTheCaseAgesConfirmedViolationOfInternationalNorms</b></p>
+                </div>
+            </div>
+            <div class="ges-content-block" style="padding-left: 20px;">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GesConfirmedViolationScoreComment}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GesConfirmedViolationScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ges-content-block">
+            <div class="header">
+                <div class="title col-lg-9 col-md-8">
+                    <p>@Resources.GESGeneralComment <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="ges-comment" data-tooltip-title=""></i></p>
+                </div>
+            </div>
+            <hr class="style10"/>
+            <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GesCommentSalientHumanRight}}</p>
+        </div>
+        
+        <div class="ges-content-block">
+            <div class="header">
+                <div class="title col-lg-12 col-md-8">
+                    <div class="row">
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-6" align="right">
+                            <p>@Resources.TotalScore  :</p></div>
+                        <div class="col-sm-1" align="right">{{salientHumanRightsPotentialViolationTotalScore}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="salient-human-rights-potential-piolation-total-score" data-tooltip-title=""></i></div>
+                    </div>
+                
+                </div>
+            
+            </div>
+            <hr class="style10"/>
+        </div>
+    </div>
+</div>
+
+<div class="tab-pane" id="company-preparedness">
+<div class="tab-wrapper">
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-12 col-md-8">
+            <div class="row">
+                <div class="col-sm-5">
+                    <p><p>@Resources.HumanRightsPolicy</p></div>
+                <div class="col-sm-6" align="right">
+                    <p>@Resources.TotalScoreForHumanRightsPolicy: </p></div>
+                <div class="col-sm-1" align="right">{{totalScoreForHumanRightsPolicy}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="total-score-for-human-rights-policy" data-tooltip-title=""></i></div>
+            </div>
+            
+        </div>
+    </div>
+    <hr class="style10"/>
+    <div class="header">
+        <div class="col-lg-12 col-md-8">
+            <p><b>1.  @Resources.APubliclyDisclosedHumanRightsPolicy </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-policy-publicly-disclosed" data-tooltip-title=""></i></p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-8">
+                <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.HumanRightsPolicyPubliclyDisclosed}}</p>
+            </div>
+            <div class="col-sm-4">
+                <div class="editor-field">
+                    <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyPubliclyDisclosedAddScoreValue" ng-readonly="true"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="header">
+        <div class=" col-lg-12 col-md-8">
+            <p><b>2.  @Resources.HumanRightsPolicyCommunicated</b></p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+
+        <div class="row">
+            <div class="col-sm-8">
+                <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.HumanRightsPolicyCommunicated}}</p>
+            </div>
+            <div class="col-sm-4">
+                <div class="editor-field">
+                    <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyCommunicatedScoreValue" ng-readonly="true"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="header">
+        <div class=" col-lg-12 col-md-8">
+            <p><b>3.  @Resources.HumanRightsPolicyStipulates </b></p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+
+        <div class="row">
+            <div class="col-sm-8">
+                <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.HumanRightsPolicyStipulates}}</p>
+            </div>
+            <div class="col-sm-4">
+                <div class="editor-field">
+                    <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyStipulatesScoreValue" ng-readonly="true"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="header">
+        <div class=" col-lg-12 col-md-8">
+            <p><b>4.  @Resources.HumanRightsPolicyApproved </b></p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-8">
+                <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.HumanRightsPolicyApproved}}</p>
+            </div>
+            <div class="col-sm-4">
+                <div class="editor-field">
+                    <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.HumanRightsPolicyApprovedScoreValue" ng-readonly="true"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* ----- Human rights due diligence ------ *@
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-12 col-md-8">
+            <div class="row">
+                <div class="col-sm-5">
+                    <p>@Resources.HumanRightsDueDiligence</p></div>
+                <div class="col-sm-6" align="right">
+                    <p>@Resources.TotalScoreForHumanRightsDueDiligence :</p></div>
+                <div class="col-sm-1" align="right">{{totalScoreForHumanRightsDueDiligence}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="total-score-for-human-rights-duediligence" data-tooltip-title=""></i></div>
+            </div>
+        </div>
+    </div>
+    <hr class="style10"/>
+    <div class="header">
+        <div class="subtitle col-lg-12 col-md-8">
+            <p>@Resources.Governance</p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <p><b>1.  @Resources.AWrittenCommitment </b></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GovernanceCommitment}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GovernanceCommitmentScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+            <div class="col-sm-12">
+                <p><b>2.   @Resources.GovernanceExamples </b></p>
+                
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GovernanceExamples}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GovernanceExamplesScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                
+            </div>
+            <div class="col-sm-12">
+                <p><b>3.   @Resources.GovernanceClearDivision</b></p>
+                
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GovernanceClearDivision}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GovernanceClearDivisionScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="header">
+        <div class="subtitle col-lg-12 col-md-8">
+            <p>@Resources.BusinessPartners</p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <p><b>4.  @Resources.TheCompanyTakesHumanRights </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-due-diligence-business-partners-human-rights" data-tooltip-title=""></i></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.BusinessPartners}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.BusinessPartnersAddScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="header">
+        <div class="subtitle col-lg-12 col-md-8">
+            <p>@Resources.IdentificationAndCommitment</p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <p><b>5. @Resources.IdentificationAndCommitmentTheCompanyDemonstrates</b> <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-due-diligence-identification-commitment-company-demonstrates" data-tooltip-title=""></i></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.IdentificationAndCommitment}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.IdentificationAndCommitmentScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="subtitle col-lg-12 col-md-8">
+            <p>@Resources.StakeholderEngagement</p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <p><b>6. @Resources.StakeholderEngagementTheCompanyDemonstratesHow </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-due-diligence-stakeholder-engagement-company-demonstrates" data-tooltip-title=""></i></p>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.StakeholderEngagement}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <div class="editor-field">
+                        <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.StakeholderEngagementAddScoreValue" ng-readonly="true"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="subtitle col-lg-12 col-md-8">
+            <p>@Resources.HumanRightsTraining</p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            
+            <div class="col-sm-8">
+                <p><b>7. @Resources.HumanRightsTrainingIsConducted </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="human-rights-due-diligence-human-rights-training" data-tooltip-title=""></i></p>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.HumanRightsTraining}}</p>
+                </div>
+                <div class="col-sm-4">
+                    <div class="editor-field">
+                        <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.HumanRightsTrainingScoreValue" ng-readonly="true"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Remediation of adverse human rights impacts *@
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-12 col-md-8">
+            <div class="row">
+                <div class="col-sm-5"><p>@Resources.RemediationOfAdverseHumanRightsImpacts</p></div>
+                <div class="col-sm-6" align="right"><p>@Resources.TotalScoreForRemediationOfAdverseHumanRightsImpacts:</p></div>
+                <div class="col-sm-1" align="right">{{totalScoreForRemediationOfAdverseHumanRightsImpacts}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="total-score-for-remediation-of-adverse-human-rights-impacts" data-tooltip-title=""></i></div>
+            </div>
+            
+        </div>
+    </div>
+    <hr class="style10"/>
+    <div class="header">
+        <div class="subtitle col-lg-12 col-md-8">
+            <p>@Resources.RemedyProcessInPlace</p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <p><b>1. @Resources.TheCompanyhasAClearProcess </b><i class="fa fa-info-circle tooltip-hint" data-tooltip-content="remediation-adverse-human-rights-impacts-clear-process" data-tooltip-title=""></i></p>
+                
+                <div class="row">
+
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.RemedyProcessInPlace}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.RemedyProcessInPlaceScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="header">
+        <div class="subtitle col-lg-12 col-md-8">
+            <p>@Resources.GrievanceMechanism <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="remediation-adverse-human-rights-impacts-grievance-mechanism" data-tooltip-title=""></i></p>
+        </div>
+    </div>
+    <div class="ges-content-block" style="padding-left: 20px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <p><b>2.  @Resources.GrievanceMechanismHasOperationalLevel</b></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GrievanceMechanismHasOperationalLevel}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismHasOperationalLevelScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+            <div class="col-sm-12">
+                <p><b>3. @Resources.GrievanceMechanismExistenceOfOperationalLevel</b></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GrievanceMechanismExistenceOfOperationalLevel}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismExistenceOfOperationalLevelScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                
+            </div>
+            <div class="col-sm-12">
+                <p><b>4.  @Resources.GrievanceMechanismClearProcess</b></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GrievanceMechanismClearProcess}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismClearProcessScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+            <div class="col-sm-12">
+                <p><b>5.  @Resources.HumanRightsNorms</b></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GrievanceMechanismRightsNorms}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismRightsNormsScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+            <div class="col-sm-12">
+                <p><b>6.  @Resources.GrievanceMechanismFilingGrievance</b></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GrievanceMechanismFilingGrievance}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismFilingGrievanceScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+            <div class="col-sm-12">
+                <p><b>7.  @Resources.GrievanceMechanismReoccurringGrievances</b></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GrievanceMechanismReoccurringGrievances}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismReoccurringGrievancesScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+            <div class="col-sm-12">
+                <p><b>8.  @Resources.GrievanceMechanismFormatAndProcesse</b></p>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GrievanceMechanismFormatAndProcesse}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="editor-field">
+                            <input type="text" class="form-control form-control-text" ng-model="GesUngpAssessmentFormViewModel.GrievanceMechanismFormatAndProcesseScoreValue" ng-readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-9 col-md-8">
+            <p>@Resources.GESGeneralComment <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="ges-comment" data-tooltip-title=""></i></p>
+        </div>
+    </div>
+    <hr class="style10"/>
+    <div class="row">
+        <div class="col-sm-12">
+            <p style="font-style: italic;">{{GesUngpAssessmentFormViewModel.GesCommentCompanyPreparedness}}</p>
+        </div>
+    </div>
+</div>
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-12 col-md-8">
+            <div class="row">
+                <div class="col-sm-11" align="right">
+                    <p>@Resources.TotalScoreForCompanyPreparedness:</p></div>
+                <div class="col-sm-1" align="right">{{totalScoreForCompanyPreparedness}} <i class="fa fa-info-circle tooltip-hint" style="color: black; font-size: 14px;" data-tooltip-content="total-score-for-company-preparedness" data-tooltip-title=""></i></div>
+            </div>
+                
+        </div>
+            
+    </div>
+    <hr class="style10"/>
+</div>
+
+</div>
+</div>
+<div class="tab-pane" id="ungp-sources">
+    <div class="tab-wrapper">
+        <div class="ges-content-block">
+
+            <div class="box-body" style="overflow-x: auto;">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="width: 43px; background-color: #68aaa3; color: white">@Resources.No</th>
+                        <th style="width: 400px;background-color: #68aaa3; color: white">@Resources.SourcesName</th>
+                        <th style="background-color: #68aaa3; color: white">@Resources.SourcesLink</th>
+                        <th style="width: 100px;background-color: #68aaa3; color: white">@Resources.SourceDate</th>
+                       
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="editingSource in editingSources">
+                        <td>
+                            {{$index + 1}}
+                        </td>
+                        <td>
+                            {{editingSource.SourcesName}}
+                        </td>
+                        <td>
+                            {{editingSource.SourcesLink}}
+                        </td>
+                        <td>
+                            {{editingSource.SourceDateString}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-pane" id="ungp-history">
+    <div class="tab-wrapper">
+        <div class="ges-content-block">
+
+            <div class="box-body" style="overflow-x: auto;">
+                <table class="table table-striped" ng-table="ungpMainHistoryTableParams">
+                    <tr ng-repeat="ungpMain in $data">
+                        <td>
+                            
+                            <div class="header">
+                                <div class="subtitle">
+                                    <p style="color:#005E7E"><i class="fa fa-history" aria-hidden="true"></i> {{ungpMain.AuditUser}} {{ungpMain.AudiAction}} - {{ungpMain.AuditDatetimeString}}</p>
+                                </div>
+                            </div>
+                            <hr class="style10"/>
+                          
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th style="width: 33%;">@Resources.UngpField</th>
+                                    <th style="width: 350px;">@Resources.UngpOriginalValue</th>
+                                    <th style="width: 350px;">@Resources.UngpNewValue</th>
+                                </tr>
+                                </thead>
+                                <tr ng-repeat="ungpchange in ungpMain.GesUngpAssessmentFormAuditDetailsViewModels">
+                                    <td>{{ungpchange.ColumnNameDescription}}</td>
+                                    <td class="ellipsis">{{ungpchange.OldValue}}</td>
+                                    <td class="ellipsis">{{ungpchange.NewValue}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+@{ Html.RenderPartial("UNGPDialog"); }
+</div>
+
+@{ Html.RenderPartial("_Tooltip"); }

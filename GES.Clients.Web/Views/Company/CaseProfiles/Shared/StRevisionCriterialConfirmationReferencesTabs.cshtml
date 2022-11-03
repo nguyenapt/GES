@@ -1,0 +1,52 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+@model GES.Inside.Data.Models.CaseProfileCoreViewModel
+
+@if (Model.CaseComponent.ConfirmedViolation)
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.ConfirmationDetails
+            </h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+
+            @{
+                var tabs = new Dictionary<string, KeyValuePair<string, string>>();
+
+                if (Model.RevisionCriterials != null)
+                {
+                    tabs[CommonHelper.ConvertNameToHtmlElementId(Resources.RevisionCriteria)] = new KeyValuePair<string, string>($"{Resources.RevisionCriteria}", Html.Partial("CaseProfiles/Shared/RevisionCriterial", Model.RevisionCriterials).ToHtmlString());
+                }
+
+                if (Model.ConfirmationInformation != null)
+                {
+                    tabs[CommonHelper.ConvertNameToHtmlElementId(Resources.BasisForDecision)] = new KeyValuePair<string, string>($"{Resources.BasisForDecision}", Html.Partial("CaseProfiles/Shared/ConfirmationInformation", Model.ConfirmationInformation).ToHtmlString());
+                }
+
+                if (Model.References != null)
+                {
+
+                    tabs[CommonHelper.ConvertNameToHtmlElementId(Resources.References)] = new KeyValuePair<string, string>($"{Resources.References}", Html.Partial("CaseProfiles/Shared/References", Model.References).ToHtmlString());
+                }
+            }
+
+            @SharedComponents.BuildTabContent(Html, tabs)
+        </div>
+    </div>
+}
+else if (Model.CaseComponent.IndicationOfViolation && Model.References.Any())
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.References
+            </h3>
+        </div><!-- /.box-header -->
+        @Html.Partial("CaseProfiles/Shared/References", Model.References)
+
+    </div>
+}

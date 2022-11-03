@@ -1,0 +1,1541 @@
+﻿@using GES.Common.Resources
+@section styling {
+    @Styles.Render("~/Content/plugins/flag-icon-css/flag-css-bundle")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-edit-angular")
+}
+
+<style>
+    table.table td a {
+        cursor: pointer;
+        display: inline-block;
+        /*margin: 0 5px;*/
+        min-width: 24px;
+    }
+
+    table.table td i {
+        font-size: 19px;
+    }
+
+    .normal-hidden {
+        display: none;
+    }
+
+    .button-bottom {
+        position: fixed;
+        bottom: 70px;
+        right: 10px;
+        border: 2px solid #0081C0;
+        padding: 15px 20px 15px 20px;
+        border-radius: 4px;
+    }
+
+    .pagination {
+        margin: 0px;
+    }
+    
+    .entity-disable {
+        color: gray;
+        pointer-events: none;
+        cursor: default;
+    }
+    .entity-disable-text {
+        background-color:#eee !important;
+        color: gray; 
+        pointer-events:none
+    }    
+
+    .dl-horizontal dd {
+        margin-left: 180px;
+        margin-bottom: 15px;
+    }
+    .header-disabled {
+        color: #68aaa3
+    }
+    
+    .header-table-disabled {
+        background-color: grey !important
+    }
+    
+</style>
+
+@section contentHeader{
+<section class="content-header" ng-form="caseProfileHeaderForm">
+    <div style="width: 500px;">
+        <select style="width: 100%" class="form-control" ng-model="caseProfile.IssueHeadingId" ng-change="updateIssueHeading()" ng-options="issueHeading.Id as issueHeading.Name for issueHeading in issueheadings" id="issueHeading{{$index}}" name="issueHeading{{$index}}" ng-init="caseProfile.IssueHeadingId=caseProfile.IssueHeadingId">
+            <option value="">Select issue heading</option>
+        </select>
+    </div>    
+    <h1 ng-hide="isNewCaseProfile">
+        {{caseProfile.ReportIncident}}
+        @*<input type="text" class="input-header" id="reportIncident-input" ng-change="validateUpdate('reportIncident-input',caseProfile.ReportIncident)" click-to-edit placeholder="Add case profile name" ng-model="caseProfile.ReportIncident" ng-required="true" is-edit-state="isNewCaseProfile" />*@
+    </h1>        
+
+    <div class="page-buttons hidden-print">
+        <button class="btn btn-success not-outer-right-btn" ng-click="updateCaseProfileData('')">
+            <i class="fa fa-refresh fa-spin" ng-show="isSaving && !savingAndCloseAction"></i> Save
+        </button>
+        <button class="btn btn-success not-outer-right-btn" ng-click="updateCaseProfileData('save_close')">
+            <i class="fa fa-refresh fa-spin" ng-show="isSaving && savingAndCloseAction"></i> Save & Close
+        </button>
+        <input class="btn" type="button" value="Cancel" id="cancel-save-bottom"
+               data-confirm-title="Do you want to leave this site?"
+               data-confirm-message="Changes you made may not be saved"
+               data-confirm-direction="ltr"
+               data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay"/>
+    </div>
+
+    @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+</section>
+}
+    <script type="text/javascript">
+    var clientStatus = @Html.Raw(Json.Encode(ViewBag.ClientsStatuses));
+    var progressStatuses = @Html.Raw(Json.Encode(ViewBag.ClientProgressStatuses));
+    var industries = @Html.Raw(Json.Encode(ViewBag.Industries));
+    var countries = @Html.Raw(Json.Encode(ViewBag.Countries));
+    </script>
+<div class="animation-loading">
+    <div class="osahan-loading"></div>
+</div>
+<div class="row" ng-form="caseProfileForm">
+
+    <div class="col-xs-8">
+        <div class="box box-primary" ng-hide="isHideSummary && isHideGuidelines">
+            <div class="box-body">
+                <div class="ges-content-block" ng-hide="isHideSummary">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p class="{{isSummaryDisabled?'header-disabled' :''}}">@Resources.Summary <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-summary-instructions" data-tooltip-title=@Resources.CaseProfileSummaryInstructions></i></p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <div class="{{isSummaryDisabled?'entity-disable-text':''}}" >
+                        <textarea maxlength="5000" name="caseProfileSummary" ng-disabled="isSummaryDisabled" click-to-edit-text-area ng-model="caseProfile.Summary" is-edit-state="isNewCaseProfile"></textarea>
+                    </div>
+                </div>
+
+                <div class="ges-content-block" ng-hide="isHideGuidelines">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p class="{{isGuidelinesDisabled?'header-disabled' :''}}">@Resources.Guidelines</p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <div class="{{isGuidelinesDisabled?'entity-disable-text':''}}">
+                        <textarea click-to-edit-text-area ng-model="caseProfile.Guidelines" is-edit-state="isNewCaseProfile"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="nav-tabs-custom" ng-hide="isHideFulldescription && isHideDescriptionnew && isHideConclusion">
+            <ul class="nav nav-tabs hidden-print">
+                <li class="active" ng-hide="isHideFulldescription && isHideDescriptionnew">
+                    <a href="#description" data-toggle="tab">@Resources.Description</a>
+                </li>
+                
+                <li ng-hide="isHideConclusion" class="{{isHideFulldescription && isHideDescriptionnew?'active':''}}">
+                    <a href="#conclusion" data-toggle="tab">@Resources.Conclusion</a>
+                </li>
+            </ul>
+
+            <div class="tab-content hidden-print">
+                <div class="active tab-pane" id="description" ng-hide="isHideFulldescription && isHideDescriptionnew">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block" ng-hide="isHideFulldescription">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isFulldescriptionDisabled?'entity-disable-text':''}}">@Resources.Description <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-full-description-instructions" data-tooltip-title=@Resources.CaseProfileDescriptionInstructions></i></p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{isFulldescriptionDisabled?'entity-disable-text':''}}">
+                                <textarea maxlength="5000" click-to-edit-text-area ng-model="caseProfile.Description" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-hide="isHideDescriptionnew">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isDescriptionnewDisabled?'entity-disable-text':''}}">@Resources.DescriptionNew</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{isDescriptionnewDisabled?'entity-disable-text':''}}">
+                                <textarea click-to-edit-text-area ng-model="caseProfile.DescriptionNew" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideFulldescription && isHideDescriptionnew?'active':''}} tab-pane" id="conclusion" ng-hide="isHideConclusion">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block" ng-hide="isHideConclusion">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isConclusionDisabled?'entity-disable-text':''}}">@Resources.Conclusion</p>
+                                </div>
+                            </div>
+
+                            <hr class="style10" />
+                            <div class="{{isConclusionDisabled?'entity-disable-text':''}}">
+                                <textarea click-to-edit-text-area ng-model="caseProfile.Conclusion" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-tabs-custom" ng-controller="CaseProfileDialogueController" ng-hide="isHideCompanydialoguelog && isHideCompanydialogue && isHideCompanydialoguenew && isHideSourcedialoguelog && isHideSourcedialogue && isSourcedialoguenew">
+            @*@{ Html.RenderPartial("ContactList"); }*@
+            @*@{ Html.RenderPartial("CompanyDialogueDialog"); }*@            
+            <ul class="nav nav-tabs hidden-print">
+                <li class="active" ng-hide="isHideCompanydialoguelog && isHideCompanydialogue && isHideCompanydialoguenew">
+                    <a href="#company-dialogue" data-toggle="tab">@Resources.CompanyDialogue</a>
+                </li>
+                <li class="{{isHideCompanydialoguelog && isHideCompanydialogue && isHideCompanydialoguenew?'active':''}}" ng-hide="isHideSourcedialoguelog && isHideSourcedialogue && isHideSourcedialoguenew">
+                    <a href="#source-dialogue" data-toggle="tab">@Resources.SourceDialogue</a>
+                </li>
+            </ul>
+
+            <div class="tab-content hidden-print" ng-hide="isHideCompanydialoguelog && isHideCompanydialogue && isHideCompanydialoguenew && isHideSourcedialoguelog && isHideSourcedialogue && isHideSourcedialoguenew">
+                <div class="active tab-pane" id="company-dialogue" ng-hide="isHideCompanydialoguelog && isHideCompanydialogue && isHideCompanydialoguenew">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block" ng-hide="isHideCompanydialogue">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isCompanydialogueDisabled?'entity-disable-text':''}}">@Resources.CompanyDialogue <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-company-dialogue-instructions-instructions" data-tooltip-title=@Resources.CaseProfileCompanyDialogueInstructions></i></p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{isCompanydialogueDisabled?'entity-disable-text':''}}">
+                                <textarea  maxlength="5000" click-to-edit-text-area ng-model="caseProfile.CompanyDialogueSummary" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-hide="isHideCompanydialoguenew">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isCompanydialoguenewDisabled?'entity-disable-text':''}}">@Resources.CompanyDialogueNew</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{isCompanydialoguenewDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.CompanyDialogueNew" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+                        <div class="ges-content-block" ng-hide="isHideCompanydialoguelog && (companyDialogueLogs == null || (companyDialogueLogs !== null && companyDialogueLogs.length === 0))">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-comments-o" aria-hidden="true"></i> @Resources.CompanyLog</h3>
+                            </div>
+                            <div class="table-title" ng-hide="isCompanydialoguelogDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button  type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addCompanyDialogue()" data-target="#company-source-dialogue-dialog" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add company dialogue log</button>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="companyDialogueTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isCompanydialoguelogDisabled?'header-table-disabled':''}}">Date</th>
+                                            <th style="width: 120px; background-color: #68aaa3; color: white" class="{{isCompanydialoguelogDisabled?'header-table-disabled':''}}">Type</th>
+                                            <th style="width: 120px; background-color: #68aaa3; color: white" class="{{isCompanydialoguelogDisabled?'header-table-disabled':''}}">Dir.</th>
+                                            <th style="background-color: #68aaa3; color: white" class="{{isCompanydialoguelogDisabled?'header-table-disabled':''}}">Sent/Rcvd</th>
+                                            <th style="background-color: #68aaa3; color: white" class="{{isCompanydialoguelogDisabled?'header-table-disabled':''}}">Title</th>
+                                            <th style="width: 150px; background-color: #68aaa3; color: white" class="{{isCompanydialoguelogDisabled?'header-table-disabled':''}}">Person</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isCompanydialoguelogDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="companydialogue in $data">
+                                            <td>
+                                                {{companydialogue.ContactDate | date: "yyyy-MM-dd"}}
+                                            </td>
+                                            <td>
+                                                {{getContactTypeName(companydialogue.ContactTypeId)}}
+                                            </td>
+                                            <td>
+                                                {{getContactDirectionName(companydialogue.ContactDirectionId)}}
+                                            </td>
+                                            <td>
+                                                {{companydialogue.Text}}
+                                            </td>
+                                            <td>
+                                                {{companydialogue.JobTitle}}
+                                            </td>
+                                            <td>{{companydialogue.FirstName}} {{companydialogue.LastName}}</td>
+                                            <td align="right">
+                                                <span ng-if="companydialogue.G_ManagedDocuments_Id !== null">
+                                                    <a class="edit-t01" title="Document" ng-click="openDocumentManagement(companydialogue, companydialogue.I_GesCompanySourceDialogues_Id, companydialogue.DialogueType)"><i class="material-icons">&#xe226;</i></a>
+                                                </span>
+                                                <a class="edit-t01" title="Edit" data-toggle="modal" data-target="#company-source-dialogue-dialog" ng-click="editCompanyDialogue(companydialogue)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isCompanydialoguelogDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteCompanyDialogue(companydialogue)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideCompanydialoguelog && isHideCompanydialogue && isHideCompanydialoguenew?'active':''}} tab-pane" id="source-dialogue" ng-hide="isHideSourcedialoguelog && isHideSourcedialogue && isHideSourcedialoguenew">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block" ng-hide="isHideSourcedialogue">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isSourcedialogueDisabled?'entity-disable-text':''}}">@Resources.SourceDialogue <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-source-dialogue-instructions-instructions" data-tooltip-title=@Resources.CaseProfileSourceDialogueInstructions></i></p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{isSourcedialogueDisabled?'entity-disable-text':''}}">
+                                <textarea  maxlength="5000" class="ges-content" click-to-edit-text-area ng-model="caseProfile.SourceDialogueSummary" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+                        <div class="ges-content-block" ng-hide="isHideSourcedialoguenew">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isSourcedialoguenewDisabled?'entity-disable-text':''}}">@Resources.SourceDialogueNew</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{isSourcedialoguenewDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.SourceDialogueNew" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="ges-content-block" ng-hide="isHideSourcedialoguelog && (sourceDialogueLogs == null || (sourceDialogueLogs !== null && sourceDialogueLogs.length === 0))">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-comments" aria-hidden="true"></i> @Resources.SourceLog</h3>
+
+                            </div>
+
+                            <div class="table-title" ng-hide="isSourcedialoguelogDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" data-target="#company-source-dialogue-dialog" ng-click="addSourceDialogue()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add source dialogue log</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="sourceDialogueTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isSourcedialoguelogDisabled?'header-table-disabled':''}}">Date</th>
+                                            <th style="width: 120px; background-color: #68aaa3; color: white"class="{{isSourcedialoguelogDisabled?'header-table-disabled':''}}">Type</th>
+                                            <th style="width: 120px; background-color: #68aaa3; color: white" class="{{isSourcedialoguelogDisabled?'header-table-disabled':''}}">Dir.</th>
+                                            <th style="background-color: #68aaa3; color: white" class="{{isSourcedialoguelogDisabled?'header-table-disabled':''}}">Sent/Rcvd</th>
+                                            <th style="background-color: #68aaa3; color: white" class="{{isSourcedialoguelogDisabled?'header-table-disabled':''}}">Title</th>
+                                            <th style="width: 150px; background-color: #68aaa3; color: white" class="{{isSourcedialoguelogDisabled?'header-table-disabled':''}}">Person</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isSourcedialoguelogDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="sourcedialogue in $data">
+                                            <td>
+                                                {{sourcedialogue.ContactDate | date: "yyyy-MM-dd"}}
+                                            </td>
+                                            <td>
+                                                {{getContactTypeName(sourcedialogue.ContactTypeId)}}
+                                            </td>
+                                            <td>
+                                                {{getContactDirectionName(sourcedialogue.ContactDirectionId)}}
+                                            </td>
+                                            <td>
+                                                {{sourcedialogue.Text}}
+                                            </td>
+                                            <td>
+                                                {{sourcedialogue.JobTitle}}
+                                            </td>
+                                            <td>{{sourcedialogue.FirstName}} {{sourcedialogue.LastName}}</td>
+                                            <td align="right">
+                                                <span ng-if="sourcedialogue.G_ManagedDocuments_Id !== null">
+                                                    <a class="edit-t01" title="Document" ng-click="openDocumentManagement(sourcedialogue, sourcedialogue.I_GesCompanySourceDialogues_Id, sourcedialogue.DialogueType)"><i class="material-icons">&#xe226;</i></a>
+                                                </span>
+                                                <a class="edit-t01" title="Edit" ng-click="editSourceDialogue(sourcedialogue)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isSourcedialoguelogDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteSourceDialogue(sourcedialogue)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-tabs-custom" ng-hide="isHideGEScommentary && isHideGSSLink && isHideNews">
+            <ul class="nav nav-tabs hidden-print">
+                <li class="active" ng-hide="isHideGEScommentary">
+                    <a href="#gescommentary-list" data-toggle="tab">@Resources.GesCommentary</a>
+                </li>
+                <li class="{{isHideGSSLink?'active':''}}" ng-hide="isHideGSSLink">
+                    <a href="#gsslink-list" data-toggle="tab">@Resources.GSSLink</a>
+                </li>
+                <li class="{{isHideGEScommentary?'active':''}}" ng-hide="isHideNews">
+                    <a href="#news-list" data-toggle="tab">@Resources.News</a>
+                </li>
+            </ul>
+
+            <div class="tab-content hidden-print">
+                <div class="active tab-pane" id="gescommentary-list" ng-controller="CaseProfileCommentaryController" ng-hide="isHideGEScommentary">
+                    <div class="tab-wrapper">
+                        <div class="table-title" ng-hide="isGEScommentaryDisabled">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-primary add-new-t01" id="btnGesCommentarySelect" ng-click="addCommentary()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add new Commentary</button>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div style="overflow-x: auto;">
+                            <table class="table table-bordered" ng-table="commentaryTableParams" show-filter="true">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px; background-color: #68aaa3; color: white" class="{{isGEScommentaryDisabled?'header-table-disabled':''}}">@Resources.No</th>
+                                        <th style="background-color: #68aaa3; color: white" class="{{isGEScommentaryDisabled?'header-table-disabled':''}}">@Resources.GesCommentaryDescription</th>
+                                        <th style="width: 160px; background-color: #68aaa3; color: white" class="{{isGEScommentaryDisabled?'header-table-disabled':''}}">@Resources.GesCommentaryCreated</th>
+                                        <th style="width: 160px; background-color: #68aaa3; color: white" class="{{isGEScommentaryDisabled?'header-table-disabled':''}}">@Resources.GesCommentaryModifyDate</th>
+                                        <th style="width: 70px; background-color: #68aaa3" class="{{isGEScommentaryDisabled?'header-table-disabled':''}}"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="commentary in $data">
+                                        <td>
+                                            {{$index + 1}}
+                                        </td>
+                                        <td>
+                                            {{commentary.Description.substr(0,300)}}...
+                                        </td>
+                                        <td filter="{ CreatedString: 'text'}" sortable="'CreatedString'">
+                                            {{commentary.CreatedString}}
+                                        </td>
+                                        <td>
+                                            {{commentary.CommentaryModifiedString}}
+                                        </td>
+                                        <td>
+                                            <a class="edit-t01" title="Edit" data-toggle="modal" data-target="#gescommentary-dialog" ng-click="editCommentary(commentary)"><i class="material-icons">&#xe22b;</i></a>
+                                            <a class="delete-t01 {{isGEScommentaryDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteCommentary(commentary)"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideGSSLink?'active':''}} tab-pane" id="gsslink-list" ng-controller="CaseProfileGSSLinkController" ng-hide="isHideGSSLink">
+                    <div class="tab-wrapper">
+                        <div class="table-title" ng-hide="isGSSLinkDisabled">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-primary add-new-t01" id="btnGSSLinkSelect" ng-click="addGSSLink()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add new GSS link</button>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div style="overflow-x: auto;">
+                            <table class="table table-bordered" ng-table="gsslinkTableParams" show-filter="true">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px; background-color: #68aaa3; color: white" class="{{isGSSLinkDisabled?'header-table-disabled':''}}">@Resources.No</th>
+                                        <th style="background-color: #68aaa3; color: white" class="{{isGSSLinkDisabled?'header-table-disabled':''}}">@Resources.GesCommentaryDescription</th>
+                                        <th style="width: 160px; background-color: #68aaa3; color: white" class="{{isGSSLinkDisabled?'header-table-disabled':''}}">@Resources.GesCommentaryCreated</th>
+                                        <th style="width: 160px; background-color: #68aaa3; color: white" class="{{isGSSLinkDisabled?'header-table-disabled':''}}">@Resources.GesCommentaryModifyDate</th>
+                                        <th style="width: 70px; background-color: #68aaa3" class="{{isGSSLinkDisabled?'header-table-disabled':''}}"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="gsslink in $data">
+                                        <td>
+                                            {{$index + 1}}
+                                        </td>
+                                        <td>
+                                            {{gsslink.Description.substr(0,300)}}...
+                                        </td>
+                                        <td filter="{ CreatedString: 'text'}" sortable="'CreatedString'">
+                                            {{gsslink.CreatedString}}
+                                        </td>
+                                        <td>
+                                            {{gsslink.GSSLinkModifiedString}}
+                                        </td>
+                                        <td>
+                                            <a class="edit-t01" title="Edit" data-toggle="modal" data-target="#gsslink-dialog" ng-click="editGSSLink(gsslink)"><i class="material-icons">&#xe22b;</i></a>
+                                            <a class="delete-t01 {{isGSSLinkDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteGSSLink(gsslink)"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideGEScommentary?'active':''}} tab-pane" id="news-list" ng-controller="CaseProfileNewsController" ng-hide="isHideNews">
+                    <div class="tab-wrapper">
+                        <div class="table-title" ng-hide="isNewsDisabled">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-primary add-new-t01" id="btnNewsSelect" ng-click="addNews()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add new News</button>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div style="overflow-x: auto;">
+                            <table class="table table-bordered" ng-table="newsTableParams">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px; background-color: #68aaa3; color: white" class="{{isNewsDisabled?'header-table-disabled':''}}">@Resources.No</th>
+                                        <th style="background-color: #68aaa3; color: white" class="{{isNewsDisabled?'header-table-disabled':''}}">@Resources.NewsDescription</th>
+                                        <th style="width: 160px; background-color: #68aaa3; color: white" class="{{isNewsDisabled?'header-table-disabled':''}}">@Resources.NewsCreated</th>
+                                        <th style="width: 160px; background-color: #68aaa3; color: white" class="{{isNewsDisabled?'header-table-disabled':''}}">@Resources.NewsModifyDate</th>
+                                        <th style="width: 70px; background-color: #68aaa3" class="{{isNewsDisabled?'header-table-disabled':''}}"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="news in $data">
+                                        <td>
+                                            {{$index + 1}}
+                                        </td>
+                                        <td>
+                                            {{news.Description.substr(0,300)}}...
+                                        </td>
+                                        <td>
+                                            {{news.CreatedString}}
+                                        </td>
+                                        <td>
+                                            {{news.LatestNewsModifiedString}}
+                                        </td>
+                                        <td>
+                                            <a class="edit-t01" title="Edit" data-toggle="modal" data-target="#news-dialog" ng-click="editNews(news)"><i class="material-icons">&#xe22b;</i></a>
+                                            <a class="delete-t01 {{isNewsDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteNews(news)"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-tabs-custom" ng-hide="isHideChangeobjective && isHideMilestone && isHideNextStep && isHideDiscussionpoints && isHideOtherstakeholders">
+            <ul class="nav nav-tabs hidden-print">
+                <li class="active" ng-hide="isHideChangeobjective && isHideMilestone && isHideNextStep">
+                    <a href="#engagement-information" data-toggle="tab">@Resources.EngagementInformation</a>
+                </li>
+                <li ng-hide="isHideDiscussionpoints" class="{{isHideChangeobjective && isHideMilestone && isHideNextStep?'active':''}}">
+                    <a href="#discussion" data-toggle="tab">@Resources.DiscussionPoints</a>
+                </li>
+                <li ng-hide="isHideOtherstakeholders" class="{{isHideChangeobjective && isHideMilestone && isHideNextStep && isHideDiscussionpoints ?'active':''}}">
+                    <a href="#stakeholders-views" data-toggle="tab">@Resources.StakeholdersViews</a>
+                </li>
+            </ul>
+
+            <div class="tab-content hidden-print">
+                <div class="active tab-pane" id="engagement-information" ng-hide="isHideChangeobjective && isHideMilestone && isHideNextStep">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block" ng-hide="isHideChangeobjective">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isChangeobjectiveDisabled?'entity-disable-text':''}}">@Resources.ChangeObjective <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-change-objective-instructions" data-tooltip-title=@Resources.CaseProfileChangeObjectiveInstructions></i></p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{isChangeobjectiveDisabled?'entity-disable-text':''}}">
+                                <textarea maxlength="5000" class="ges-content" click-to-edit-text-area ng-model="caseProfile.ProcessGoal" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-controller="caseProfileMileStoneController" ng-hide="isHideMilestone">
+                            <div class="title {{isMilestoneDisabled?'entity-disable-text':''}}">@Resources.Milestone</div>
+                            <hr class="style10"/>
+                            <div class="table-title" ng-hide="isMilestoneDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addMilestone()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add milestone</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-status" >
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 85px;background-color: #68aaa3" class="{{isMilestoneDisabled?'header-table-disabled':''}}">Date</th>
+                                        <th style="width: 100px;background-color: #68aaa3" class="{{isMilestoneDisabled?'header-table-disabled':''}}">Milestone</th>
+                                        <th style="width: 180px;background-color: #68aaa3" class="{{isMilestoneDisabled?'header-table-disabled':''}}">Description</th>
+                                        <th style="width: 40px;background-color: #68aaa3" class="{{isMilestoneDisabled?'header-table-disabled':''}}"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="mileStone in mileStones">
+                                        <td style="vertical-align: middle;">
+                                            {{mileStone.MilestoneModified | date: "yyyy-MM-dd"}}
+                                        </td>
+                                        <td>
+                                            {{mileStone.GesMilestoneTypeName}}
+                                        </td>
+                                        <td style="text-align: left;">
+                                            {{mileStone.MilestoneDescription}}
+                                        </td>
+                                        <td>
+                                            <a class="edit-t01" title="Edit" data-toggle="modal" ng-click="editMilestone(mileStone)"><i class="material-icons">&#xe22b;</i></a>
+                                            <a class="delete-t01 {{isMilestoneDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteMileStone(mileStone)"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       
+                        <div class="ges-content-block" ng-hide="isHideNextStep">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{isNextStepDisabled?'entity-disable-text':''}}">@Resources.NextStep</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{isNextStepDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.ProcessStep" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideChangeobjective && isHideMilestone && isHideNextStep?'active':''}} tab-pane" id="discussion" ng-controller="CaseProfileDiscussionController" ng-hide="isHideDiscussionpoints">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="table-title" ng-hide="isDiscussionpointsDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addDiscussionPoint()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add discussion points</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="discussionPointsTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isDiscussionpointsDisabled?'header-table-disabled':''}}">Name</th>
+                                            <th style="background-color: #68aaa3; color: white" class="{{isDiscussionpointsDisabled?'header-table-disabled':''}}">Description</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isDiscussionpointsDisabled?'header-table-disabled':''}}">Created</th>
+                                            <th style="width: 70px; background-color: #68aaa3; color: white" class="{{isDiscussionpointsDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="discussionPoint in $data">
+                                            <td>
+                                                {{discussionPoint.Name}}
+                                            </td>
+                                            <td>
+                                                {{discussionPoint.Description.substr(0,300)}}...
+                                            </td>
+                                            <td>
+                                                {{discussionPoint.Created | date: "yyyy-MM-dd"}}
+                                            </td>
+                                            <td>
+                                                <a class="edit-t01" title="Edit" data-toggle="modal" data-target="#discussion-point-dialog" ng-click="editDiscussionPoint(discussionPoint)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isDiscussionpointsDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteDiscussionPoint(discussionPoint)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideChangeobjective && isHideMilestone && isHideNextStep && isHideDiscussionpoints ?'active':''}} tab-pane" id="stakeholders-views" ng-controller="CaseProfileStakeholderController" ng-hide="isHideOtherstakeholders">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="table-title" ng-hide="isOtherstakeholdersDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" ng-click="addStakeholder()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add other stakeholder</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="stakeholderViewsTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isOtherstakeholdersDisabled?'header-table-disabled':''}}">Name</th>
+                                            <th style="width: 300px; background-color: #68aaa3; color: white" class="{{isOtherstakeholdersDisabled?'header-table-disabled':''}}">Description</th>
+                                            <th style="background-color: #68aaa3; color: white" class="{{isOtherstakeholdersDisabled?'header-table-disabled':''}}">Url</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isOtherstakeholdersDisabled?'header-table-disabled':''}}">Created</th>
+                                            <th style="width: 70px; background-color: #68aaa3; color: white" class="{{isOtherstakeholdersDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="otherStakeholder in $data">
+                                            <td>
+                                                {{otherStakeholder.Name}}
+                                            </td>
+                                            <td>
+                                                {{otherStakeholder.Description.substr(0,300)}}...
+                                            </td>
+                                            <td>
+                                                {{otherStakeholder.Url.substr(0,50)}}...
+                                            </td>
+                                            <td>
+                                                {{otherStakeholder.Created | date: "yyyy-MM-dd"}}
+                                            </td>
+                                            <td>
+                                                <a class="edit-t01" title="Edit" ng-click="editStakeholderView(otherStakeholder)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isOtherstakeholdersDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteStakeholderView(otherStakeholder)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-tabs-custom" ng-hide="isHideAssociatedCorporations && isHideSources && isHideReferences && isHideSupplementaryReading">
+            <ul class="nav nav-tabs hidden-print">
+                <li class="active" ng-hide="isHideAssociatedCorporations">
+                    <a href="#associated-corporations" data-toggle="tab">@Resources.AssociatedCorporations</a>
+                </li>
+                <li ng-hide="isHideSources" class="{{isHideAssociatedCorporations?'active':''}}">
+                    <a href="#sources" data-toggle="tab">@Resources.Sources</a>
+                </li>
+                <li ng-hide="isHideReferences" class="{{isHideAssociatedCorporations && isHideSources?'active':''}}">
+                    <a href="#references" data-toggle="tab">@Resources.References</a>
+                </li>
+                <li ng-hide="isHideSupplementaryReading" class="{{isHideAssociatedCorporations && isHideSources && isHideReferences?'active':''}}">
+                    <a href="#supplementary-reading" data-toggle="tab">@Resources.SupplementaryReading</a>
+                </li>
+            </ul>
+
+            <div class="tab-content hidden-print">
+                <div class="active tab-pane" id="associated-corporations" ng-controller="CaseProfileAssociatedCorporationsController" ng-hide="isHideAssociatedCorporations">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="table-title" ng-hide="isAssociatedCorporationsDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" ng-click="addAssociatedCorporation()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add associated corporations</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="caseprofileAssociatedCorporationsTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isAssociatedCorporationsDisabled?'header-table-disabled':''}}">Name</th>
+                                            <th style="width: 300px; background-color: #68aaa3; color: white" class="{{isAssociatedCorporationsDisabled?'header-table-disabled':''}}">Ownership</th>
+                                            <th style="background-color: #68aaa3; color: white" class="{{isAssociatedCorporationsDisabled?'header-table-disabled':''}}">Comment</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isAssociatedCorporationsDisabled?'header-table-disabled':''}}">Traded</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isAssociatedCorporationsDisabled?'header-table-disabled':''}}">ShowInReport</th>
+                                            <th style="width: 70px; background-color: #68aaa3; color: white" class="{{isAssociatedCorporationsDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="associated in $data">
+                                            <td>
+                                                {{associated.Name}}
+                                            </td>
+                                            <td>
+                                                {{associated.Ownership}}...
+                                            </td>
+                                            <td>
+                                                {{associated.Comment.substr(0,300)}}...
+                                            </td>
+                                            <td>
+                                                {{associated.Traded}}
+                                            </td>
+                                            <td>
+                                                {{associated.ShowInReport}}
+                                            </td>
+                                            <td>
+                                                <a class="edit-t01" title="Edit" ng-click="editAssociatedCorporation(associated)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isAssociatedCorporationsDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteAssociatedCorporation(associated)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideAssociatedCorporations?'active':''}} tab-pane" id="sources" ng-controller="CaseProfileSourcesController" ng-hide="isHideSources">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="table-title" ng-hide="isSourcesDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" ng-click="addSource()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add source</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="caseprofileSourcesTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isSourcesDisabled?'header-table-disabled':''}}">Source</th>
+                                            <th style="width: 140px; background-color: #68aaa3; color: white" class="{{isSourcesDisabled?'header-table-disabled':''}}">Publication Year</th>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isSourcesDisabled?'header-table-disabled':''}}">Available From</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isSourcesDisabled?'header-table-disabled':''}}">Accessed</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isSourcesDisabled?'header-table-disabled':''}}">Main Source</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isSourcesDisabled?'header-table-disabled':''}}">Name</th>
+                                            <th style="width: 70px; background-color: #68aaa3; color: white" class="{{isSourcesDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="source in $data">
+                                            <td>
+                                                {{source.Source}}
+                                            </td>
+                                            <td>
+                                                {{source.PublicationYear}}
+                                            </td>
+                                            <td>
+                                                {{source.AvailableFrom}}
+                                            </td>
+                                            <td>
+                                                {{source.Accessed | date: "yyyy-MM-dd"}}
+                                            </td>
+                                            <td>
+                                                {{source.MainSource}}
+                                            </td>
+                                            <td>
+                                                {{source.Name}}
+                                            </td>
+                                            <td>
+                                                <a class="edit-t01" title="Edit" ng-click="editSource(source)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isSourcesDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteSource(source)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideAssociatedCorporations && isHideSources?'active':''}} tab-pane" id="references" ng-controller="CaseProfileReferencesController" ng-hide="isHideReferences">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="table-title" ng-hide="isReferencesDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" ng-click="addReference()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add reference</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="caseprofileReferencesTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isReferencesDisabled?'header-table-disabled':''}}">Source</th>
+                                            <th style="width: 140px; background-color: #68aaa3; color: white" class="{{isReferencesDisabled?'header-table-disabled':''}}">Publication Year</th>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isReferencesDisabled?'header-table-disabled':''}}">Available From</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isReferencesDisabled?'header-table-disabled':''}}">Accessed</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isReferencesDisabled?'header-table-disabled':''}}">Name</th>
+                                            <th style="width: 70px; background-color: #68aaa3; color: white" class="{{isReferencesDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="reference in $data">
+                                            <td>
+                                                {{reference.Source}}
+                                            </td>
+                                            <td>
+                                                {{reference.PublicationYear}}
+                                            </td>
+                                            <td>
+                                                {{reference.AvailableFrom}}
+                                            </td>
+                                            <td>
+                                                {{reference.Accessed | date: "yyyy-MM-dd"}}
+                                            </td>
+                                            <td>
+                                                {{reference.Name}}
+                                            </td>
+                                            <td>
+                                                <a class="edit-t01" title="Edit" ng-click="editReference(reference)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isReferencesDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteReference(reference)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="{{isHideAssociatedCorporations && isHideSources && isHideReferences?'active':''}} tab-pane" id="supplementary-reading" ng-controller="CaseProfileSupplementaryReadingController" ng-hide="isHideSupplementaryReading">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="table-title" ng-hide="isSupplementaryReadingDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" ng-click="addSupplementaryReading()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add supplementary reading</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="caseprofileSupplementaryReadingsTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isSupplementaryReadingDisabled?'header-table-disabled':''}}">Source</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isSupplementaryReadingDisabled?'header-table-disabled':''}}">Publication Year</th>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isSupplementaryReadingDisabled?'header-table-disabled':''}}">Available From</th>
+                                            <th style="width: 100px; background-color: #68aaa3; color: white" class="{{isSupplementaryReadingDisabled?'header-table-disabled':''}}">Accessed</th>
+                                            <th style="width: 70px; background-color: #68aaa3; color: white" class="{{isSupplementaryReadingDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="supplementary in $data">
+                                            <td>
+                                                {{supplementary.Source}}
+                                            </td>
+                                            <td>
+                                                {{supplementary.PublicationYear}}
+                                            </td>
+                                            <td>
+                                                {{supplementary.AvailableFrom}}
+                                            </td>
+                                            <td>
+                                                {{supplementary.Accessed | date: "yyyy-MM-dd"}}
+                                            </td>
+                                            <td>
+                                                <a class="edit-t01" title="Edit" ng-click="editSupplementaryReading(supplementary)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isSupplementaryReadingDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteSupplementaryReading(supplementary)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-tabs-custom" ng-hide="isHide360IncidentAnalysisSummary && isHide360IncidentAnalysisDialogueAndAnalysis && isHide360IncidentAnalysisConclusion && isHide360IncidentAnalysisGuidelinesandconventions && isHide360IncidentAnalysisSources && isHide360ClosingIncidentAnalysisSummary && isHide360ClosingIncidentAnalysisDialogueAndAnalysis && isHide360ClosingIncidentAnalysisConclusion">
+            <ul class="nav nav-tabs hidden-print">
+                <li class="active" ng-hide="isHide360IncidentAnalysisSummary && isHide360IncidentAnalysisDialogueAndAnalysis && isHide360IncidentAnalysisConclusion && isHide360IncidentAnalysisGuidelinesandconventions && isHide360IncidentAnalysisSources">
+                    <a href="#case-incident-analysis" data-toggle="tab">@Resources.CaseIncidentAnalysis</a>
+                </li>
+                <li class="{{isHide360IncidentAnalysisSummary && isHide360IncidentAnalysisDialogueAndAnalysis && isHide360IncidentAnalysisConclusion && isHide360IncidentAnalysisGuidelinesandconventions && isHide360IncidentAnalysisSources?'active':''}}" ng-hide="isHide360ClosingIncidentAnalysisSummary && isHide360ClosingIncidentAnalysisDialogueAndAnalysis && isHide360ClosingIncidentAnalysisConclusion">
+                    <a href="#case-closing-incident-analysis" data-toggle="tab">@Resources.CaseClosingIncidentAnalysis</a>
+                </li>
+            </ul>
+            <div class="tab-content hidden-print">
+                <div class="active tab-pane" id="case-incident-analysis" ng-hide="isHide360IncidentAnalysisSummary && isHide360IncidentAnalysisDialogueAndAnalysis && isHide360IncidentAnalysisConclusion && isHide360IncidentAnalysisGuidelinesandconventions && isHide360IncidentAnalysisSources">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block" ng-hide="isHide360IncidentAnalysisSummary">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{is360IncidentAnalysisSummaryDisabled?'entity-disable-text':''}}">@Resources.Summary</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{is360IncidentAnalysisSummaryDisabled?'entity-disable-text':''}}">
+                                <textarea click-to-edit-text-area ng-model="caseProfile.IncidentAnalysisSummary" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-hide="isHide360IncidentAnalysisDialogueAndAnalysis">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{is360IncidentAnalysisDialogueAndAnalysisDisabled?'entity-disable-text':''}}">@Resources.DialogueAndAnalysis <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-dialogue-analysis-instructions" data-tooltip-title=@Resources.CaseProfileDialogueAnalysisInstructions></i></p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{is360IncidentAnalysisDialogueAndAnalysisDisabled?'entity-disable-text':''}}">
+                                <textarea maxlength="5000" class="ges-content" click-to-edit-text-area ng-model="caseProfile.IncidentAnalysisDialogueAndAnalysis" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-hide="isHide360IncidentAnalysisConclusion">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{is360IncidentAnalysisConclusionDisabled?'entity-disable-text':''}}">@Resources.Conclusion</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{is360IncidentAnalysisConclusionDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.IncidentAnalysisConclusion" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-hide="isHide360IncidentAnalysisGuidelinesandconventions">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{is360IncidentAnalysisGuidelinesandconventionsDisabled?'entity-disable-text':''}}">@Resources.GuidelineAndConvention</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{is360IncidentAnalysisGuidelinesandconventionsDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.IncidentAnalysisGuidelines" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-hide="isHide360IncidentAnalysisSources">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{is360IncidentAnalysisSourcesDisabled?'entity-disable-text':''}}">@Resources.Sources</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{is360IncidentAnalysisSourcesDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.IncidentAnalysisSources" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="{{isHide360IncidentAnalysisSummary && isHide360IncidentAnalysisDialogueAndAnalysis && isHide360IncidentAnalysisConclusion && isHide360IncidentAnalysisGuidelinesandconventions && isHide360IncidentAnalysisSources?'active':''}} tab-pane" id="case-closing-incident-analysis" ng-hide="isHide360ClosingIncidentAnalysisSummary && isHide360ClosingIncidentAnalysisDialogueAndAnalysis && isHide360ClosingIncidentAnalysisConclusion">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block" ng-hide="isHide360ClosingIncidentAnalysisSummary">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{is360ClosingIncidentAnalysisSummaryDisabled?'entity-disable-text':''}}">@Resources.Summary</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{is360ClosingIncidentAnalysisSummaryDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.ClosingIncidentAnalysisSummary" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-hide="isHide360ClosingIncidentAnalysisDialogueAndAnalysis">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{is360ClosingIncidentAnalysisDialogueAndAnalysisDisabled?'entity-disable-text':''}}">@Resources.DialogueAndAnalysis</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{is360ClosingIncidentAnalysisDialogueAndAnalysisDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.ClosingIncidentAnalysisDialogueAndAnalysis" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="ges-content-block" ng-hide="isHide360ClosingIncidentAnalysisConclusion">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p class="{{is360ClosingIncidentAnalysisConclusionDisabled?'entity-disable-text':''}}">@Resources.Conclusion</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <div class="{{is360ClosingIncidentAnalysisConclusionDisabled?'entity-disable-text':''}}">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="caseProfile.ClosingIncidentAnalysisConclusion" is-edit-state="isNewCaseProfile"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-xs-4">
+        <div class="box box-primary" style="border-top-color:red" ng-show="isFormInvalid">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-warning" style="font-size:32px;color:red" aria-hidden="true"></i> @Resources.SavingErrorList</h3>
+            </div>
+            <div class="box-body">
+                <div ng-repeat="error in validateMessage">
+                    <p style="color: red"><i class="fa fa-warning"></i> {{error.text}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary" ng-hide="isHideCompanyinfo">
+            <div class="box-header with-border">
+                <h3 class="box-title "><i class="fa fa-archive" aria-hidden="true"></i> @Resources.CompanyInfo</h3>
+            </div>
+            <div class="box-body">
+                <dl class="dl-horizontal">
+                    <dt>@Resources.Company</dt>
+                    <dd>{{caseProfile.CompanyName}}</dd>
+
+                    <dt>@Resources.Isin</dt>
+                    <dd>{{caseProfile.CompanyIsin}}</dd>
+
+                    <dt>@Resources.Industry</dt>
+                    <dd>{{caseProfile.CompanyIndustry}}</dd>
+
+                    <dt>@Resources.HomeCountry</dt>
+                    <dd>{{caseProfile.CompanyHomeCountry}}</dd>
+                    <div ng-show="allowShow">
+                        <dt>@Resources.UnGlobalCompact</dt>
+                        <dd>{{caseProfile.UnGlobalCompact}}</dd>
+                        <dt>@Resources.GriAlignedDisclosure</dt>
+                        <dd>{{caseProfile.GriAlignedDisclosure}}</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <div class="box box-primary box-edit" ng-hide="isHideEntrydate && isHideNorm && isHideLocation && isHideRecommendation && isHideCaseInformationConclusion && isHideEngagementtype">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-briefcase" aria-hidden="true"></i> @Resources.CaseInfo</h3>
+            </div>
+            <div class="box-body">
+                <dl class="dl-horizontal">
+                    <dt style="line-height: 17px;"><label for="showInClient" class="control-pointer">@Resources.ShowInClient</label></dt>
+                    <dd class="simple-control" style="line-height: 0px;">
+                        <input type="checkbox" ng-model="caseProfile.ShowInClient" id="showInClient" class="control-pointer">
+                    </dd>
+                    <dt ng-if="caseProfile.I_GesCaseReports_Id > 0" ><label>Case Id</label></dt>
+                    <dd ng-if="caseProfile.I_GesCaseReports_Id > 0"  class="simple-control" style="line-height: 0px;">
+                        <input type="text" ng-model="caseProfile.I_GesCaseReports_Id" id="gesCaseReports_Id" class="form-control form-control-text" ng-disabled="true">
+                    </dd>
+                    <dt ng-hide="isHideEntrydate" class="{{isEntrydateDisabled?'header-disabled':''}}">@Resources.EntryDate</dt>
+                    <dd ng-hide="isHideEntrydate">
+                        <input type="text" ng-disabled="isEntrydateDisabled"  date-picker  ng-model="caseProfile.EntryDate" class="form-control form-control-text"/>  
+                    </dd>
+                    <dt ng-hide="isHideNorm" class="{{isNormDisabled?'header-disabled':''}}">@Resources.Norm</dt>
+                    <dd ng-hide="isHideNorm">
+                        <select ng-model="caseProfile.I_NormAreas_Id" ng-disabled="isNormDisabled" style="{{isNormDisabled?'background-color:#dddddd':''}}" id="norm-select" name="normSelect" class="form-control">
+                            <option value="">Select Norm</option>
+                            <option ng-repeat="normArea in normAreas" value="{{normArea.I_NormAreas_Id}}">{{normArea.Name}}</option>
+                        </select>
+                    </dd>
+                    <dt class="{{isLocationDisabled?'header-disabled':''}}" ng-hide="isHideLocation">@Resources.Location</dt>
+                    <dd ng-hide="isHideLocation" ng-class="isFormInvalid && caseProfileForm.countrySelect.$invalid ? '' : ''">
+                        <select class="form-control" ng-disabled="isLocationDisabled" ng-model="caseProfile.CountryId" id="country-select" ng-change="validateUpdate('country-select',caseProfile.CountryId)" name="countrySelect" ng-required="true">
+                            <option value="">Select Country</option>
+                            <option ng-repeat="country in countries" value="{{country.Id}}" data-country-code="{{country.CountryCode}}">
+                                {{country.FullName}}
+                            </option>
+                        </select>
+                    </dd>
+                    <dt ng-hide="isHideRecommendation" class="{{isRecommendationDisabled?'header-disabled':''}}">@Resources.EngagementStatus</dt>
+                    <dd ng-hide="isHideRecommendation">
+                        <select ng-model="caseProfile.NewI_GesCaseReportStatuses_Id" ng-disabled="isRecommendationDisabled" ng-change="updateTemplate()" id="recommendation-select" class="form-control">
+                            <option value="">Select Engagement status</option>
+                            <option ng-repeat="recommendation in recommendations" value="{{recommendation.I_GesCaseReportStatuses_Id}}">{{recommendation.Name}}</option>
+                        </select>
+                    </dd>
+                    <dt ng-hide="isHideRecommendation"></dt>
+                    <dd ng-hide="isHideRecommendation">
+                        <div ng-controller="caseProfileRecommendationLogController">
+                            <input type="button" class="btn btn-primary" value="@Resources.ViewArchive" data-toggle="modal" data-target="#recommendation-dialog" ng-click="viewRecommendationForm()" ng-disabled="isSaving||isNewCaseProfile"/>
+                        </div>
+                    </dd>
+                    @* <dt ng-hide="isHideCaseInformationConclusion" class="{{isCaseInformationConclusionDisabled?'header-disabled':''}}">@Resources.Conclusion</dt> *@
+                    @* <dd ng-hide="isHideCaseInformationConclusion"> *@
+                    @*     <select ng-model="caseProfile.I_GesCaseReportStatuses_Id" ng-disabled="isCaseInformationConclusionDisabled" id="conclusion-select" class="form-control"> *@
+                    @*         <option value="">Select Conclusion</option> *@
+                    @*         <option ng-repeat="conclusion in conclusions" value="{{conclusion.I_GesCaseReportStatuses_Id}}">{{conclusion.Name}}</option> *@
+                    @*     </select> *@
+                    @* </dd> *@
+                    @* <dt ng-hide="isHideCaseInformationConclusion"></dt> *@
+                    @* <dd ng-hide="isHideCaseInformationConclusion"> *@
+                    @*     <div ng-controller="caseProfileConclusionLogController"> *@
+                    @*         <input type="button" class="btn btn-primary" value="@Resources.ViewArchive" data-toggle="modal" data-target="#conclusion-dialog" ng-click="viewConclusionForm()" ng-disabled="isSaving||isNewCaseProfile" /> *@
+                    @*     </div> *@
+                    @* </dd> *@
+                    <dt class="required-field {{isEngagementtypeDisabled?'header-disabled':''}}" ng-hide="isHideEngagementtype">@Resources.EngagementType</dt>
+                    <dd ng-hide="isHideEngagementtype" ng-class="(isFormInvalid && caseProfileForm.engagementTypeSelect.$invalid)? 'required' : ''">
+                        <select ng-model="caseProfile.I_Engagement_Type_Id" ng-disabled="isEngagementtypeDisabled" ng-change="engagementTypesUpdate('engagement-type-select',caseProfile.I_Engagement_Type_Id)" id="engagement-type-select" name="engagementTypeSelect" class="form-control" ng-required="true">
+                            <option value="">Select Engagement type</option>
+                            <option ng-repeat="engagementType in engagementTypes" value="{{engagementType.Id}}">{{engagementType.Name}}</option>
+                        </select>
+                    </dd>
+                </dl>
+
+                <table class="table table-status " ng-hide="isHideResponse && isHideProgress">
+                    <thead>
+                        <tr>
+                            <th ng-hide="isHideResponse" style="background-color:#68aaa3" class="{{isResponseDisabled?'header-table-disabled':''}}">@Resources.ResponseStatus</th>
+                            <th ng-hide="isHideProgress" style="background-color:#68aaa3" class="{{isProgressDisabled?'header-table-disabled':''}}">@Resources.ProgressStatus</th>
+                            @*<th>@Resources.MilestoneStatus</th>*@
+                            <th ng-hide="isHideDevelopment" style="background-color:#68aaa3;width: 85px" class="{{isResponseDisabled && isProgressDisabled?'header-table-disabled':''}}">@Resources.DevelopmentStatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td ng-hide="isHideResponse">
+                                <select style="width: 100%" ng-disabled="isResponseDisabled" class="form-control status-select" ng-model="caseProfile.I_ResponseStatuses_Id"
+                                        id="response-status-select" ng-change="getDevelopmentGradeText()">
+                                    <option value="">Select Response</option>
+                                    <option ng-repeat="responseStatus in responseStatuses" value="{{responseStatus.I_ResponseStatuses_Id}}">{{responseStatus.ShortName}}</option>
+                                </select>
+                            </td>
+                            <td ng-hide="isHideProgress">
+                                <select style="width: 100%" ng-disabled="isProgressDisabled" class="form-control status-select" ng-model="caseProfile.I_ProgressStatuses_Id"
+                                        id="progress-status-select" ng-change="getDevelopmentGradeText()">
+                                    <option value="">Select Progress</option>
+                                    <option ng-repeat="progressStatus in progressStatuses" value="{{progressStatus.I_ProgressStatuses_Id}}">{{progressStatus.ShortName}}</option>
+                                </select>
+                            </td>
+
+
+                            @*<td>
+                                    <select class="form-control status-select" ng-model="caseProfile.MileStone" id="milestone-select">
+                                        <option value="">Select Milestone</option>
+                                        <option ng-repeat="milestone in milestones" value="{{milestone.value}}">{{milestone.name}}</option>
+                                    </select>
+                                </td>*@
+                            <td style="vertical-align: middle">
+                                <img class="development-status-icon" alt="" src="/Content/img/icons/development_{{calculatedDevelopmentGrade.toLowerCase()}}.png" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="box box-primary" ng-hide="isHideGEScontactinformation">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    @Resources.GESContactInformation
+                </h3>
+            </div>
+
+            <div class="box-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        <object data="{{currentUser.RetrievedImageUrlLower}}"  type="image/png" class="profile-user-img profile-user-img-custom img-responsive img-circle" id="userImageUrlLower">
+                            <object data="{{currentUser.RetrievedImageUrl}}" type="image/png" class="img-responsive img-circle" id="userImageUrl">
+                                <img class="img-responsive img-circle" src="/Content/img/user-avatar-160x160.jpg" alt="User profile picture" />
+                            </object>
+                        </object>
+                    </dt>
+                    <dd>
+                        <div class="user-info-wrapper">
+                            <div class="user-info">
+                                <select ng-model="caseProfile.AnalystG_Users_Id" ng-disabled="isGEScontactinformationDisabled" id="user-select" ng-change="GetUserById()" class="form-control">
+                                    <option value="">Select User</option>
+                                    <option ng-repeat="user in users" value="{{user.UserId}}">{{user.FullName}}</option>
+                                </select>
+                                <div ng-if="currentUser !== null">
+                                    {{currentUser.JobTitle}}
+                                    <br />
+                                    <a>
+                                        {{currentUser.Email}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="nav-tabs-custom" ng-hide="isHideSDGs && isHideGuidelineslist && isHideConventions">
+            <ul class="nav nav-tabs hidden-print">
+                <li class="active {{isHideGuidelineslist && isHideConventions?'active':''}}" ng-hide="isHideSDGs">
+                    <a href="#sustainable-development-goals" data-toggle="tab">
+                        @Resources.SustainableDevelopmentGoals
+                    </a>
+                </li>
+                <li ng-hide="isHideGuidelineslist" class="{{isHideSDGs?'active':''}}">
+                    <a href="#case-guidelines" data-toggle="tab">
+                        @Resources.Guidelines
+                    </a>
+                </li>
+                <li ng-hide="isHideConventions" class="{{isHideSDGs && isHideGuidelineslist?'active':''}}">
+                    <a href="#case-conventions" data-toggle="tab">
+                        @Resources.Conventions
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content hidden-print">
+                <div class="active {{isHideGuidelineslist && isHideConventions?'active':''}}  tab-pane" id="sustainable-development-goals" ng-controller="CaseProfileSdgController" ng-hide="isHideSDGs">
+                    @{ Html.RenderPartial("SdgDialog"); }
+                    <div class="tab-wrapper">
+                        <label ng-show="selectedSdgs === null || selectedSdgs.length === 0">There is no SDG for this case profile.</label>
+                        <ul id="sortable" ng-hide="selectedSdgs === null || selectedSdgs.length === 0">
+                            <div class="{{isSDGsDisabled?'entity-disable-text':''}}">
+                                <li ng-repeat="sdg in selectedSdgs" id="{{sdg.Sdg_Id}}" class="relative-width" title="Move to change position">
+                                    <i class="fa fa-close" aria-hidden="true" title="Remove SDG" ng-click="removeSdg(sdg)"></i>
+                                    <img src="@Url.Action("Download", "DocumentMgmt", null, Request?.Url?.Scheme)?documentId={{sdg.DocumentId}}" alt="sdg icon"/>
+                                
+                                </li>
+                            </div>
+                        </ul>
+                        <br />
+                        <input type="button" ng-hide="isSDGsDisabled" class="btn btn-primary" value="@Resources.SelectSdg" data-toggle="modal" data-target="#sdg-dialog" ng-disabled="isSaving||isNewCaseProfile" />
+                    </div>
+                </div>
+                <div class="{{isHideSDGs?'active':''}} tab-pane" id="case-guidelines" ng-controller="CaseProfileGuidelineController" ng-hide="isHideGuidelineslist">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="table-title" ng-hide="isGuidelineslistDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addGuideline()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add guideline</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="caseprofileGuidelinesTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isGuidelineslistDisabled?'header-table-disabled':''}}">Name</th>
+                                            <th style="width: 70px; background-color: #68aaa3; color: white" class="{{isGuidelineslistDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="guideline in $data">
+                                            <td>
+                                                {{GetNormSectionTitle(guideline.I_Norms_Id)}}
+                                            </td>
+                                            <td>
+                                                <a class="edit-t01" title="Edit" data-toggle="modal" ng-click="editGuideline(guideline)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isGuidelineslistDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteGuideline(guideline)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="{{isHideSDGs && isHideGuidelineslist?'active':''}} tab-pane" id="case-conventions" ng-controller="CaseProfileConventionController" ng-hide="isHideConventions">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="table-title" ng-hide="isConventionsDisabled">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <br />
+                                        <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addConvention()" ng-disabled="isSaving||isNewCaseProfile"><i class="fa fa-plus"></i> Add convention</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="caseprofileConventionsTableParams">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 250px; background-color: #68aaa3; color: white" class="{{isConventionsDisabled?'header-table-disabled':''}}">Name</th>
+                                            <th style="width: 70px; background-color: #68aaa3; color: white" class="{{isConventionsDisabled?'header-table-disabled':''}}"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="convention in $data">
+                                            <td>
+                                                {{GetConventionName(convention.I_Conventions_Id)}}
+                                            </td>
+                                            <td>
+                                                <a class="edit-t01" title="Edit" data-toggle="modal" ng-click="editConvention(convention)"><i class="material-icons">&#xe22b;</i></a>
+                                                <a class="delete-t01 {{isConventionsDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteConvention(convention)"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="box box-primary" ng-controller="CaseProfileKPIController" ng-hide="isHideKpis">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <i class="fa fa-area-chart" aria-hidden="true"></i>
+                @Resources.Kpis
+            </h3>
+            <div class="row" ng-hide="isKpisDisabled">
+                <div class="col-sm-8">
+                    <br />
+                    <button type="button" class="btn btn-primary add-new-t01" ng-click="addKpi()" ng-disabled="isSaving||isNewCaseProfile || isNotAllowAddKpi"><i class="fa fa-plus"></i> Add new KPI</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-body" style="overflow-x: auto;">
+
+            <table class="table table-status">
+                <thead>
+                <tr >
+                    <th style="width: 43px;background-color:#68aaa3" class="{{isKpisDisabled?'header-table-disabled':''}}">@Resources.KpiId</th>
+                    <th style="width: 205px;background-color:#68aaa3" class="{{isKpisDisabled?'header-table-disabled':''}}">@Resources.Kpi</th>
+                    <th style="width: 115px;background-color:#68aaa3" class="{{isKpisDisabled?'header-table-disabled':''}}">@Resources.Performance</th>
+                    <th style="width: 100px;background-color:#68aaa3" class="{{isKpisDisabled?'header-table-disabled':''}}">@Resources.KpiCreated</th>
+                    <th style="width: 40px;background-color:#68aaa3" class="{{isKpisDisabled?'header-table-disabled':''}}"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="kpi in editingKpis">
+                    <td style="vertical-align: middle">
+                        {{kpi.I_GesCaseReportsI_Kpis_Id}}
+                    </td>
+                    <td>
+                        {{GetKpiNamebyId(kpi.I_Kpis_Id)}}
+                    </td>
+                    <td>
+                        {{GetKpiPerformanceNamebyId(kpi.I_KpiPerformance_Id)}}
+                    </td>
+                    <td style="vertical-align: middle">
+                        {{kpi.Created}}
+                    </td>
+                    <td>
+                        <a class="edit-t01" title="Edit" data-toggle="modal" data-target="#kpi-dialog" ng-click="editKpi(kpi)"><i class="material-icons">&#xe22b;</i></a>
+                        <a class="delete-t01 {{isKpisDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteKpi(kpi)"><i class="material-icons">&#xE872;</i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="box box-primary box-edit" ng-controller="CaseProfileAdditionalDocumentController" ng-hide="isHideAdditionalDocument">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> @Resources.AdditionalDocuments</h3>
+        </div>
+        <div class="box-body" ng-form="companyAdditionalDocumentsForm">
+            <div class="ges-content-block">
+                <div class="table-title">
+                    <div class="row" ng-hide="isAdditionalDocumentDisabled">
+                        <div class="col-sm-8">
+                            <br />
+                            <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addCaseProfileAdditionalDocument()" ng-disabled="isSaving"><i class="fa fa-plus"></i> Add document</button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div style="overflow-x: auto;">
+                    <table class="table table-bordered" ng-table="caseProfileAdditionalDocumentTableParams">
+                        <thead>
+                        <tr>
+                            <th class="{{isAdditionalDocumentDisabled?'header-table-disabled':''}}" style="width: 190px; background-color: #68aaa3; color: white">@Resources.DocumentName</th>
+                            <th class="{{isAdditionalDocumentDisabled?'header-table-disabled':''}}" style="width: 170px; background-color: #68aaa3; color: white">@Resources.DocumentComment</th>
+                            @* <th style="width: 100px; background-color: #68aaa3; color: white">@Resources.UploadedDate</th> *@
+                            <th class="{{isAdditionalDocumentDisabled?'header-table-disabled':''}}" style="width: 70px; background-color: #68aaa3; color: white"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="caseProfileAdditionalDocument in $data">
+                            <td>
+                                {{caseProfileAdditionalDocument.Name}}
+                            </td>
+                            <td>
+                                {{caseProfileAdditionalDocument.Comment}}
+                            </td>
+                            @* <td> *@
+                            @*     {{companyAdditionalDocument.Created | date: "yyyy-MM-dd"}} *@
+                            @* </td> *@
+                            <td>
+                                <a class="edit-t01" title="Edit" ng-click="editCaseProfileAdditionalDocument(caseProfileAdditionalDocument)"><i class="material-icons">&#xe22b;</i></a>
+                                <a class="delete-t01 {{isAdditionalDocumentDisabled?'entity-disable':''}}" title="Delete" data-toggle="tooltip" ng-click="deleteCaseProfileAdditionalDocument(caseProfileAdditionalDocument)"><i class="material-icons">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*TODO: This function will be implemented later*@
+        @*<div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><i class="fa fa-folder" aria-hidden="true"></i> @Resources.AdditionalDocumentsForCompany</h3>
+                </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-striped">
+
+                        <tr ng-repeat="document in documents">
+                            <td>
+                                <a href="{{document.DownloadUrl}}" target="_blank">
+                                    <i class="fa fa-book" aria-hidden="true"></i>
+                                    {{document.Name}}
+                                </a>
+
+                                <i class="document-icon icon-remove glyphicon glyphicon-remove"
+                                   title="Delete document"
+                                   data-confirm-title="Delete document"
+                                   data-confirm-message="Do you want to delete document <b>{{document.Name}}</b>?"
+                                   data-confirm-direction="ltr"
+                                   data-id="{{document.G_ManagedDocuments_Id}}"></i>
+
+                                <i class="document-icon document-icon-pencil glyphicon glyphicon-pencil" title="Edit document" data-toggle="modal" data-target="#document-dialog" ng-click="getDocumentById(document.G_ManagedDocuments_Id)"></i>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div ngf-drop ngf-select ng-model="file" class="drop-box"
+                         ngf-drag-over-class="'dragover'" ngf-change="addNewFile($file)">
+                        <div class="drop-box-text">@Resources.AddNewDocument</div>
+                    </div>
+                    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+
+                </div>
+            </div>*@
+    </div>
+
+    <div class="col-xs-8" ng-controller="CaseProfileUNGPController" ng-hide="isHideUNGPassessmentform">
+        <div class="box box-primary">
+    
+            @{ Html.RenderPartial("UngpAssessmentForm"); }
+    
+        </div>
+    </div>
+    <div class="col-xs-8">
+        <div class="box box-primary" ng-hide="isHideInternalComments">
+            <div class="box-body">
+                <div class="ges-content-block" ng-hide="isHideInternalComments">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p class="{{isInternalCommentsDisabled?'header-disabled' :''}}">@Resources.InternalComments</p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <div class="{{isInternalCommentsDisabled?'entity-disable-text':''}}" >
+                        <textarea name="caseProfileInternalComments" ng-disabled="isInternalCommentsDisabled" click-to-edit-text-area ng-model="caseProfile.Comment" is-edit-state="isNewCaseProfile"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@*@{ Html.RenderPartial("DocumentDialog"); }*@
+
+<div class="button-bottom">
+    <button class="btn btn-success not-outer-right-btn" ng-click="updateCaseProfileData('')">
+        <i class="fa fa-refresh fa-spin" ng-show="isSaving && !savingAndCloseAction"></i> Save
+    </button>
+    <button class="btn btn-success not-outer-right-btn" ng-click="updateCaseProfileData('save_close')">
+        <i class="fa fa-refresh fa-spin" ng-show="isSaving && savingAndCloseAction"></i> Save & Close
+    </button>
+    <input class="btn" type="button" value="Cancel" id="cancel-save"
+           data-confirm-title="Do you want to leave this site?"
+           data-confirm-message="Changes you made may not be saved"
+           data-confirm-direction="ltr"
+           data-confirm-ok="Leave"
+           data-confirm-cancel="Stay" />
+</div>
+
+
+

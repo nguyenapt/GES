@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="62aef5b898414f3983e23312998ad287" Name="Diagram1" ZoomLevel="42">
+        <EntityTypeShape EntityType="GesModel.AlertRatings" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.ControversialRatings" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.E_MessageContent" Width="1.5" PointX="15" PointY="159.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.E_MessageContentG_Individuals" Width="1.5" PointX="24" PointY="168.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.E_Messages" Width="1.5" PointX="12.75" PointY="159.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.E_MessagesR_Lists" Width="1.5" PointX="15" PointY="185.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.EngagementRatings" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.F_CreditReportStates" Width="1.5" PointX="19.5" PointY="162.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Bills" Width="1.5" PointX="30" PointY="168" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ClientDialogue" Width="1.5" PointX="27" PointY="170.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Cultures" Width="1.5" PointX="32" PointY="200.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Departments" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_DocumentManagementTaxonomies" Width="1.5" PointX="13.5" PointY="149.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_DocumentManagementTaxonomiesG_ManagedDocuments" Width="1.5" PointX="15.75" PointY="172.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_FileExtensions" Width="1.5" PointX="15.75" PointY="139.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Forms" Width="1.5" PointX="27" PointY="218.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ForumMessages" Width="1.5" PointX="26.25" PointY="175.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ForumMessages_Tree" Width="1.5" PointX="28.5" PointY="175.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Genders" Width="1.5" PointX="19.5" PointY="160.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Individuals" Width="1.5" PointX="21.75" PointY="167.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_IndividualsG_Services" Width="1.5" PointX="24" PointY="175.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_IndividualsGroups" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Industries" Width="1.5" PointX="8.25" PointY="161.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_IntNameIds" Width="1.5" PointX="21.75" PointY="159.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_IntNames" Width="1.5" PointX="24" PointY="155.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Languages" Width="1.5" PointX="8.25" PointY="157.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_LocalizedLongTexts" Width="1.5" PointX="17.25" PointY="148.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_LocalizedLongTextTranslations" Width="1.5" PointX="19.5" PointY="148.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_LocalizedTexts" Width="1.5" PointX="33" PointY="210.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_LocalizedTextTranslations" Width="1.5" PointX="35.25" PointY="198" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ManagedDocumentApprovalStatuses" Width="1.5" PointX="5.25" PointY="184.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ManagedDocumentItems" Width="1.5" PointX="13" PointY="180" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ManagedDocumentRiskLevels" Width="1.5" PointX="5.25" PointY="186.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ManagedDocuments" Width="2.125" PointX="7.5" PointY="169.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ManagedDocumentServices" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ManagedDocumentsG_ManagedDocumentTaggs" Width="1.5" PointX="15.75" PointY="169.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ManagedDocumentTaggs" Width="1.5" PointX="13.5" PointY="152.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_MarketingMethods" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_MimeTypes" Width="1.5" PointX="13.5" PointY="146.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_MultiLangDescriptions" Width="1.5" PointX="10.5" PointY="159.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_MultiLangNames" Width="1.5" PointX="10.5" PointY="147.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_News" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_NewsCategories" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_NewsTypes" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_OrganizationsCalenderEvents" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_OrganizationsG_Services" Width="1.5" PointX="26.25" PointY="179.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_OrganizationsI_ClientStatuses" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Pages" Width="1.5" PointX="30" PointY="216.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_PaymentMethods" Width="1.5" PointX="8.25" PointY="181.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Provinces" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_QualityPolicies" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Reminders" Width="1.5" PointX="32.25" PointY="164.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ReportingPageModules" Width="1.5" PointX="18.75" PointY="181.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ReportingTemplates" Width="1.5" PointX="18.75" PointY="190.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ReportingTemplatesG_ReportingModules" Width="1.5" PointX="21" PointY="180.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_SalesRatings" Width="1.5" PointX="8.25" PointY="154.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_SaleStates" Width="1.5" PointX="8.25" PointY="151.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Searches" Width="1.5" PointX="8.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_SecurityGroups" Width="1.5" PointX="27" PointY="201.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_SecurityGroupsG_Forms" Width="1.5" PointX="29.25" PointY="201" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_SecurityGroupsG_Pages" Width="1.5" PointX="32.25" PointY="197.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_SecurityGroupsG_SecurityRights" Width="1.5" PointX="34.25" PointY="201.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_SecurityRights" Width="1.5" PointX="32" PointY="207.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Services" Width="1.5" PointX="5.25" PointY="158.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_ServiceStates" Width="1.5" PointX="24" PointY="159.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_StandardTextCategories" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_StandardTexts" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Texts" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_TimeZones" Width="1.5" PointX="19.5" PointY="155.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Titles" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Uploads" Width="1.5" PointX="15.75" PointY="175.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Urls" Width="1.5" PointX="9.75" PointY="184.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_UserLoginLog" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_Users" Width="1.5" PointX="24" PointY="181.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_UsersG_SecurityGroups" Width="1.5" PointX="29.25" PointY="186.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_WebServiceUsers" Width="1.5" PointX="12.75" PointY="195.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ActivityForms" Width="1.5" PointX="12.75" PointY="185.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Answers" Width="1.5" PointX="34.5" PointY="187" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_BurmaRecommendations" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Categories" Width="1.5" PointX="27.75" PointY="197.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CharScores" Width="1.5" PointX="0.75" PointY="165.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ClientProgressStatuses" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ClientStatuses" Width="1.5" PointX="12.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CompaniesG_Organizations" Width="1.5" PointX="12.75" PointY="200" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CompaniesG_Services" Width="1.5" PointX="7.5" PointY="166.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CompaniesI_CompanyListTypes" Width="1.5" PointX="7.5" PointY="178.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CompaniesI_ManagementSystems" Width="1.5" PointX="32.25" PointY="176.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CompaniesImport" Width="1.5" PointX="7.5" PointY="225.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CompanyListTypes" Width="1.5" PointX="5.25" PointY="189.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ContactDirections" Width="1.5" PointX="24.75" PointY="209.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ContactTypes" Width="1.5" PointX="24.75" PointY="212.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialActivites" Width="1.5" PointX="13.5" PointY="155.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialActivitesGroups" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialComments" Width="1.5" PointX="31.5" PointY="192.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialCompanies" Width="1.5" PointX="26.25" PointY="191.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialCompaniesI_ControversialActivites" Width="1.5" PointX="15.75" PointY="164.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialInvolvementTexts" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialScreening" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialSources" Width="1.5" PointX="2.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialSourceTypes" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ConventionCategories" Width="1.5" PointX="16.5" PointY="157.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Conventions" Width="1.5" PointX="18.75" PointY="170.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ConventionSignatories" Width="1.5" PointX="24" PointY="172.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CountriesOfOperation" Width="1.5" PointX="8.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CountryRisk" Width="1.5" PointX="5.25" PointY="151.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CountryRiskScores" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementActivityOptions" Width="1.5" PointX="10.5" PointY="162.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementDiscussionPoints" Width="1.5" PointX="7.5" PointY="190.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementGap" Width="1.5" PointX="7.5" PointY="193.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementGoal" Width="1.5" PointX="7.5" PointY="198" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementIssuesInfo" Width="1.5" PointX="7.5" PointY="200.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementOtherStakeholderViews" Width="1.5" PointX="7.5" PointY="203.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementProfiles" Width="1.5" PointX="32.25" PointY="181.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementStandards" Width="1.5" PointX="7.5" PointY="206.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementSwots" Width="1.5" PointX="7.5" PointY="210" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementTypeCategories" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementTypeNews" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Ftse_Tree" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_FtseGroups" Width="1.5" PointX="3" PointY="147" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_FtseSectors" Width="1.5" PointX="13.5" PointY="172" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_FtseSubSectors" Width="1.5" PointX="21.75" PointY="164.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesAssociatedCorporations" Width="1.5" PointX="12" PointY="191.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportAvailabilityStatuses" Width="1.5" PointX="15.75" PointY="203.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportHistory" Width="1.5" PointX="18.75" PointY="152" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportReferences" Width="1.5" PointX="15.75" PointY="180.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsG_Individuals" Width="1.5" PointX="24" PointY="192.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_Conventions" Width="1.5" PointX="21" PointY="190.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_EngagementTypes" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_GesAssociatedCorporations" Width="1.5" PointX="12" PointY="203" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_GesRevisionTexts" Width="1.5" PointX="15" PointY="199.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_Kpis" Width="1.5" PointX="10.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_Norms" Width="1.5" PointX="15" PointY="196.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_ProcessStatuses" Width="1.5" PointX="7.5" PointY="186.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportSources" Width="1.5" PointX="15" PointY="191.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportSourceTypes" Width="1.5" PointX="7.5" PointY="214" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportStatuses" Width="1.5" PointX="7.5" PointY="221.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportSupplementaryReading" Width="1.5" PointX="18" PointY="185.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportUpdates" Width="1.5" PointX="12" PointY="219.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCommentary" Width="1.5" PointX="12" PointY="222.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCompanies" Width="1.5" PointX="7.5" PointY="216.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCompanyDialogues" Width="1.5" PointX="27" PointY="185.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCompanyDialoguesG_Individuals" Width="1.5" PointX="35.25" PointY="181.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCompanyWatcher" Width="1.5" PointX="24" PointY="195.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesLatestNews" Width="1.5" PointX="12" PointY="230.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesRevisionTexts" Width="1.5" PointX="12.75" PointY="210" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesSourceDialogues" Width="1.5" PointX="29" PointY="192" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesSourceDialoguesG_Individuals" Width="1.5" PointX="37.25" PointY="187.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_HighRiskZones" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_HrCommunityRatingsConversionTable" Width="1.5" PointX="3" PointY="157.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_HrEmployeesRatingsConversionTable" Width="1.5" PointX="3" PointY="160.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_HrRatingsConversionTable" Width="1.5" PointX="3" PointY="162.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_HrSuppliersRatingsConversionTable" Width="1.5" PointX="3" PointY="165.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_HrTotalRatingsConversionTable" Width="1.5" PointX="3" PointY="168.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_IndividualLists" Width="1.5" PointX="30" PointY="165" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_IndividualListsG_Individuals" Width="1.5" PointX="32.25" PointY="172.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_InformationQuality" Width="1.5" PointX="36" PointY="167.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_KpiPerformance" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Kpis" Width="1.5" PointX="6.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ManagementSystems" Width="1.5" PointX="30" PointY="158.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ManagementSystemTypes" Width="1.5" PointX="27.75" PointY="160.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Milestones" Width="2.5" PointX="12" PointY="238.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Msci_Tree" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_MsciI_Questions" Width="1.5" PointX="40.5" PointY="179.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_MsciIndustries" Width="1.5" PointX="3" PointY="142.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_MsciIndustryGroups" Width="1.5" PointX="0.75" PointY="142.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_MsciSectors" Width="1.5" PointX="1.5" PointY="139" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_MsciSubIndustries" Width="1.5" PointX="3" PointY="184" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Nas" Width="1.5" PointX="26.25" PointY="204.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_NasI_IndividualLists" Width="1.5" PointX="28.5" PointY="205.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_NasI_NaArticles" Width="1.5" PointX="37.5" PointY="191" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_NaTypes" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_NormAreas" Width="1.5" PointX="11.25" PointY="156.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_NormCategories" Width="1.5" PointX="10.5" PointY="247" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Norms" Width="1.5" PointX="12.75" PointY="245.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Portfolios" Width="1.5" PointX="16.5" PointY="142.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_PortfoliosG_Organizations" Width="1.5" PointX="18.75" PointY="165.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_PortfoliosG_OrganizationsG_Services" Width="1.5" PointX="24" PointY="165.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_PortfoliosG_OrganizationsI_ControversialActivites" Width="1.5" PointX="24" PointY="162.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_PortfolioTypes" Width="1.5" PointX="14.25" PointY="143.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ProcessMembers" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ProcessStatuses" Width="1.5" PointX="21" PointY="193.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ProgressStatuses" Width="1.5" PointX="16.5" PointY="154.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ProxyResolutions" Width="1.5" PointX="0.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Questions" Width="1.5" PointX="32.25" PointY="186.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_QuestionsByRisk" Width="1.5" PointX="34.5" PointY="170.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_RatingsConversionTable" Width="1.5" PointX="17.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_RelatedCases" Width="1.5" PointX="12" PointY="241.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ReportFiles" Width="1.5" PointX="9.75" PointY="228.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_ResponseStatuses" Width="1.5" PointX="16.5" PointY="151.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_RiskCompanies" Width="1.5" PointX="38.25" PointY="167.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_RiskCompaniesStatistics" Width="1.5" PointX="13.5" PointY="163.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_RiskIndustryAverageScores" Width="1.5" PointX="12.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_RiskMatrixTexts" Width="1.5" PointX="30" PointY="219.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_RiskStatistics" Width="1.5" PointX="3" PointY="176.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Scores" Width="1.5" PointX="29.25" PointY="179.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Sections" Width="1.5" PointX="30" PointY="197.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_SecurityEvents" Width="1.5" PointX="3" PointY="187.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_SecurityStatuses" Width="1.5" PointX="3" PointY="189.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_SecurityTypes" Width="1.5" PointX="3" PointY="192" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Sources" Width="1.5" PointX="27" PointY="168" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Swots" Width="1.5" PointX="13.5" PointY="175.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_SwotScores" Width="1.5" PointX="11.25" PointY="153" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_SwotTypes" Width="1.5" PointX="11.25" PointY="149.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_Themes" Width="1.5" PointX="26.25" PointY="241.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_TimelineItems" Width="1.5" PointX="2.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.L_UsersUsers" Width="1.5" PointX="26.25" PointY="245.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.M_Messages" Width="1.5" PointX="34.25" PointY="191.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.M_MessagesI_IndividualLists" Width="1.5" PointX="36.5" PointY="194.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.M_MessageTypes" Width="1.5" PointX="32" PointY="204.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_AlertStatuses" Width="1.5" PointX="18.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_AnalysisLevels" Width="1.5" PointX="18.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_Comments" Width="1.5" PointX="8.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_Groups" Width="1.5" PointX="18.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_Inboxes" Width="1.5" PointX="18.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_Links" Width="1.5" PointX="18.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_NewsItemFiles" Width="1.5" PointX="18.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_NewsItemLinks" Width="1.5" PointX="19.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_NewsItems" Width="1.5" PointX="4.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_NewsItemsG_Services" Width="1.5" PointX="14.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_NewsItemsI_Companies" Width="1.5" PointX="20.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_NewsItemsO_Taxonomy" Width="1.5" PointX="20.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_ResultTypes" Width="1.5" PointX="20.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_SearchTerms" Width="1.5" PointX="10.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_Sources" Width="1.5" PointX="18.75" PointY="142.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_Taxonomy" Width="1.5" PointX="20.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_TaxonomyTree" Width="1.5" PointX="20.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.R_EmailSource" Width="1.5" PointX="24" PointY="200.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.R_Lists" Width="1.5" PointX="12.75" PointY="206.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.R_ListsG_Individuals" Width="1.5" PointX="30" PointY="189.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.R_ListsG_Organizations" Width="1.5" PointX="15" PointY="188.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.RiskRatings" Width="1.5" PointX="20.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.StandardRatings" Width="1.5" PointX="21.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.T_Activites" Width="1.5" PointX="28.5" PointY="209.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.T_ActivitesI_GesCaseReports" Width="1.5" PointX="0.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.T_ActivityTypes" Width="1.5" PointX="26.25" PointY="258.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.T_ActMan_Start" Width="1.5" PointX="6.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.T_ApprovalStatuses" Width="1.5" PointX="26.25" PointY="215.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.T_Projects" Width="1.5" PointX="32.25" PointY="167.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.T_Translate" Width="1.5" PointX="18.75" PointY="177.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.T_Translated" Width="1.5" PointX="21" PointY="183.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.G_OrganizationsG_ManagedDocuments" Width="1.5" PointX="16.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_CalenderEvents_Audit" Width="1.5" PointX="18.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_GesRevisionTexts_Audit" Width="1.5" PointX="12.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_Kpis_Audit" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsI_ProcessStatuses_Audit" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_PdfExportSettings" Width="1.5" PointX="24.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_PortfoliosI_ControversialActivites" Width="2.625" PointX="24.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.I_RiskRankTexts" Width="1.5" PointX="30" PointY="222" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_NewsItemsArchive" Width="1.5" PointX="8.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GesModel.O_Texts" Width="1.5" PointX="24.75" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="GesModel.FK_E_MessageContent_E_Messages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_E_MessageContent_G_Languages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IndividualsE_MessageContent_E_MessageContent" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IndividualsE_MessageContent_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_E_MessagesE_Lists_E_Messages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_E_MessagesE_Lists_E_Lists" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Individuals_F_CreditReportStates" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Bills_G_PaymentMethods" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Invoices_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Reminders_G_Bills" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ClientDialogue_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ClientDialogue_I_ContactDirections" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ClientDialogue_I_ContactTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Cultures_G_Languages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Cultures_G_Languages1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_LocalizedTextTranslations_G_Cultures" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_M_Messages_G_Cultures" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Translate_G_Cultures" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Translated_G_Cultures" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_DocumentManagementTaxonomies_G_DocumentManagementTaxonomies" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_DocumentManagementTaxonomiesG_ManagedDocuments_G_DocumentManagementTaxonomies" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_DocumentManagementTaxonomiesG_ManagedDocuments_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_FileExtensions_G_MimeTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Forms_G_Pages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_SecurityGroupsG_Forms_G_Forms" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ForumMessages_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ForumMessages_Tree_G_ForumMessages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Individuals_G_Genders" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_E_EmailSource_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Individuals_G_Languages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Individuals_G_PaymentMethods" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Individuals_G_TimeZones1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Individuals_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IndividualsE_Lists_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IndividualsG_Services_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Users_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsG_Individuals_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanyDialogues_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanyDialoguesG_Individuals_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanyWatcher_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesSourceDialogues_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesSourceDialoguesG_Individuals_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_IndividualListsG_Individuals_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Activites_G_Individuals" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IndividualsG_Services_G_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IntNames_G_IntNameIds" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ServiceStates_G_IntNameIds" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IntNames_G_Languages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IntDescriptions_G_Languages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_MultiLangDescriptions_G_Languages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_MultiLangNames_G_Languages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_LocalizedLongTextTranslations_G_LocalizedLongTexts" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IntTexts_G_IntTextIds" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocuments_G_ManagedDocumentApprovalStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocumentItems_G_ManagedDocumentItems" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocumentItems_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocumentItems_G_Uploads" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocumentItems_G_Urls" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocuments_G_ManagedDocumentRiskLevels" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocumentsG_ManagedDocumentTaggs_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Uploads_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Urls_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialCompaniesI_ControversialActivites_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Conventions_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportReferences_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportSources_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportSupplementaryReading_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ReportFiles_G_ManagedDocuments" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocumentsG_ManagedDocumentTaggs_G_ManagedDocumentTaggs" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Uploads_G_MimeTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_OrganizationsG_Services_G_ServiceStates" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_OrganizationsG_Services_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_UsersG_Services_G_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_SecurityGroupsG_Pages_G_Pages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ReportingTemplatesG_ReportingModules_G_ReportingPageModules" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ProcessStatuses_G_ReportingPageModules" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ReportingTemplatesG_ReportingModules_G_ReportingTemplates" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ProcessStatuses_G_ReportingTemplates" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_ReportingTemplatesG_ReportingModules_G_Uploads" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_SecurityGroupsG_Forms_G_SecurityGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_SecurityGroupsG_Pages_G_SecurityGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_SecurityGroupsG_SecurityRights_G_SecurityGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_UsersG_SecurityGroups_G_SecurityGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_SecurityGroupsG_SecurityRights_G_SecurityRights" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_CompaniesG_Services_G_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_PortfoliosG_OrganizationsG_Services_G_Services" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_StandardTexts_G_StandardTextCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Uploads_G_Uploads" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Scores_G_Uploads" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Urls_G_Urls" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_Scores_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_Users_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_UsersG_SecurityGroups_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_CompaniesI_ManagementSystems_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialCompanies_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialCompanies_G_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialCompaniesI_ControversialActivites_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementProfiles_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_IndividualListsG_Individuals_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Nas_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Questions_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_G_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_G_Users2" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Themes_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_L_UsersUsers_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_M_Messages_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Activites_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_ActivityTypes_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Projects_G_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_WebServiceUsers_G_WebServiceUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ActivityForms_I_EngagementActivityOptions" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_Answers_C_Questions" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Scores_I_Answers" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Scores_I_Answers1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_Sections_C_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskMatrixTexts_I_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskRankTexts_I_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_HrCommunityRatingsConversionTable_I_CharScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_HrRatingsConversionTable_I_CharScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_HrRatingsConversionTable_I_CharScores1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_HrSuppliersRatingsConversionTable_I_CharScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_HrTotalRatingsConversionTable_I_CharScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_QuestionsByRisk_I_CharScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores2" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores3" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores4" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores5" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores6" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores7" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_CharScores8" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores10" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores11" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores12" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores2" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores3" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores4" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores5" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores6" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores7" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores8" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_CharScores9" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores10" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores11" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores12" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores2" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores3" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores4" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores5" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores6" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores7" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores8" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskStatistics_I_CharScores9" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_CompaniesI_CompanyListTypes_I_CompanyListTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_CompaniesI_ManagementSystems_I_ManagementSystems" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_CompaniesImport_I_CompanyListTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanyDialogues_I_ContactDirections" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesSourceDialogues_I_ContactDirections" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanyDialogues_I_ContactTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesSourceDialogues_I_ContactTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialActivites_I_ControversialActivites" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialComments_I_ControversialActivites" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialCompaniesI_ControversialActivites_I_ControversialActivites" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_PortfoliosG_OrganizationsI_ControversialActivites_I_ControversialActivites" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialComments_I_ControversialCompanies" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialCompaniesI_ControversialActivites_I_ControversialCompanies" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Conventions_I_ConventionCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ConventionSignatories_I_Conventions" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsI_Conventions_I_Conventions" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_FtseSectors_C_FtseGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_FtseSubSectors_C_FtseSectors" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportSources_I_GesCaseReportAvailabilityStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportSupplementaryReading_I_GesCaseReportAvailabilityStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportHistory_I_ProgressStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportHistory_I_ResponseStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsI_GesRevisionTexts_I_GesRevisionTexts" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsU_Norms_I_Norms" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanyWatcher_I_GesCompanies" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanyDialoguesG_Individuals_I_GesCompanyDialogues" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_GesSourceDialoguesG_Individuals_I_GesSourceDialogues" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_IndividualListsG_Individuals_I_IndividualLists" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_NasI_IndividualLists_I_IndividualLists" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_M_MessagesI_IndividualLists_I_IndividualLists" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_InformationQuality" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompanies_I_InformationQuality1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_ManagementSystems_I_ManagementSystemTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_MsciI_Questions_I_Questions" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_MsciIndustries_C_MsciIndustryGroups" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_MsciSubIndustries_C_MsciIndustries" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_MsciIndustryGroups_C_MsciSectors" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_NasI_IndividualLists_I_Nas" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_NasI_NaArticles_I_Nas" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Norms_I_NormCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Portfolios_I_PortfolioTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_PortfoliosG_Organizations_I_Portfolios" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_O_Sources_I_Portfolios" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_PortfoliosG_Organizations_I_ProgressStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_PortfoliosG_OrganizationsG_Services_I_PortfoliosG_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_PortfoliosG_OrganizationsI_ControversialActivites_I_PortfoliosG_Organizations" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_Questions_C_Sections" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_C_Scores_C_Questions" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_QuestionsByRisk_I_Questions" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Scores_I_Sources" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Swots_I_SwotScores" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Swots_I_SwotScores1" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_I_Swots_I_SwotTypes2" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_M_Messages_M_MessageTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_M_MessagesI_IndividualLists_M_Messages" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_IndustriesE_Lists_E_Lists" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_G_OrganizationsE_Lists_E_Lists" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Activites_T_ActivityTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Activites_T_ApprovalStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Activites_T_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="GesModel.FK_T_Translated_T_Translate" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialActivitesPresets" Width="1.5" PointX="19.5" PointY="139.5" />
+        <EntityTypeShape EntityType="GesModel.I_ControversialActivitesPresetsItems" Width="1.5" PointX="21.75" PointY="155.25" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialActivitesPresetsItems_I_ControversialActivites" />
+        <AssociationConnector Association="GesModel.FK_I_ControversialActivitesPresetsItems_I_ControversialActivitesPresets" />
+        <EntityTypeShape EntityType="GesModel.I_PortfoliosI_Companies" Width="1.5" PointX="15.375" PointY="24.75" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsExtra" Width="1.5" PointX="45.75" PointY="186.125" />
+        <EntityTypeShape EntityType="GesModel.GesCaseReportSignUp" Width="1.5" PointX="45.75" PointY="182.25" />
+        <AssociationConnector Association="GesModel.FK_GesCaseReportSignUp_G_Individuals" />
+        <EntityTypeShape EntityType="GesModel.G_Organizations_GesDocument" Width="1.5" PointX="25.875" PointY="102.25" />
+        <EntityTypeShape EntityType="GesModel.GesDocument" Width="1.5" PointX="23.625" PointY="25" />
+        <EntityTypeShape EntityType="GesModel.GesDocumentService" Width="1.5" PointX="21.375" PointY="26.125" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_GesDocument_GesDocument" />
+        <AssociationConnector Association="GesModel.FK_GesDocument_GesDocumentService" />
+        <EntityTypeShape EntityType="GesModel.GesCompanyProfiles" Width="1.5" PointX="25.875" PointY="25.375" />
+        <AssociationConnector Association="GesModel.FK_GesCompanyProfiles_GesDocument" />
+        <EntityTypeShape EntityType="GesModel.I_CompaniesG_ManagedDocuments" Width="1.5" PointX="3.375" PointY="25.75" />
+        <EntityTypeShape EntityType="GesModel.GesCaseReportSdg" Width="1.5" PointX="45.75" PointY="114.5" />
+        <EntityTypeShape EntityType="GesModel.Sdg" Width="1.5" PointX="25.875" PointY="30.125" />
+        <AssociationConnector Association="GesModel.FK_GesCaseReportSdg_Sdg" />
+        <AssociationConnector Association="GesModel.FK_Sdg_GesDocument" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementTypes_GesDocument" Width="1.5" PointX="25.875" PointY="20.125" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementTypes_GesDocument_GesDocument" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReports_Audit" Width="1.5" PointX="5.375" PointY="25.75" />
+        <EntityTypeShape EntityType="GesModel.GesMilestoneTypes" Width="1.5" PointX="8.875" PointY="239" IsExpanded="true" />
+        <AssociationConnector Association="GesModel.FK_I_Milestones_GesMilestoneType" />
+        <EntityTypeShape EntityType="GesModel.GesUNGPAssessmentScores" Width="1.5" PointX="46.5" PointY="189.5" />
+        <EntityTypeShape EntityType="GesModel.GesUNGPAssessmentForm" Width="1.5" PointX="48.75" PointY="177.875" />
+        <EntityTypeShape EntityType="GesModel.GesUNGPAssessmentFormResources" Width="1.5" PointX="51" PointY="185.75" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentForm_GesUNGPAssessmentFormResources" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_1" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_10" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_11" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_12" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_13" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_14" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_15" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_16" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_17" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_18" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_19" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_2" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_20" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_21" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_22" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_23" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_24" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_25" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_3" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_4" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_5" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_6" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_7" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_8" />
+        <AssociationConnector Association="GesModel.FK_GesUNGPAssessmentScores_9" />
+        <EntityTypeShape EntityType="GesModel.GesDocTypes" Width="1.5" PointX="23.375" PointY="14.875" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementTypes_GesDocument_GesDocTypes" />
+        <EntityTypeShape EntityType="GesModel.GesAnnouncement" Width="1.5" PointX="21.375" PointY="21.75" />
+        <EntityTypeShape EntityType="GesModel.GesUNGPAssessmentForm_Audit" Width="1.5" PointX="27.375" PointY="1.25" />
+        <EntityTypeShape EntityType="GesModel.GesUNGPAssessmentForm_Audit_Details" Width="1.5" PointX="29.625" PointY="1" />
+        <AssociationConnector Association="GesModel.GesUNGPAssessmentForm_Audit_Details_GesUNGPAssessmentForm_Audit" />
+        <EntityTypeShape EntityType="GesModel.GesUNGPAssessmentFormResource_Audit" Width="1.5" PointX="25.375" PointY="15.25" />
+        <EntityTypeShape EntityType="GesModel.GesUNGPAssessmentFormResource_Audit_Details" Width="1.5" PointX="27.625" PointY="15" />
+        <AssociationConnector Association="GesModel.GesUNGPAssessmentFormResource_Audit_Details_GesUNGPAssessmentFormResource_Audit" />
+        <EntityTypeShape EntityType="GesModel.GesEventCalendarUserAccept" Width="2" PointX="3" PointY="29" />
+        <EntityTypeShape EntityType="GesModel.I_CalenderEvents" Width="1.5" PointX="0.75" PointY="28.75" />
+        <AssociationConnector Association="GesModel.FK_I_CalenderEvents_GesEventCalendarUserAccept" />
+        <EntityTypeShape EntityType="GesModel.GesCaseReports_Audit" Width="1.5" PointX="11.375" PointY="28.375" />
+        <EntityTypeShape EntityType="GesModel.GesCaseReports_Audit_Details" Width="1.5" PointX="13.625" PointY="28" />
+        <AssociationConnector Association="GesModel.GesCaseReports_Audit_Details_GesCaseReports_Audit" />
+        <EntityTypeShape EntityType="GesModel.GesCaseProfileInvisibleEntities" Width="1.5" PointX="31.875" PointY="61.375" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseProfileEntities" Width="1.5" PointX="29.625" PointY="5" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseProfileEntitiesGroup" Width="1.5" PointX="27.375" PointY="5.25" />
+        <AssociationConnector Association="GesModel.FK_35" />
+        <AssociationConnector Association="GesModel.FK_34" />
+        <EntityTypeShape EntityType="GesModel.GesCaseProfileTemplates" Width="1.5" PointX="17" PointY="117" />
+        <AssociationConnector Association="GesModel.FK_32" />
+        <AssociationConnector Association="GesModel.FK_20" />       
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReportsG_ManagedDocuments" Width="1.5" PointX="45.75" PointY="179.125" />
+        <AssociationConnector Association="GesModel.FK_33" />
+        <EntityTypeShape EntityType="GesModel.Countries" Width="1.5" PointX="33" PointY="152.875" />
+        <EntityTypeShape EntityType="GesModel.I_Companies" Width="1.5" PointX="35.25" PointY="144.75" />
+        <EntityTypeShape EntityType="GesModel.PeerGroups" Width="1.5" PointX="30.75" PointY="156" />
+        <EntityTypeShape EntityType="GesModel.Regions" Width="1.5" PointX="30.75" PointY="153.125" />
+        <EntityTypeShape EntityType="GesModel.SubPeerGroups" Width="1.5" PointX="33" PointY="155.75" />
+        <AssociationConnector Association="GesModel.FK_dbo_Countries_dbo_Regions_RegionId" />
+        <AssociationConnector Association="GesModel.FK_dbo_I_Companies_dbo_Countries_CountryOfIncorporationId" />
+        <AssociationConnector Association="GesModel.FK_G_ManagedDocuments_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_G_Users" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_G_Users1" />
+        <AssociationConnector Association="GesModel.FK_C_CompaniesG_Services_C_Companies" />
+        <AssociationConnector Association="GesModel.FK_C_RiskCompanyInfo_C_Companies" />
+        <AssociationConnector Association="GesModel.FK_dbo_I_Companies_dbo_SubPeerGroups_SubPeerGroupId" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_FtseGroups" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_FtseSectors" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_FtseSubSectors" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_MsciIndustries" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_MsciIndustries1" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_MsciIndustryGroups" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_MsciIndustryGroups1" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_MsciSectors" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_MsciSubIndustries" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_MsciSubIndustries1" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_SecurityEvents" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_SecurityStatuses" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_I_SecurityTypes" />
+        <AssociationConnector Association="GesModel.FK_I_CompaniesI_CompanyListTypes_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_CompaniesI_ManagementSystems_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementDiscussionPoints_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementGap_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementGoal_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementIssuesInfo_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementOtherStakeholderViews_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementProfiles_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementStandards_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementSwots_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanies_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_RiskCompaniesStatistics_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_Scores_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_Swots_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_T_Activites_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_dbo_SubPeerGroups_dbo_PeerGroups_PeerGroupId" />
+        <EntityTypeShape EntityType="GesModel.G_Organizations" Width="1.5" PointX="43.5" PointY="157.5" />
+        <EntityTypeShape EntityType="GesModel.I_NaArticles" Width="1.5" PointX="40.5" PointY="161.25" />
+        <AssociationConnector Association="GesModel.FK_dbo_G_Organizations_dbo_Countries_CountryId" />
+        <AssociationConnector Association="GesModel.FK_dbo_I_NaArticles_dbo_Countries_CountryId" />
+        <AssociationConnector Association="GesModel.FK_E_Messages_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_G_Individuals_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_G_Industries" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_G_Languages" />
+        <AssociationConnector Association="GesModel.FK_C_CompaniesG_Organizations_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_E_Lists_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_G_PaymentMethods" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_G_SalesRatings" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_G_SaleStates" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_G_Users" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_GesDocument_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_G_Organizations_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_G_OrganizationsE_Lists_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_G_OrganizationsG_Services_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_G_WebServiceUsers_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_I_ActivityForms_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_I_Companies_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_I_PortfoliosG_Organizations_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_T_Activites_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_T_Projects_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_T_Translate_G_Organizations" />
+        <AssociationConnector Association="GesModel.FK_I_NaArticles_G_Users" />
+        <AssociationConnector Association="GesModel.FK_I_NaArticles_I_Companies" />
+        <AssociationConnector Association="GesModel.FK_I_NaArticles_I_NormAreas" />
+        <AssociationConnector Association="GesModel.FK_I_NasI_NaArticles_I_NaArticles" />
+        <EntityTypeShape EntityType="GesModel.I_GSSLink" Width="1.5" PointX="45.75" PointY="197.75" />
+        <EntityTypeShape EntityType="GesModel.I_GesCaseReports" Width="1.5" PointX="42.75" PointY="175.25" />
+        <EntityTypeShape EntityType="GesModel.IssueHeading" Width="1.5" PointX="40.5" PointY="197.5" />
+        <EntityTypeShape EntityType="GesModel.IssueHeadingGroup" Width="1.5" PointX="38.25" PointY="197.625" />
+        <AssociationConnector Association="GesModel.FK_dbo_I_GesCaseReports_dbo_Countries_CountryId" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_G_ForumMessages" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_G_ManagedDocuments" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_G_Users" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_G_Users1" />
+        <AssociationConnector Association="GesModel.FK_GesCaseReportSdg_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_GesCaseReportSignUp_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_GesUNGPAssessmentForm" />
+        <AssociationConnector Association="GesModel.FK_I_ActivityForms_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesAssociatedCorporations_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportReferences_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_29" />
+        <AssociationConnector Association="GesModel.FK_dbo_I_RelatedCases_dbo_I_GesCaseReports_Issue_ID" />
+        <AssociationConnector Association="GesModel.FK_dbo_I_RelatedCases_dbo_I_GesCaseReports_Related_ID" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_I_GesCaseReportsI_ProcessStatuses" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_I_GesCaseReportSourceTypes" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_I_GesCaseReportStatuses" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_I_GesCaseReportStatuses1" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_I_GesCaseReportStatuses2" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_I_GesCompanies" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_I_NaArticles" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReports_IssueHeading" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsExtra_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsG_Individuals_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsI_Conventions_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsI_GesAssociatedCorporations_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsI_GesRevisionTexts_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportSources_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportsU_Norms_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportSupplementaryReading_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCaseReportUpdates_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCommentary_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesCompanyDialogues_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesLatestNews_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GesSourceDialogues_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_GSSLink_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_I_Milestones_I_GesCaseReports" />
+        <AssociationConnector Association="GesModel.FK_IssueHeading_IssueHeadingGroup" />
+        <EntityTypeShape EntityType="GesModel.I_PortfolioCompaniesImport" Width="1.5" PointX="26.75" PointY="154.5" />
+        <AssociationConnector Association="GesModel.FK_I_PortfolioCompaniesImport_I_CompanyListTypes" />
+        <AssociationConnector Association="GesModel.FK_I_PortfolioCompaniesImport_I_Portfolios" />
+        <EntityTypeShape EntityType="GesModel.I_EngagementTypes" Width="1.5" PointX="14.75" PointY="67.5" />
+        <AssociationConnector Association="GesModel.FK_17" />
+        <AssociationConnector Association="GesModel.FK_I_EngagementTypes_GesDocument_I_EngagementTypes_GesDocument" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,5 @@
+INSERT INTO [dbo].[I_GesCaseProfileEntitiesGroup] ([I_GesCaseProfileEntitiesGroup_Id] ,[Name],[GroupType], [Order],[VisibleType]) VALUES (NEWID(),'Confirmation details','CLIENT-CONFIRMATION-DETAILS',28,2)
+
+INSERT INTO [dbo].[I_GesCaseProfileEntities] ([GesCaseProfileEntity_Id],[Name] ,[Type],[Order],[Description],[I_GesCaseProfileEntitiesGroup_Id],[VisibleType]) VALUES (NEWID(),'Revision criteria','CLIENT-CONFIRMATION-DETAILS-REVISION-CRITERIA',47,'',(select [I_GesCaseProfileEntitiesGroup_Id] from [I_GesCaseProfileEntitiesGroup] where [GroupType] = 'CLIENT-CONFIRMATION-DETAILS'),2);
+
+INSERT INTO [dbo].[I_GesCaseProfileEntities] ([GesCaseProfileEntity_Id],[Name] ,[Type],[Order],[Description],[I_GesCaseProfileEntitiesGroup_Id],[VisibleType]) VALUES (NEWID(),'Basis for decision','CLIENT-CONFIRMATION-DETAILS-BASIS-FOR-DECISION',47,'',(select [I_GesCaseProfileEntitiesGroup_Id] from [I_GesCaseProfileEntitiesGroup] where [GroupType] = 'CLIENT-CONFIRMATION-DETAILS'),2);

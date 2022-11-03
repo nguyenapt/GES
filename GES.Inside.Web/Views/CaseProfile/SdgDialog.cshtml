@@ -1,0 +1,37 @@
+﻿@using GES.Common.Resources
+<div class="modal fade" id="sdg-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 665px; height: 700px">
+        <div class="modal-content" ng-form="sdgForm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">@Resources.SelectSdg</h4>
+            </div>
+            <br />
+            <div class="modal-body" style="min-height: 0; max-height: 630px; overflow-y: auto" ng-form="sdgDialogForm">
+                <div class="box-body box-edit">        
+                    <table class="table table-striped sdg-table" ng-hide="sdgs === null || sdgs.length === 0">
+                        <tbody>
+                        <tr ng-repeat="sdg in sdgs">
+                            <td>
+                                <input type="checkbox" ng-checked="selectedSdgs.indexOf(sdg) != -1" ng-click="toggleUpdateSdg(sdg)" style="cursor: pointer"/>
+                            </td>
+                            <td>
+                                <img style="width: 60px" src="@Url.Action("Download", "DocumentMgmt", null, Request?.Url?.Scheme)?documentId={{sdg.DocumentId}}" alt="sdg icon"/>
+                            </td>
+                            <td>
+                                {{sdg.Sdg_Name}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="modal-footer">                
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Close" />
+            </div>
+        </div>
+    </div>
+</div>

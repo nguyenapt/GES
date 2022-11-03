@@ -1,0 +1,28 @@
+﻿@using GES.Common.Configurations
+@model IEnumerable<GES.Inside.Data.Models.RevisionViewModel>
+
+<!-- /.box-header -->
+<div class="box-body table-responsive ges-content-block">
+    <table class="table table-striped">
+        @foreach (var revision in Model)
+        {
+            <tr>
+                <td>
+                    <i class="fa @(revision.Checked ? "far fa-check-square" : "far fa-square")" title="" aria-hidden="true"></i>
+                </td>
+                <td class="text-nowrap">
+                    @{
+                        DateTime revisionDateTime;
+                        if (DateTime.TryParse(revision.DateText, out revisionDateTime))
+                        {
+                            @revisionDateTime.ToString(Configurations.DateFormat)
+                        }
+                    }
+                </td>
+                <td>
+                    <p class="ges-content"><b>@revision.GesRevisionText</b> @revision.Description</p>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

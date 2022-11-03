@@ -1,0 +1,21 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileSdgAndGuidelineConventionComponent
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+
+    var tabContent = new Dictionary<string, KeyValuePair<string, string>>();
+    if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "SDGS"))
+    {
+        var item = new KeyValuePair<string, string>($"{Resources.SustainableDevelopmentGoals}", Html.Partial("CaseProfiles/Shared/Sdg", Model.Sdgs).ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.SustainableDevelopmentGoals), item);
+    }
+    if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "GUIDELINES") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CONVENTIONS"))
+    {
+        var item = new KeyValuePair<string, string>($"{Resources.GuidelineAndConvention}", Html.Partial("CaseProfiles/Shared/GuidelineAndConvention", Model).ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.GuidelineAndConvention), item);
+    }
+}
+@SharedComponents.BuildTabContent(Html, tabContent)

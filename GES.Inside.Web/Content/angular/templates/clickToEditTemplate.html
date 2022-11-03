@@ -1,0 +1,10 @@
+﻿<div class="templateRoot">
+    <div class="hover-edit-trigger" title="click to edit">
+        <div class="hover-text-field" ng-show="!editState" ng-click="setDisabled?'':toggle()">{{model}}<div class="{{setDisabled?'': 'edit-pencil glyphicon glyphicon-pencil'}}"></div></div>
+        <input class="inputText" placeholder="{{placeholder}}" type="text" ng-model="model" ng-enter="save()" ng-show="editState" ng-disabled="setDisabled" ng-required="required"/>
+    </div>
+    <div class="edit-button-group pull-right" ng-show="editState">
+        <div class="glyphicon glyphicon-ok" ng-click="save()"></div>
+        <div class="glyphicon glyphicon-remove" ng-click="cancel()"></div>
+    </div>
+</div>

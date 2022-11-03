@@ -1,0 +1,7 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIssueComponent
+
+@Html.RenderBlockContent(m => m.SourceDialogueSummary)
+@Html.RenderBlockContentWithCustomContent(Resources.SourceLog, Html.Partial("/Views/Company/CaseProfiles/Shared/LogAndDialougeReport.cshtml", new DialogueAndLogModel { DialogueModels = Model.SourceDialogues, ShowDocument = false }).ToString())

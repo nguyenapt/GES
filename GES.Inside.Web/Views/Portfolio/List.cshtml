@@ -1,0 +1,98 @@
+﻿@using GES.Inside.Web.Helpers
+@*@model GES.Inside.Web.Models.ViewModels.ActivityViewModel<GES.Inside.Data.Models.GesPortfolio>*@
+@{
+    ViewBag.PageClass = "page-portfolio page-portfolio-list";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-portfolio-list")
+}
+@section styling {
+    @Styles.Render("~/Content/plugins/x-editable-bs3/x-editable-css-bundle")
+}
+<script type="text/javascript" charset="utf-8">
+    var types = @Html.Raw(Json.Encode(ViewBag.PortfolioTypes));
+    var orgId = @ViewBag.OrgId;
+    var orgName = @Html.Raw(Json.Encode(@ViewBag.OrgName));
+    var agreementServices = @Html.Raw(Json.Encode(@ViewBag.AgreementServices));
+</script>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                @*<h3 class="box-title">Data Table With Full Features</h3>*@
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div id="newPortfolioModalDialog" class="inline-div" title=""></div>
+                <div id="addStandardPortfolioModalDialog" class="inline-div" title=""></div>
+                @if (ViewBag.OrgId > 0)
+                {
+                    @Ajax.ActionLink("New Portfolio", "CreateForm", "Portfolio",
+                        new
+                        {
+                            orgId = ViewBag.OrgId,
+                            orgName = ViewBag.OrgName,
+                            IncludeInAlerts = false,
+
+                            Name = "",
+                            StandardPortfolio = false,
+                            GesStandardUniverse = false,
+
+                        }, new AjaxOptions
+                        {
+                            UpdateTargetId = "newPortfolioModalDialog",
+                            HttpMethod = "Post",
+                            OnBegin = "$('.btn-new-portfolio').button('loading')",
+                            OnSuccess = "OpenDialog(newPortfolioModalDialog)",
+                            OnComplete = "resetNewPortfolioButton()"
+                        }, new
+                        {
+                            @class = "btn btn-success btn-new-portfolio",
+                            @data_loading_text = "Please wait..."
+                        })
+
+                    @Ajax.ActionLink("Add Standard Portfolio", "AddStandardPortfolioForm", "Portfolio",
+                        new
+                        {
+                            orgId = ViewBag.OrgId,
+                            orgName = ViewBag.OrgName
+
+                        }, new AjaxOptions
+                        {
+                            UpdateTargetId = "addStandardPortfolioModalDialog",
+                            HttpMethod = "Post",
+                            OnBegin = "$('.btn-add-standard-portfolio').button('loading')",
+                            OnSuccess = "OpenAddStandardPortfolioDialog(addStandardPortfolioModalDialog)",
+                            OnComplete = "resetAddStandardPortfolioButton()"
+                        }, new
+                        {
+                            @class = "btn btn-primary btn-add-standard-portfolio",
+                            @data_loading_text = "Please wait..."
+                        })
+
+
+                    <input class="btn batch-delete-portfolios btn-danger pull-right" disabled type="button" data-loading-text="Processing..." value="Delete Selected Portfolio(s)"/>
+                    <br/>
+                    <br/>
+
+                    <strong>Table options:</strong>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="toggle-show-services" name="toggle-show-services" value="true">Show services? (Would cause table reload)
+                            </label>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input class="btn export-standard-universe-list-btn btn-primary not-outer-right-btn pull-right" type="button" data-loading-text="Processing..." value="Export GES Standard Universe to Excel"/>
+                    <br />
+                    <br />
+                }
+
+                <table id="tblportfolios" class="table table-bordered table-striped"></table>
+                <div id="myPager"></div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

@@ -1,0 +1,18 @@
+﻿@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+@model IEnumerable<GES.Inside.Data.Models.EventListViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i> @Resources.Calendar
+            </h3>
+        </div>
+        <div class="box-body">
+            @Html.Partial("~/Views/Company/_Profile_Events.cshtml", Model)
+        </div>
+    </div>
+}

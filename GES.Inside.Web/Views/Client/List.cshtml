@@ -1,0 +1,27 @@
+﻿@using GES.Inside.Web.Helpers
+@{
+    ViewBag.PageClass = "page-client page-client-list";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-client-list")
+}
+<script type="text/javascript">
+    var clientStatus = @Html.Raw(Json.Encode(ViewBag.ClientsStatuses));
+    var progressStatuses = @Html.Raw(Json.Encode(ViewBag.ClientProgressStatuses));
+    var industries = @Html.Raw(Json.Encode(ViewBag.Industries));
+    var countries = @Html.Raw(Json.Encode(ViewBag.Countries));
+</script>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                @*<h3 class="box-title">Data Table With Full Features</h3>*@
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                @* <input class="btn btn-success" type="button" value="Add New Organization" onclick="window.location = '/Client/Details/Add'" /> *@
+                <table id="tblclients" class="table table-bordered table-striped"></table>
+                <div id="myPager"></div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

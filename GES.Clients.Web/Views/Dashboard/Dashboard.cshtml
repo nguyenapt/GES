@@ -1,0 +1,346 @@
+﻿@using System.Web.Configuration
+@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model GES.Clients.Web.Models.DashboardViewModel
+@{
+    ViewBag.Title = Resources.Dashboard;
+    ViewBag.SubTitle = "";
+    ViewBag.PageClass = "page-dashboard page-dashboard-index";
+}
+
+@section globalVar {
+    <script type="text/javascript">
+        var oldClientsSiteUrl = '@WebConfigurationManager.AppSettings["oldClientsSiteUrl"]';
+        window.individualId = @ViewBag.IndividualId;
+        window.orgId = @ViewBag.OrgId;
+    </script>
+
+    <script id="calendar-template" type="text/x-handlebars-template">
+        <div id="ei-events">
+            {{#each events}}
+            <div class="ei-event" data-start='{{this.EventDate}}' data-end='{{this.EventEndDate}}' data-loc="" data-parts="{{this.CompanyId}}-{{this.EngagementTypeId}}" {{#if this.IsGesEvent}} data-eventtype="ges" {{else}} data-eventtype="nonges" {{/if}}>
+                <div class="ei-name">{{this.Heading}}</div>
+                <div class="ei-description">{{this.Description}}</div>
+                <div class="ei-event-download-link">{{this.Id}}</div>
+            </div>
+            {{/each}}
+        </div>
+    </script>
+
+    <script id="blog-posts-template" type="text/x-handlebars-template">
+        {{#each entries}}
+        <div class="">
+            <div class="heading-block">
+                <h4><a target="_blank" href="{{this.link}}">{{this.title}}</a></h4>
+                <span class="description">{{this.publishedDate}}</span>
+            </div><!-- /.user-block -->
+            <div class="post-block">
+                <!-- post text -->
+                {{{this.content}}}
+            </div>
+        </div>
+        <hr>
+        {{/each}}
+    </script>
+
+    <script id="stats-box-template" type="text/x-handlebars-template">
+        <p>
+            Companies: <a target="_blank" href="{{companiesLink}}">{{NumberOfCompanies}}</a>&nbsp;&nbsp;
+            {{#if DashboardInfoDetails}}
+            <a data-toggle="collapse" data-target="#stats-details" class="anchor-pointer"><i class="fa fa-arrow-down"></i>&nbsp;@Resources.Details</a>
+            {{/if}}
+        </p>
+        {{#if DashboardInfoDetails}}
+        <div id="stats-details" class="collapse">
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr class="no-bottom-border-row">
+                        <th colspan="2" class="no-bottom-padding">@Resources.Name</th>
+                    </tr>
+                    <tr class="no-top-border-row">
+                        <th class="no-top-padding">@Resources.LastUpdated</th>
+                        <th class="no-top-padding text-right">@Resources.Companies</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each DashboardInfoDetails}}
+                    <tr>
+                        <td colspan="2" class="no-bottom-padding">
+                            <a href="{{this.LinkToSearchPage}}">{{this.PortfolioName}}</a><br />
+                        </td>
+                    </tr>
+                    <tr class="no-top-border-row">
+                        <td class="no-top-padding">
+                            {{this.LastUpdated}}
+                        </td>
+                        <td class="no-top-padding text-right">
+                            {{this.NumHoldings}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        {{else}}
+
+        {{/if}}
+    </script>
+}
+
+@section styling {
+    @Styles.Render("~/Content/plugins/eventify/eventify-css-bundle")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-dashboard")
+}
+<div class="box-tools" data-toggle="tooltip" title="">
+    <div class="btn-group btn-group-dashboard" data-toggle="btn-toggle">
+        @if (Model.Indices.Any())
+        {
+            <button type="button" class="btn btn-default btn-lg btn-toggle-indices"><i class="fa fa-square text-green"></i>&nbsp;&nbsp;@Resources.Indices</button>
+        }
+        @if (Model.Portfolios.Any())
+        {
+            <button type="button" class="btn btn-default btn-lg btn-toggle-portfolios"><i class="fa fa-square text-orange"></i>&nbsp;&nbsp;@Resources.Portfolios</button>
+        }
+        <button type="button" class="btn btn-default btn-lg btn-toggle-focuslist"><i class="fa fa-square text-red"></i>&nbsp;&nbsp;@Resources.FocusList</button>
+    </div>
+    <div>&nbsp;</div>
+</div>
+<div class="clear"></div>
+<div class="row">
+    <div class="col-md-3">
+        @if (Model.Indices.Any())
+        {
+            <div class="box box-primary box-config-indices">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@Resources.SelectIndices</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="editor-field">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    @Html.DropDownListFor(m => m.Index, Model.Indices, new { @class = "form-control", @id = "combobox-index", @multiple = "multiple", @data_actions_box = "true" })
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-primary-new-dark pull-right btn-apply-indices">@Resources.Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        }
+        <div class="box box-primary box-config-portfolios">
+            <div class="box-header with-border">
+                <h3 class="box-title">@Resources.SelectPortfolios</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="editor-field">
+                        <div class="row">
+                            <div class="col-md-9">
+                                @Html.DropDownListFor(m => m.Portfolio, Model.Portfolios, new { @class = "form-control", @id = "combobox-portfolio", @multiple = "multiple", @data_actions_box = "true" })
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary-new-dark pull-right btn-apply-portfolios">@Resources.Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+        <div class="box box-primary box-dashboard-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">@Resources.Info</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+
+            </div><!-- /.box-body -->
+            <div class="overlay normal-hidden">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div><!-- /.box -->
+        @*<div class="box box-primary box-calendar">
+                <div class="box-header with-border">
+                    <h3 class="box-title">@Resources.Calendar</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <p>@Resources.ThereAreNoEventsScheduledForThisPeriod</p>
+                </div><!-- /.box-body -->
+                <div class="overlay normal-hidden">
+                    <i class="fa fa-refresh fa-spin"></i>
+                </div>
+            </div><!-- /.box -->*@
+    </div><!-- /.col -->
+
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box box-primary box-chart chart-cases-by-recommendation">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@Resources.EngagementStatus</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart-message"></div>
+                                <div class="chart-responsive">
+                                    <canvas id="doughnutChart-by-recommendation" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+
+                    </div><!-- /.footer -->
+                    <div class="overlay normal-hidden">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+
+            <div class="col-md-3">
+                <div class="box box-primary box-chart chart-cases-by-norm">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@Resources.NormArea</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart-message"></div>
+                                <div class="chart-responsive">
+                                    <canvas id="doughnutChart-by-norm" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+
+                    </div><!-- /.footer -->
+                    <div class="overlay normal-hidden">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+
+            <div class="col-md-3">
+                <div class="box box-primary box-chart chart-cases-by-sector">
+                    <div class="box-header with-border">
+                        <h3 class="box-title" title="Global Industry Classification Standard (GICS), level 1">@Resources.Sector</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart-message"></div>
+                                <div class="chart-responsive">
+                                    <canvas id="doughnutChart-by-sector" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+
+                    </div><!-- /.footer -->
+                    <div class="overlay normal-hidden">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+
+            <div class="col-md-3">
+                <div class="box box-primary box-chart chart-cases-by-location">
+                    <div class="box-header with-border">
+                        <h3 class="box-title" title="Country where the incident(s) occurred.">@Resources.Location</h3>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="chart-message"></div>
+                                <div class="chart-responsive">
+                                    <canvas id="doughnutChart-by-location" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+
+                    </div><!-- /.footer -->
+                    <div class="overlay normal-hidden">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>
+                </div><!-- /.box -->
+            </div>
+        </div>
+
+        
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<div class="row">
+    @*<div class="col-md-6 col-sm-12">
+            <div class="nav-tabs-custom tabs-news-milestones">
+                <ul class="nav nav-tabs nav-big-heading">
+                    <li class="tab-heading tab-heading-news active">
+                        <a href="#latest-news" data-toggle="tab">
+                            <h3>@Resources.LatestNews</h3>
+                        </a>
+                    </li>
+                    <li class="tab-heading tab-heading-milestones">
+                        <a href="#latest-milestones" data-toggle="tab">
+                            <h3>@Resources.LatestMilestones</h3>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="latest-news">
+
+                    </div><!-- /.tab-pane -->
+                    <div class="tab-pane" id="latest-milestones">
+
+                    </div><!-- /.tab-pane -->
+                </div><!-- /.tab-content -->
+            </div><!-- /.nav-tabs-custom -->
+        </div>*@
+
+    @*<div class="col-md-6 col-sm-12">*@
+    <div class="box box-primary box-figure figure-cases-map">
+        <div class="box-header with-border">
+            <h3 class="box-title">@Resources.EvaluateAndEngageCases</h3>
+            <h5>@Resources.BasedOnCompanyHQ</h5>
+            @*<div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>*@
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <figure>
+                        <div id="world-map-cases" style="height: 400px; width: 100%;"></div>
+                    </figure>
+                </div>
+            </div>
+        </div><!-- /.box-body -->
+
+        <div class="overlay normal-hidden">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div><!-- /.box -->
+    @*<div class="box box-primary box-blog">
+            <div class="box-header with-border">
+                <h3 class="box-title">@Resources.LatestBlogPosts</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <p>@Resources.NoBlogPostsAvailable</p>
+            </div><!-- /.box-body -->
+
+            <div class="overlay normal-hidden">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div><!-- /.box -->*@
+    <!--</div>-->
+</div>

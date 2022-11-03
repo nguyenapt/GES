@@ -1,0 +1,28 @@
+﻿@using GES.Common.Resources
+@using GES.Common.Helpers
+
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileUNGPAssessmentComponent
+
+
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-9 col-md-8 col-xs-12">
+            <span class="tooltip-hint" data-tooltip-content="salience-hint">Source</span>
+        </div>
+    </div>
+    <hr class="style10" />
+    <div class="box-body">
+        @if (Model.Sources != null && Model.Sources.Any())
+        {
+            for (var i = 0; i < Model.Sources.Count; i++)
+            {
+                <span><strong>@Model.Sources[i].SourcesName</strong>@(Model.Sources[i].SourceDate.HasValue ? " - " + Model.Sources[i].SourceDate.Value.ToString("yyyy-MM-dd") : "")</span><br />
+                <a href='@Model.Sources[i].SourcesLink' target='_blank'>@Model.Sources[i].SourcesLink</a><br />
+                if (i < Model.Sources.Count - 1)
+                {
+                    <hr class="style4">
+                }
+            }
+        }
+    </div>
+</div>

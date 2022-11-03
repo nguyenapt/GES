@@ -1,0 +1,18 @@
+﻿IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_TYPE = 'PRIMARY KEY'
+AND TABLE_NAME = 'I_CompaniesG_ManagedDocuments' 
+AND TABLE_SCHEMA ='dbo' )
+BEGIN
+	ALTER TABLE dbo.I_CompaniesG_ManagedDocuments 
+	ADD CONSTRAINT PK_I_CompaniesG_ManagedDocuments PRIMARY KEY CLUSTERED (I_CompaniesG_ManagedDocuments_Id);
+END
+
+GO
+
+IF NOT EXISTS (
+	SELECT * FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
+    WHERE CONSTRAINT_NAME ='FK_GesCompanyProfiles_GesDocument')
+BEGIN
+	ALTER TABLE GesCompanyProfiles     
+		ADD CONSTRAINT FK_GesCompanyProfiles_GesDocument FOREIGN KEY (DocumentId)     
+		REFERENCES GesDocument (DocumentId) 
+END

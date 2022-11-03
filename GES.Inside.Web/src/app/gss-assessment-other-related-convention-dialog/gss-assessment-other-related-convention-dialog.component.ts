@@ -1,0 +1,93 @@
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-gss-assessment-other-related-convention-dialog',
+    templateUrl: './gss-assessment-other-related-convention-dialog.component.html',
+    styleUrls: ['./gss-assessment-other-related-convention-dialog.component.css']
+})
+export class GssAssessmentOtherRelatedConventionDialogComponent{
+    otherRelatedConventions = [
+        { text: 'Convention on International Trade in Endangered Species of Wild Fauna and Flora', value: 1 },
+        { text: 'International Convention for the Prevention of Pollution from Ships', value: 2 },
+        { text: 'Joint Convention on the Safety of Spent Fuel Management and on the Safety of Radioactive Waste Management', value: 3 },
+        { text: 'Agenda 21, the 1992 Rio Earth Summit', value: 4 },
+        { text: 'UN Framework Convention on Climate Change (UNFCCC)', value: 5 },
+        { text: 'Basel Convention on the Control of Transboundary Movements of Hazardous Wastes and their Disposal', value: 6 },
+        { text: 'Basic Principles on the Use of Force and Firearms by Law Enforcement Officials', value: 7 },
+        { text: 'Code of Good Practices on Fiscal Transparency', value: 8 },
+        { text: 'Convention against Torture and Other Cruel, Inhuman or Degrading Treatment or Punishment', value: 9 },
+        { text: 'Convention Concerning the Protection of the World Cultural and Natural Heritage', value: 10 },
+        { text: 'Convention for the Protection of the Marine Environment of the North-East Atlantic', value: 11 },
+        { text: 'Convention on Biological Diversity', value: 12 },
+        { text: 'Convention on Environmental Impact Assessment in a Transboundary Context', value: 13 },
+        { text: 'Convention on Long-range Transboundary Air Pollution', value: 14 },
+        { text: 'Convention on Nuclear Safety ', value: 15 },
+        { text: 'Convention on the Protection and Use of Transboundary Watercourses and International Lakes', value: 16 },
+        { text: 'Convention on the Rights of Persons with Disabilities', value: 17 },
+        { text: 'The Declaration on the Rights of Persons Belonging to National or Ethnic, Religious and Linguistic Minorities', value: 18 },
+        { text: 'Declaration of the United Nations Conference on the Human Environment', value: 19 },
+        { text: 'Forest Principles', value: 20 },
+        { text: 'Hague Convention, 1907 ', value: 21 },
+        { text: 'IAEA safety standards', value: 22 },
+        { text: 'ICGN (International Corporate Governance Network) Global Corporate Governance Principles', value: 23 },
+        { text: 'ILO Abolition of Forced Labour Convention (No. 105)', value: 24 },
+        { text: 'ILO Collective Bargaining Convention (No. 154)', value: 25 },
+        { text: 'ILO Declaration on Fundamental Principles and Rights at Work', value: 26 },
+        { text: 'ILO Discrimination (Employment and Occupation) Convention (No. 111)', value: 27 },
+        { text: 'ILO Equal Remuneration Convention (No. 100)', value: 28 },
+        { text: 'ILO Forced Labour Convention (No. 29)', value: 29 },
+        { text: 'ILO Forty-Hour Week Convention (No. 47)', value: 30 },
+        { text: 'ILO Freedom of Association and Protection of the Right to Organise Convention (No. 87)', value: 31 },
+        { text: 'ILO Hours of work Convention (No. 1)', value: 32 },
+        { text: 'ILO Indigenous and Tribal Peoples Convention (No. 169)', value: 33 },
+        { text: 'ILO Migration for Employment Convention (Revised) (No. 97)', value: 34 },
+        { text: 'ILO Minimum Age Convention (No. 138)', value: 35 },
+        { text: 'ILO Minimum Wage Fixing Convention (No. 131)', value: 36 },
+        { text: 'ILO Occupational Safety and Health Convention (No. 155)', value: 37 },
+        { text: 'ILO Protection of Wages Convention (No. 95)', value: 38 },
+        { text: 'ILO Right to Organise and Collective Bargaining Convention (No. 98)', value: 39 },
+        { text: 'ILO Worst Forms of Child Labour Convention (No. 182)', value: 40 },
+        { text: 'International Convention against all forms of Discrimination against Women', value: 41 },
+        { text: 'International Convention for the Protection of All Persons from Enforced Disappearance', value: 42 },
+        { text: 'International Convention for the Regulation of Whaling', value: 43 },
+        { text: 'International Convention on Oil Pollution Preparedness, Response and Cooperation', value: 44 },
+        { text: 'International Convention on the Elimination of all Forms of Racial Discrimination', value: 45 },
+        { text: 'International Convention on the Protection of the Rights of All Migrant Workers and Members of Their Families', value: 46 },
+        { text: 'International Convention on the Rights of the Child', value: 47 },
+        { text: 'International Covenant on Civil and Political Rights', value: 48 },
+        { text: 'International Covenant on Economic, Social and Cultural Rights', value: 49 },
+        { text: 'International Humanitarian Law (especially the Geneva Conventions)', value: 50 },
+        { text: 'International Treaty on Plant Genetic Resources for Food and Agriculture', value: 51 },
+        { text: 'Minamata Convention on Mercury', value: 52 },
+        { text: 'Optional Protocol to the Convention on the Rights of the Child on the sale of children, child pornography and child prostitution', value: 53 },
+        { text: 'PACI Principles for Countering Bribery', value: 54 },
+        { text: 'Rio Declaration on Environment and Development', value: 55 },
+        { text: 'Rotterdam Convention on the Prior Informed Consent Procedures for Certain Hazardous Chemicals and Pesticides in International Trade', value: 56 },
+        { text: 'Stockholm Convention on Persistent Organic Pollutants', value: 57 },
+        { text: 'The Cartagena Protocol on Biosafety', value: 58 },
+        { text: 'The Paris Agreement on Climate Change', value: 59 },
+        { text: 'The Arms Trade Treaty (ATT)', value: 60 },
+        { text: 'Transactions (OECD Anti-Bribery Convention)', value: 61 },
+        { text: 'UN Code of Conduct for Law Enforcement Officials', value: 62 },
+        { text: 'UN Conference on Environment and Development and resulting standards/legislation', value: 63 },
+        { text: 'UN Convention against Corruption', value: 64 },
+        { text: 'UN Convention on Combating Bribery of Foreign Public Officials in International Business', value: 65 },
+        { text: 'UN Convention on the Law of the Sea ', value: 66 },
+        { text: 'UN Convention relating to the Status of Refugees', value: 67 },
+        { text: 'UN Convention to Combat Desertification', value: 68 },
+        { text: 'UN Declaration on the Rights of Indigenous Peoples', value: 69 },
+        { text: 'UN Framework Convention on Climate Change (and resulting Kyoto Protocol)', value: 70 },
+        { text: 'UN Sanctions', value: 71 },
+        { text: 'UNECE Convention on Access to Information, Public Participation in Decision-making and Access to Justice in Environmental Matters', value: 72 },
+        { text: 'Universal Declaration on Human Rights', value: 73 },
+        { text: 'Vienna Convention for the Protection of the Ozone Layer', value: 74 },
+        { text: 'WHO Framework Convention on Tobacco Control and the Tobacco Industry', value: 75 }
+
+    ]
+
+    selectedOtherRelatedConventions: []    
+
+    saveOtherRelatedConvention() {
+        var x = this.selectedOtherRelatedConventions;
+    }
+}

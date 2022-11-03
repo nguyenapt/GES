@@ -1,0 +1,40 @@
+﻿<div ng-form="commentaryForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelCommentary(ngDialogData.editingCommentary)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">Sustainalytics commentary</h4>
+    </div>
+
+    <div class="modal-body" style="min-height: 0; max-height: 450px; overflow-y: auto">
+        <div class="box-body box-edit">
+            <div class="ges-content-block">
+                <div class="header">
+                    <div class="title col-lg-9 col-md-8">
+                        <p>Description <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-full-commentary-instructions" data-tooltip-title="Sustainalytics commentary Instructions"></i></p>
+                    </div>
+                </div>
+                <hr class="style10" />
+                <div style="max-height: 500px; height: 336px;overflow-y: auto;">                
+                    <textarea type="text"  maxlength="5000" ng-style={"height":"230px;"} click-to-edit-text-area ng-model="ngDialogData.editingCommentary.Description" is-edit-state="true" name="description" ng-required="true" style="height:240px"></textarea>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <br />
+    <div class="modal-footer">
+        <span ng-hide="isGEScommentaryDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-commentary-update" ng-disabled="commentaryForm.$invalid" ng-click="saveCommentary(ngDialogData.editingCommentary)" />
+            <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew-commentary" ng-click="saveCommentary(ngDialogData.editingCommentary,true)" ng-disabled="commentaryForm.$invalid" />
+            <span ng-if="ngDialogData.editingCommentary.I_GesCommentary_Id !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteCommentary(ngDialogData.editingCommentary,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelCommentary(ngDialogData.editingCommentary)" />
+    </div>
+</div>
+
+<style>
+    textarea { resize: vertical; }
+</style>

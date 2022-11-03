@@ -1,0 +1,58 @@
+﻿@using GES.Common.Resources
+@model GES.Clients.Web.Models.GesUserViewModel
+<div class="tab-pane active" id="generalInformation">
+    @using (Ajax.BeginForm("GeneralInfor", "Account", FormMethod.Post,
+                        new AjaxOptions
+                        {
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "POST",
+                            OnBegin = "$('.btn-submit-user-profile').button('loading')",
+                            OnComplete = "resetSubmitUserProfileButton()"
+                            //OnSuccess = "showSuccess(data,status,xhr)"
+                        }
+                        , new { @class = "form-horizontal", role = "form", @id = "form-general-info" }
+                        ))
+    {
+        @Html.AntiForgeryToken()
+        @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @id = "user-name", @readonly = true })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email-name" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @id = "first-name" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @id = "last-name" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(m => m.Phone, new { @class = "form-control", @id = "phone" })
+        @Html.HiddenFor(m => m.MobilePhone, new { @class = "form-control", @id = "mobile-phone" })
+        @Html.HiddenFor(m => m.WorkPhone, new { @class = "form-control", @id = "work-phone" })
+        
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-primary-new-dark btn-submit-user-profile" id="btn-submit-info" type="submit">@Resources.Save</button>
+            </div>
+        </div>
+    }
+</div>

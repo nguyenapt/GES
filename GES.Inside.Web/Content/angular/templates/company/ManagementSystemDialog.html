@@ -1,0 +1,38 @@
+﻿<div ng-form="managementSystemForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelCompanyManagementSystem(ngDialogData.editingCompanyManagementSystem)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingCompanyManagementSystem.I_CompaniesI_ManagementSystems_Id == 0 ? "Add New" : "Edit"}} management system</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">        
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Management system</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <select style="width: 100%" class="form-control" ng-model="ngDialogData.editingCompanyManagementSystem.I_ManagementSystems_Id" ng-options="managementSystem.I_ManagementSystems_Id as managementSystem.Name for managementSystem in managementSystems" id="managementSystem{{$index}}" name="managementSystem{{$index}}" ng-init="ngDialogData.editingCompanyManagementSystem.I_ManagementSystems_Id=ngDialogData.editingCompanyManagementSystem.I_ManagementSystems_Id" ng-required="true">
+                    <option value="">Select management system</option>
+                </select>
+            </div>            
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Certification</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="checkbox" ng-model="ngDialogData.editingCompanyManagementSystem.Certification" name="classA" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Coverage</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="number" step="1" ng-model="ngDialogData.editingCompanyManagementSystem.Coverage" class="form-control" name="coverage" />
+            </div>
+        </div>        
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-submit-company-management-system" ng-click="saveCompanyManagementSystem(ngDialogData.editingCompanyManagementSystem)" ng-disabled="managementSystemForm.$invalid" />
+        <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew-company-management-system" ng-click="saveCompanyManagementSystem(ngDialogData.editingCompanyManagementSystem,true)" ng-disabled="managementSystemForm.$invalid" />
+        <span ng-if="ngDialogData.editingCompanyManagementSystem.I_CompaniesI_ManagementSystems_Id !== 0">
+            <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-company-management-system" ng-click="deleteCompanyManagementSystem(ngDialogData.editingCompanyManagementSystem,true)" />
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelCompanyManagementSystem(ngDialogData.editingCompanyManagementSystem)" />
+    </div>
+</div>

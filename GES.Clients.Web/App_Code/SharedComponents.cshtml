@@ -1,0 +1,39 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+
+@helper BuildViewArchivedLink(string modalTitle, string viewArchiveText = null)
+{
+    <a href="#" class="modal-link" data-toggle="modal" data-target="#@CommonHelper.ConvertNameToHtmlElementId(modalTitle)">
+        <i class="fa fa-history" aria-hidden="true"></i> @(viewArchiveText ?? Resources.ViewArchive)
+    </a>
+}
+
+@helper BuildTabContent(System.Web.Mvc.HtmlHelper html, Dictionary<string, KeyValuePair<string, string>> contents)
+{
+    var validContents = contents.Where(x => !string.IsNullOrWhiteSpace(x.Value.Value)).ToDictionary(v => v.Key, v=> v.Value);
+
+    if (validContents != null && validContents.Count > 0)
+    {
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs hidden-print">
+                @foreach (var content in validContents)
+                {
+                    <li class="@(validContents.Keys.FirstOrDefault() == content.Key ? "active" : "")">                        
+                        <a href="#@content.Key" data-toggle="tab" class="tab-box-header">@html.Raw(content.Value.Key)</a>                        
+                    </li>
+                }
+            </ul>
+        
+            <div class="tab-content hidden-print">
+                @foreach (var content in validContents)
+                {
+                    <div class="@(validContents.Keys.FirstOrDefault() == content.Key ? "active" : "") tab-pane" id="@content.Key">
+                        <div class="tab-wrapper">
+                            @html.Raw(content.Value.Value)
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>    
+    }
+}

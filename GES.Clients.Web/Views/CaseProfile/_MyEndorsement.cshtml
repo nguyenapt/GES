@@ -1,0 +1,160 @@
+﻿@model GES.Clients.Web.Models.MyEndorsementViewModel
+@using GES.Common.Resources
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="myEndorsementModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            @using (Ajax.BeginForm("UpdateEndorsement", "CaseProfile", new AjaxOptions()
+                                                                       {
+                                                                           HttpMethod = "POST",
+                                                                           OnBegin = "$('.btn-save-endorsement').button('loading');"
+                                                                       }, new {id = "update-endorsement-form"}))
+            {
+                @Html.HiddenFor(i=>i.ActivityFormId)
+                @Html.HiddenFor(i=>i.GesCaseReportId)
+                @Html.HiddenFor(i=>i.OrgId)
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3>@Resources.ActivityForm</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="combobox-EngagementActivityOption">
+                            @Resources.EngagementActivityOptions (@Resources.Required)                            
+                        </label>
+                        @Html.DropDownListFor(i => Model.EngagementActivityOption, Model.EngagementActivityOptions, $"-- {Resources.SelectValue}--", new {@class = "form-control", @id = "combobox-EngagementActivityOption"})
+                        @Html.ValidationMessageFor(i => i.EngagementActivityOption, "", new { @class = "text-danger" })
+                        <p>* @Resources.TheNameOfClientsWillBeDisplayedInEFForClientsOnlyAndInCommunicationsWithTheCompany</p>
+                    </div>
+
+
+                    <div class="control-group">
+                        <div class="row">
+                            <div class="form-group">
+                                <label>@Resources.Ownership</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="checkbox-OwnerShip" class="col-md-6 control-label">@Resources.WeCurrentlyHaveDirectHoldingsInThisCompany</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.Ownership, new {id = "checkbox-OwnerShip"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="textbox-NumberofShareCount" class="col-md-6 control-label" style="margin-top: 6px;">@Resources.NumberOfShare</label>
+                                <div class="col-md-2">
+                                    @Html.TextBoxFor(i => i.NumberofShareCount, new {id = "textbox-NumberofShareCount", @class = "form-control", type="number"})
+                                </div>
+                                <label for="textbox-NumberofShareDate" class="col-md-1 control-label text-center" style="margin-top: 6px">@Resources.AsOf.ToLower()</label>
+                                <div class="col-md-2">
+                                    <div class='input-group date interval-selections'>
+                                        @Html.TextBoxFor(i => i.NumberofShareDate, new { id = "textbox-NumberofShareDate", @class = "form-control" })
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="checkbox-HoldingsThroughExternalFunds" class="col-md-6 control-label">@Resources.WeCurrentlyHaveHoldingsThroughExternalFunds</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.HoldingsThroughExternalFunds, new {id = "checkbox-HoldingsThroughExternalFunds"})
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="checkbox-FixedIncomeHoldings" class="col-md-6 control-label">@Resources.WeCurrentlyHaveFixedIncomeHoldingsInThisCompany</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.FixedIncomeHoldings, new {id = "checkbox-FixedIncomeHoldings"})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="form-group">
+                            <label>@Resources.WouldYouLikeToBeInvitedTo</label>
+                            <p>@Resources.WouldYouLikeToBeInvitedToMessage</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="checkbox-SignLetters" class="col-md-4 control-label">@Resources.SignLetters</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.SignLetters, new {id = "checkbox-SignLetters"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkbox-ParticipateInConferenceCalls" class="col-md-4 control-label">@Resources.ParticipateInConferenceCalls</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.ParticipateInConferenceCalls, new {id = "checkbox-ParticipateInConferenceCalls", @class = "right-checkbox"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="checkbox-ParticipateInLiveMeetings" class="col-md-4 control-label">@Resources.ParticipateInLiveMeetings</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.ParticipateInLiveMeetings, new {id = "checkbox-checkbox-ParticipateInLiveMeetings"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkbox-FileorCoFileResolutions " class="col-md-4 control-label">@Resources.FileOrCoFileResolutions</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.FileorCoFileResolutions, new {id = "checkbox-FileorCoFileResolutions", @class = "right-checkbox"})
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="checkbox-CleaningHouseActions" class="col-md-10 control-label">@Resources.ParticipationInClearinghouseActionsIncludingExternalPartnersAndProspects</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.CleaningHouseActions, new {id = "checkbox-CleaningHouseActions", @class = "right-checkbox"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="checkbox-QuestionToAgms" class="col-md-10 control-label">@Resources.PutForwardQuestionsRecommendationsToAGMsAndProxyVoting</label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.QuestionToAgms, new {id = "checkbox-QuestionToAgms", @class = "right-checkbox"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="checkbox-CollaborativeActions" class="col-md-10 control-label">@Resources.ParticipateInCollaborativeActionsLikeRoundtableMeetings </label>
+                                <div class="col-md-2">
+                                    @Html.CheckBoxFor(i => i.CollaborativeActions, new {id = "checkbox-CollaborativeActions", @class = "right-checkbox"})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="form-group">
+                            <label for="textbox-Suggestion">
+                                @Resources.Suggestion
+                            </label>
+                            @Html.TextAreaFor(i => i.Suggestions, new {id = "textbox-Suggestion", @class = "form-control"})
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary-new-dark btn-save-endorsement">@Resources.Save</button>
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+@Scripts.Render("~/bundles/page-my-endorsement")

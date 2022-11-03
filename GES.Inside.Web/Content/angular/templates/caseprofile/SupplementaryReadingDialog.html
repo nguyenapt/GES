@@ -1,0 +1,58 @@
+﻿<div ng-form="supplementaryReadingDialogForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelSupplementaryReading(ngDialogData.editingSupplementaryReading)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingSupplementaryReading.Id == 0 ? "Add New" : "Edit"}} Supplementary Reading</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Name</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingSupplementaryReading.Source" class="form-control form-control-text" name="source" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Publication Year</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="number" ng-model="ngDialogData.editingSupplementaryReading.PublicationYear" class="form-control form-control-text" name="publicationYear" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Available</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <select style="width: 100%" class="form-control" ng-model="ngDialogData.editingSupplementaryReading.Status" ng-options="status.id as status.Name for status in ngDialogData.statuses" id="status{{$index}}" name="status{{$index}}" is-edit-state="isNewCaseProfile" ng-init="ngDialogData.editingSupplementaryReading.Status=ngDialogData.editingSupplementaryReading.Status" ng-required="true">
+                    <option value="">Select value</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Available From</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingSupplementaryReading.AvailableFrom" class="form-control form-control-text" name="availableFrom" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Accessed</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <input type="date" style="border: none; width: 100%; -webkit-box-shadow: none" name="Accessed{{$index}}" id="Accessed{{$index}}" ng-model="ngDialogData.editingSupplementaryReading.Accessed" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd" ng-required="true" />
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Show in report</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <input type="checkbox" ng-model="ngDialogData.editingSupplementaryReading.ShowInReport" name="showInReport" />
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isSupplementaryReadingDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-submit" ng-click="saveSupplementaryReading(ngDialogData.editingSupplementaryReading)" ng-disabled="supplementaryReadingDialogForm.$invalid" />
+            <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew" ng-click="saveSupplementaryReading(ngDialogData.editingSupplementaryReading,true)" ng-disabled="supplementaryReadingDialogForm.$invalid" />
+            <span ng-if="ngDialogData.editingSupplementaryReading.Id !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteSupplementaryReading(ngDialogData.editingSupplementaryReading,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelSupplementaryReading(ngDialogData.editingSupplementaryReading)" />
+    </div>
+</div>

@@ -1,0 +1,505 @@
+﻿@using GES.Common.Resources
+@using GES.Inside.Web.Helpers
+@{
+    ViewBag.PageClass = "page-client page-client-details";
+
+    var clientId = ViewBag.Id ?? TempData["orgId"];
+}
+@section styling {
+    @Styles.Render("~/bundles/page-client-details-css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-client-details")
+}
+<script type="text/javascript">
+    var clientId = @clientId;
+  
+</script>
+
+<style>
+    
+    
+</style>
+
+@section contentHeader{
+    <section class="content-header"  ng-form="clientHeaderForm">
+        <h1>
+            <input type="text" class="input-header" click-to-edit placeholder="Add organization name" ng-model="clientDetails.Name" ng-required="true"/>
+        </h1>
+        <div class="page-buttons hidden-print">
+            <button class="btn btn-success not-outer-right-btn" ng-click="UpdateClient()" ng-disabled="clientHeaderForm.$invalid || clientForm.$invalid || isSaving">
+                <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+            </button>
+            <input class="btn" type="button" value="Cancel" id="cancel-save"
+                   data-confirm-title="Do you want to leave this site?"
+                   data-confirm-message="Changes you made may not be saved"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay" />
+        </div>
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<div class="row" ng-form="clientForm">
+    <div class="col-xs-12">
+        
+        <div class="box-body" >
+            <div class="box-group" id="accordion">
+                
+            <div class="panel box box-primary">
+                <a data-toggle="collapse" data-parent="#accordion" href="#organizationInfo">
+                    <div class="box-header with-border">
+                        <h3 class="box-title" style="color: #3c8dbc;">
+                            @Resources.ClientOrganizationInfo
+                        </h3>
+                    </div>
+                </a>
+                <div id="organizationInfo" class="panel-collapse collapse in">
+                <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientName</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Name" ng-required="true"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientOrgNr</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.OrgNr" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientAddress1</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Address1" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientPostalCode</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.PostalCode" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientAddress2</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Address2" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientCity</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.City" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientAddress3</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Address3" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientCountry</label>
+                            </div>
+                            <div class="editor-field">
+                                <select style="width: 100%" ng-model="clientDetails.CountryId" id="country-select" name="countrySelect" class="form-control" >
+                                    <option value="">Select Country</option>
+                                    <option ng-repeat="country in countries" value="{{country.Id}}" data-country-code="{{country.CountryCode}}"> {{country.FullName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientBillingAddress1</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.BillingAddress1" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientBillingPostalCode</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.BillingPostalCode" ng-required="false"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientBillingAddress2</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.BillingAddress2" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientBillingCity</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.BillingCity" ng-required="false"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientBillingAddress3</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.BillingAddress3" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientBillingCountry</label>
+                            </div>
+                            <div class="editor-field">
+                                <select style="width: 100%" ng-model="clientDetails.BillingG_Countries_Id" id="billing-country-select" name="billingcountrySelect" class="form-control">
+                                    <option value="">Select Country</option>
+                                    <option ng-repeat="country in countries" value="{{country.Id}}" data-country-code="{{country.CountryCode}}"> {{country.FullName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientPhone</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Phone" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientFax</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Fax" ng-required="false"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientWebsite</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.WebsiteUrl" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientType</label>
+                            </div>
+                            <div class="editor-field">
+                                <select ng-model="clientDetails.G_Industries_Id" id="client-type-select" name="client-typeSelect" class="form-control">
+                                    <option value="">Select a client type</option>
+                                    <option ng-repeat=" type in clientTypes" value="{{type.G_Industries_Id}}">{{type.FullName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientEmployees</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Employees" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientMembers</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Members" ng-required="false"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientTotalAssets</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.TotalAssets" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientEquity</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Equity" ng-required="false"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientProperty</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Property" ng-required="false"/>
+                            </div>
+                        </div>
+                            
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientFi</label>
+                            </div>
+                            <div class="editor-field">
+                                <input type="text" class="form-control" ng-model="clientDetails.Fi" ng-required="false"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.Raw(@Resources.ClientOurApproach)
+                            </div>
+                            <div class="editor-field">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="clientDetails.OurApproach" is-edit-state="isNewClient"></textarea>
+                            </div>
+                        </div>
+                    </div>
+  
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                <label>@Resources.ClientComment</label>
+                            </div>
+                            <div class="editor-field">
+                                <textarea class="ges-content" click-to-edit-text-area ng-model="clientDetails.Comment" is-edit-state="isNewClient"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* TODO: Document management will added here *@
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <div class="editor-field">
+                                <label>@Resources.ClientCustomer: &nbsp; </label>
+                                <input type="checkbox" ng-model="clientDetails.Customer" id="isCustomer" class="control-pointer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-field">
+                                <label>@Resources.ClientCreated:</label>
+                                <input type="text" style="width: 30%; border: none; background-color:white" date='yyyy/MM/dd HH:mm:ss a' ng-readonly="true" ng-model="clientDetails.Created" class="form-control form-control-text"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="editor-field">
+                                <label>@Resources.ClientModifiedBy:</label>
+                                <input type="text" style="width: 80%; border: none; background-color:white" ng-readonly="true" ng-model="clientDetails.ModifyString" class="form-control form-control-text"/>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+            <div class="panel box box-primary">
+                <a data-toggle="collapse" data-parent="#accordion" href="#agreements">
+                    <div class="box-header with-border">
+                        <h4 class="box-title" style="color: #3c8dbc;">
+                            @Resources.ClientAgreements
+                        </h4>
+                    </div> 
+                </a>
+                <div id="agreements" class="panel-collapse collapse">
+                    <div class="box-body">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <br/>
+                                    <button type="button" class="btn btn-info add-new-t01" id="btnContactSelect" data-toggle="modal" data-target="#agreement-dialog" ng-click="openAgreementPopup()"><i class="fa fa-plus"></i> Add new agreement</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table class="table table-bordered" ng-table="agreementsTableParams">
+                                <thead>
+                                <tr>
+                                    <th style="width: 400px; background-color: #68aaa3; color: white">@Resources.ClientAgreementsService</th>
+                                    <th style="width: 100px; background-color: #68aaa3; color: white">@Resources.ClientAgreementsPrice</th>
+                                    <th style="width: 180px; background-color: #68aaa3; color: white">@Resources.ClientAgreementsReporting</th>
+                                    <th style="width: 400px; background-color: #68aaa3; color: white">@Resources.ClientAgreementsComment</th>
+                                    <th style="width: 50px; background-color: #68aaa3"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="agreement in $data">
+                                    <td>
+                                        {{agreement.ServicesName}}
+                                    </td>
+                                    <td>
+                                        {{agreement.Price}}
+                                    </td>
+                                    <td>
+                                        {{agreement.Reporting}}
+                                    </td> 
+                                    <td>
+                                        {{agreement.Comment}}
+                                    </td>
+                                    <td>
+                                        <a class="edit-t01" title="Edit" data-toggle="modal" data-target="#agreement-dialog" ng-click="openAgreementPopup(agreement)"><i class="material-icons">&#xe22b;</i></a>
+                                        <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteAgreement(agreement)"><i class="material-icons">&#xE872;</i></a>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                            
+                        <h4 class="box-title">@Resources.ClientAgreementsTimeManager</h4>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="editor-label control-label">
+                                        <label>@Resources.ClientAgreementsTimeManagerFreeHoursForThisClient</label>
+                                    </div>
+                                    <div class="editor-field">
+                                        <textarea class="ges-content" click-to-edit-text-area ng-model="clientDetails.Property" is-edit-state="isNewClient"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                                
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="editor-label control-label">
+                                        <label>@Resources.ClientAgreementsTimeManagerStandardHourlyPrice</label>
+                                    </div>
+                                    <div class="editor-field">
+                                        <textarea class="ges-content" click-to-edit-text-area ng-model="clientDetails.Property" is-edit-state="isNewClient"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            </div>
+                
+        </div><!-- /.box-body -->
+        
+    </div><!-- /.col -->
+</div><!-- /.row -->
+@{ Html.RenderPartial("AgreementForm"); }

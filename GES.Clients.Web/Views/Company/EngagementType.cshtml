@@ -1,0 +1,138 @@
+﻿@using System.Web.Configuration
+@using GES.Common.Configurations
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.EngagementTypeViewModel
+@{
+    ViewBag.Title = @Model.Name;
+    
+    var imgSrc = String.Format("data:image/gif;base64,{0}", Model.ThemeImage);
+}
+@section globalVar {
+    <script type="text/javascript">
+        var oldClientsSiteUrl = '@WebConfigurationManager.AppSettings["oldClientsSiteUrl"]';
+        var kpiPieColors = {};
+        kpiPieColors.Low = '@Configurations.KpiPerformanceColors["Low"]';
+        kpiPieColors.Medium = '@Configurations.KpiPerformanceColors["Medium"]';
+        kpiPieColors.High = '@Configurations.KpiPerformanceColors["High"]';
+
+        var isOnlyForEngagementType = true;
+        var engagementTypeId = @Model.I_EngagementTypes_Id;
+        var serviceId = (('@Model.GovernanceServicesIds').length > 0)?'@Model.GovernanceServicesIds':'@Model.ServicesId';
+    </script>
+}
+
+@section styling {
+    @Styles.Render("~/Content/plugins/iCheck/iCheck-css-bundle")
+    @Styles.Render("~/Content/plugins/eventify/eventify-css-bundle")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-stewardship-and-risk-theme")
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="sna-theme-page-img" style="background-color:#68aaa3;background-image: url(@imgSrc)">
+                            
+                            <div class="sna-engagement-box">
+                                <div class="sna-engagement-type-name">
+                                    <h1>@Model.Name</h1>
+                                </div>
+                                <div class="sna-engagement-type-description">
+                                    @Html.Raw(Model.Description)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p></p>
+                @if (@Model.I_EngagementTypes_Id != 0)
+                {
+                    if (!Model.IsSubscribe)
+                    {
+                        if (Model.Deactive != null && Model.Deactive.Value)
+                        {
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="engagement-type-not-subscribe">
+                                        This engagement theme is closed. For more information, please contact @Model.ContactFullName at @Model.ContactMobile or<a href="mailto:@Model.ContactEmail">@Model.ContactEmail</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="engagement-type-not-subscribe">
+                                        You are currently not subscribing to this engagement theme. For more information about this subscription, please contact @Model.ContactFullName at @Model.ContactMobile or<a href="mailto:@Model.ContactEmail">@Model.ContactEmail</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else if (Model.TimeLine.Any() && Model.I_EngagementTypes_Id == (long) EngagementTypeEnum.EmerginMarket)
+                    {
+                        <div class="row">
+                            <div class="col-xs-9">
+                                @Html.Partial("~/Views/Company/_Framework_And_Development.cshtml", Model)
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">
+                                            @Resources.Timeline
+                                        </h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div id="ei-events">
+                                            @foreach (var item in Model.TimeLine)
+                                            {
+                                                <div class="ei-event" data-start='@item.EventDate.ToString("yyyy-MM-dd HH:mm")' data-end="" data-loc="" data-eventtype="">
+                                                    <div class="ei-name">@item.Heading</div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @Html.Partial("~/Views/Company/_Framework_And_Development.cshtml", Model)
+                            </div>
+                        </div>
+
+                    }
+                }
+
+                <div class="row">
+
+                </div>
+
+                @if (Model.IsSubscribe)
+                {
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <br />
+                            <table id="tblcompanies" class="table table-bordered table-striped"></table>
+                            <div id="myPager"></div>
+                        </div>
+                    </div>
+                }
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+@Html.Partial("~/Views/Company/_SignUp_Box_Messagebox.cshtml")
+<div id="myEndorsementModalContainer"></div>
+
+@Html.Partial("_StatusTooltip")

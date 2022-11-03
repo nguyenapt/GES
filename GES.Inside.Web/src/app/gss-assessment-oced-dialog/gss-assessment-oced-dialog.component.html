@@ -1,0 +1,16 @@
+<h3 matDialogTitle>OECD Guidelines for Multinational Enterprises</h3>
+<mat-dialog-content style="width:800px">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xs-12">
+            <mat-selection-list #oceds [(ngModel)]="selectedOCEDGuidelines">
+                <mat-list-option *ngFor="let oced of ocedGuidelines" [value]="oced.value">
+                    {{oced.text}}
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="saveOCEDGuideline()">Save</button>
+    <button mat-raised-button matDialogClose>Cancel</button>
+</mat-dialog-actions>

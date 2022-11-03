@@ -1,0 +1,191 @@
+﻿@using System.Linq.Dynamic
+@using GES.Clients.Web.Configs
+@using System.Web.Configuration
+@{
+    var currentAction = (string)ViewContext.RouteData.Values["action"];
+    var currentController = (string)ViewContext.RouteData.Values["controller"];
+    var isFocusList = false;
+    var parseResult = bool.TryParse(Request.QueryString["isFocusList"], out isFocusList);
+
+    // clicky
+    var clickUrl = string.Format("http://clicky.com/{0}", SiteSettings.ClickyTrackingId);
+    var clickImgUrl = string.Format("//in.getclicky.com/{0}ns.gif", SiteSettings.ClickyTrackingId);
+
+    var queryString = "";
+    if (parseResult && isFocusList)
+    {
+        queryString = "isfocuslist";
+    }
+    else if (Request.QueryString.Count > 0)
+        {
+            queryString = Request.QueryString[0].ToString();
+        }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" href="~/Content/img/favicon.ico" />
+    <!-- Windows Tile -->
+    <meta name="application-name" content="Sustainalystics Clients" />
+    <meta name="msapplication-config" content="browserconfig.xml" />
+
+    <title>@ViewBag.Title | @SiteSettings.SiteName</title>
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- Plugin Js-->
+    @Scripts.Render("~/bundles/js-plugins")
+
+    @Styles.Render("~/bundles/css-codyhouse-horizontal-timeline")
+    <!-- Bootstrap 3.3.5 -->
+    @Styles.Render("~/bundles/css-bootstrap")
+    <!-- Plugins CSS -->
+    @Styles.Render("~/bundles/css-plugins")
+    @Styles.Render("~/Content/plugins/jquery-ui-bootstrap/jquery-ui-bundle")
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <!-- and AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    @Styles.Render("~/bundles/css-adminlte-theme")
+    <!-- Additional CSS bundles -->
+    @RenderSection("styling", required: false)
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type='text/javascript'>
+        var appInsights=window.appInsights||function(config)
+        {
+            function r(config){ t[config] = function(){ var i = arguments; t.queue.push(function(){ t[config].apply(t, i)})} }
+            var t = { config:config},u=document,e=window,o='script',s=u.createElement(o),i,f;for(s.src=config.url||'//az416426.vo.msecnd.net/scripts/a/ai.0.js',u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=['Event','Exception','Metric','PageView','Trace','Ajax'];i.length;)r('track'+i.pop());return r('setAuthenticatedUserContext'),r('clearAuthenticatedUserContext'),config.disableExceptionTracking||(i='onerror',r('_'+i),f=e[i],e[i]=function(config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t['_' + i](config, r, u, e, o),s}),t
+        }({
+            instrumentationKey:'b4415bb3-85bf-4d95-b145-3473389a0134'
+        });
+
+        window.appInsights=appInsights;
+        appInsights.trackPageView();
+
+        var oldClientsSiteUrl = '@WebConfigurationManager.AppSettings["oldClientsSiteUrl"]';
+    </script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-33925563-5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-33925563-5');
+    </script>
+</head>
+<body class="hold-transition skin-yellow sidebar-mini @ViewBag.PageClass">
+    <div class="animation-loading">
+        <div class="osahan-loading"></div>
+    </div>
+    <div class="wrapper">
+        <!-- Header -->
+        @Html.Partial("_Header")
+        <!-- Left side column. contains the logo and sidebar -->
+        @Html.Action("RenderSidebar", "Authentication", new
+        {
+            queryString = queryString,
+            action = currentAction,
+            controller = currentController
+        })
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    <span id="initialHeading">@Html.Raw(ViewBag.Title)</span>
+                    <span class="lead"><strong>@Html.Raw(ViewBag.SubTitle)</strong></span>
+                </h1>
+                <div class="page-buttons hidden-print">
+                    @RenderSection("pageButtons", false)
+                </div>
+                @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                @RenderBody()
+            </section><!-- /.content -->
+        </div><!-- /.content-wrapper -->
+        <!-- Footer -->
+        @Html.Partial("_Footer")
+    </div><!-- ./wrapper -->
+
+    <div id="chartjs-tooltip">
+        <table></table>
+    </div>
+
+    <!-- jQuery 2.1.4 -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jquery.unobtrusive")*@
+    <!-- Bootstrap 3.3.5 -->
+    @Scripts.Render("~/bundles/bootstrap")
+    <!-- Global var -->
+    @RenderSection("globalVar", required: false)
+    <!-- Others: i.e. FastClick, slimScroll -->
+    @Scripts.Render("~/bundles/others")
+
+    <!-- Sparkline -->
+    @*<script src="plugins/sparkline/jquery.sparkline.min.js"></script>*@
+    <!-- ChartJS 1.0.1 -->
+    @*<script src="plugins/chartjs/Chart.min.js"></script>*@
+
+    <!-- AdminLTE App -->
+    <script src="~/Content/js/app.min.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/Content/js/pages/dashboard2.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Content/js/demo.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]')
+                .popover({
+                    html: true,
+                    animation: true
+                });
+
+            var readMoreConfig = {
+                collapsedHeight: 80,
+                speed: 350,
+                moreLink: '<a href="#" class="ges-content-read-more" style="text-align: right">Read more <i class="fa fa-angle-double-down" aria-hidden="true"></i></a>',
+                lessLink: '<a href="#" class="ges-content-read-more" style="text-align: right">Close <i class="fa fa-angle-double-up" aria-hidden="true"></i></a>'
+            };
+
+            $('.case-report-block dd, .ges-content').readmore(readMoreConfig);
+
+            $(document).on('shown.bs.tab', function () {
+                //Fix bug https://github.com/jedfoster/Readmore.js/issues/128
+                $(".tab-content .ges-content").readmore(readMoreConfig);
+            });
+
+            utils.setUpContentBlockAnimation();
+
+            $(".animation-loading").hide();
+
+            $(".datepicker").datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            });
+            utils.shortenIfPassLimit(400, ".dashboard-announcement-content");                        
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+
+    <a title="Real Time Web Analytics" href="@clickUrl"><img alt="Real Time Web Analytics" src="//static.getclicky.com/media/links/badge.gif" border="0" /></a>
+    <script src="//static.getclicky.com/js" type="text/javascript"></script>
+    <script type="text/javascript">try { clicky.init(@SiteSettings.ClickyTrackingId); } catch (e) { }</script>
+    <noscript><p><img alt="Clicky" width="1" height="1" src="@clickImgUrl" /></p></noscript>
+</body>
+</html>
+

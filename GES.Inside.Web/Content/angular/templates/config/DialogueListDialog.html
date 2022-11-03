@@ -1,0 +1,39 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" ng-click="cancelDialogueDialog()">×</span>
+    </button>
+    <h4 class="modal-title text-bold">{{ngDialogData.currentType}} dialogues</h4>
+</div>
+<div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+    <div class="row" style="margin-top:15px">
+        <table class="table table-bordered" ng-table="dialogueTableParams">
+            <tbody>
+                <tr ng-repeat="dialogue in $data">
+                    <td data-title="'Company'" filter="{'CompanyName': 'text' }" sortable="'CompanyName'" header-class="'ng-table-column'">
+                        <a target="_blank" href="Company/Details/{{dialogue.CompanyId}}">{{dialogue.CompanyName}}</a>
+                        
+                    </td>
+                    <td data-title="'Issue'" filter="{'Issue': 'text' }" sortable="'Issue'" header-class="'ng-table-column'">
+                        <a target="_blank" href="CaseProfile/Edit/{{dialogue.I_GesCaseReports_Id}}">{{dialogue.Issue}}</a>                        
+                    </td>
+                    <td data-title="'Norm/Theme'" filter="{'Norm': 'text' }" sortable="'Norm'" header-class="'ng-table-column'">
+                        {{dialogue.Norm}}
+                    </td>
+                    <td data-title="'Type'" filter="{'ContactTypeName': 'text' }" sortable="'ContactTypeName'" header-class="'ng-table-column'">
+                        {{dialogue.ContactTypeName}}
+                    </td>
+                    <td data-title="'Direction'" filter="{'ContactDirectionName': 'text' }" sortable="'ContactDirectionName'" header-class="'ng-table-column'">
+                        {{dialogue.ContactDirectionName}}
+                    </td>
+                    <td data-title="'Date'" sortable="'ContactDate'" header-class="'ng-table-column ng-table-column-100'">
+                        {{dialogue.ContactDate | date: "yyyy-MM-dd"}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>   
+
+</div>
+<div class="modal-footer">    
+    <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelDialogueDialog()" />
+</div>

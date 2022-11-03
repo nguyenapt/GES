@@ -1,0 +1,67 @@
+﻿@using GES.Common.Configurations
+@using GES.Common.Resources
+@model IList<GES.Inside.Data.Models.KpiViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="box box-primary ">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.Kpi
+            </h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div id="kpi-chart-container" class="col-lg-4 col-md-8 col-xs-12">
+                </div>                
+            </div>
+            <div class="row">
+                <div class="kpi-legend-wrapper">
+                    <span class="kpi-performance low-performance">
+                        <span>Low</span>
+                    </span>
+                    <span class="kpi-performance medium-performance">
+                        <span>Medium</span>
+                    </span>
+                    <span class="kpi-performance high-performance">
+                        <span>High</span>
+                    </span>
+                </div>
+            </div>
+            <div class="ges-content-block">
+                <div class="header">
+                    <div class="title col-lg-9 col-md-8 col-xs-12">
+                        <p>@Resources.KpiDetail</p>
+                    </div>
+                </div>
+                <hr class="style10" />
+                <div class="direct-chat-messages">
+                    @foreach (var kpi in Model)
+                    {
+                        <div>
+                            <div class="kpi-heading">@kpi.KpiName</div>
+                            <div><span>Peformance: </span><span style="color: @Configurations.KpiPerformanceColors[kpi.KpiPerformance]"><strong>@kpi.KpiPerformance</strong></span></div>
+                            <div class="pre-line-white-space">@kpi.KpiDescription</div>
+                        </div>
+
+                        if (Model.IndexOf(kpi) != Model.Count - 1)
+                        {
+                            <br />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        var _pieColors = [];
+        var _pieData = [];
+
+        @foreach (var kpi in Model)
+        {
+            @:_pieColors.push("@Configurations.KpiPerformanceColors[kpi.KpiPerformance]");
+            @:_pieData.push({name: "@kpi.KpiName", y: 1, value: "@kpi.KpiPerformance", color: "@Configurations.KpiPerformanceColors[kpi.KpiPerformance]", description: "@HttpUtility.JavaScriptStringEncode(kpi.KpiDescription)"});
+        }
+    </script>
+}

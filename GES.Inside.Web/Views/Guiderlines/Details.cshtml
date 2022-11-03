@@ -1,0 +1,71 @@
+﻿@using System.Web.Configuration
+@using System.Web.Mvc.Html
+@using GES.Inside.Web.Helpers
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.NormModel
+
+@{
+    ViewBag.PageClass = "page-guiderline page-guiderline-details";
+
+
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-guiderline-details")
+}
+<style>
+    .inputText {
+        width: 100% !important;
+        overflow-x: -moz-scrollbars-none;
+    }
+
+</style>
+
+@section contentHeader{
+    <section class="content-header" ng-form="guiderlineHeaderForm">
+        <h1>
+            <input type="text" style="width: 80%" class="input-header" click-to-edit placeholder="Add Guiderline name" ng-model="guiderlineDetails.FriendlyName" ng-required="true" is-edit-state="isAddNew"/>
+        </h1>
+        
+        <div class="page-buttons hidden-print">
+            <button class="btn btn-success not-outer-right-btn" ng-click="UpdateGuiderline()" ng-disabled="guiderlineHeaderForm.$invalid || guiderlineForm.$invalid || isSaving">
+                <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+            </button>
+            <input class="btn btn-danger" type="button" value="Delete" id="delete-guiderline" 
+                   data-confirm-title="Delete Guiderline"
+                   data-confirm-message="Are you sure you want to delete selected guiderline?"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Delete" 
+                   data-confirm-cancel="Cancel" 
+                   ng-disabled="isNewGuiderline"/>
+            <input class="btn" type="button" value="Cancel" id="cancel-save"
+                   data-confirm-title="Do you want to leave this site?"
+                   data-confirm-message="Changes you made may not be saved"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay" />
+        </div>
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="box box-primary box-company-overview">
+            <div class="box-body" ng-form="guiderlineForm">
+
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.GuiderlineSectionTitle</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="guiderlineDetails.SectionTitle" is-edit-state="isAddNew"></textarea>
+                </div>
+
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+    </div><!-- /.col -->
+   
+</div><!-- /.row -->

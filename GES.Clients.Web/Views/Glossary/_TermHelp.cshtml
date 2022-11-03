@@ -1,0 +1,33 @@
+﻿@using GES.Clients.Web.Configs
+@using GES.Clients.Web.Extensions
+@using GES.Inside.Data.DataContexts
+@using GES.Inside.Data.Repository
+@using GES.Inside.Data.Services
+@using GES.Common.Resources
+@model GES.Clients.Web.Models.StringModel
+@{
+    var glossaryService = new GlossaryService(new UnitOfWork<GesRefreshDbContext>());
+    var term = glossaryService.GetBySlug(Model.Slug);
+
+    var truncatedDesc = "";
+    var isTruncated = false;
+
+    if (term != null)
+    {
+        truncatedDesc = Html.GetPlainTextFromHtml(term.Description).TruncateAtWord(SiteSettings.GlossaryTruncateLimit);
+        isTruncated = truncatedDesc.EndsWith("...");
+    }
+}
+@if (term != null)
+{
+    <a class="termTip">
+        <i class="fa fa-question-circle"></i>
+    </a>
+    <span class="tooltiptext">
+    @Html.Raw(truncatedDesc)
+    @if (isTruncated)
+    {
+        <a target="_blank" href='@String.Format("/Glossary#{0}", Model.Slug)'> @Resources.ReadMore</a>
+    }
+</span>
+}

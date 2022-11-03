@@ -1,0 +1,57 @@
+﻿@using GES.Inside.Data.Models;
+@using GES.Common.Resources;
+@using GES.Common.Configurations;
+@model IEnumerable<EventListViewModel>
+<div class="box box-primary ">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-calendar"></i> @Resources.UpcomingEvents @GetCounting(Model)</h3>
+    </div>
+    <div class="box-body">
+        @if (Model != null && Model.Any())
+        {
+            <table class="table calendar-export">
+                @foreach (var item in Model.OrderByDescending(x => x.EventDate))
+                {
+                    <tr>
+                        <td class="event-date">@(item.EventDate.ToString(Configurations.DateFormat))</td>
+                        <td>
+                            @if (item.IsGesEvent)
+                            {
+                                <img src="~/Content/img/logo.png" style="width: 44px; height: auto" alt="" />
+                                <br />
+                            }
+                            @item.Description
+                            <br />
+                            <i class="fa fa-clock-o"></i>
+                            @{
+                                var eventDate = item.EventDate.ToString("HH:mm");
+                                if (eventDate == "00:00")
+                                {
+                                    @:Day Event
+                                }
+                                else
+                                {
+                                    @eventDate
+                                }
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            @:There are currently no upcoming events
+        }
+
+    </div>
+</div>
+
+@functions
+{
+    private static string GetCounting<T>(IEnumerable<T> items)
+    {
+        return items != null && items.Any() ? $"({items.Count()})" : "";
+    }
+}

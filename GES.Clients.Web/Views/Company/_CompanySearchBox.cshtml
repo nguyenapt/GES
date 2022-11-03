@@ -1,0 +1,209 @@
+﻿@model GES.Clients.Web.Models.CompanySearchBoxViewModel
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+
+<script type="text/javascript">
+        clientType = '@Model.ClientType';
+</script>
+<!--Row 1-->
+<div class="row row-simple">
+    <div class="col-md-4 col-search-text">
+        <div class="form-group">
+            <div class="editor-field">
+                @*<small>@Html.LabelFor(m => m.Name)</small>*@
+                <small><label>Name</label></small>
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @id = "textbox-company-name", @placeholder = Resources.TypeCompanyNameIssueOrKeyword })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-search-isin">
+        @*<div class="form-group">
+            <div class="editor-field">
+                <a class="link-to-glossary" target="_blank" href="/Glossary#conclusion"><small>@Html.LabelFor(m => m.Conclusion)</small></a>
+                @Html.DropDownListFor(m => m.Conclusion, Model.Conclusions, null, new { @class = "form-control", @id = "combobox-conclusion", @multiple = "multiple", @data_actions_box = "true" })
+
+            </div>
+        </div>*@
+        
+        <div class="form-group">
+            <div class="editor-field">
+                <small>@Html.LabelFor(m => m.EngagementArea)</small>
+                @Html.DropDownListFor(m => m.EngagementArea, Model.EngagementAreas, Resources.AllValues, new { @class = "form-control", @id = "combobox-engagementarea" })
+            </div>
+        </div>
+
+        
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <div class="editor-field">
+                <a class="link-to-glossary" target="_blank" href="/Glossary#engagementstatus"><small>@Html.LabelFor(m => m.Recommendation)</small></a>
+                @if (@Model.ClientType == ClientType.GlobalEthicalStandardOnly)
+                {
+                    @Html.DropDownListFor(m => m.Recommendation, Model.Recommendations, new { @class = "form-control ges-control-disabled", @id = "combobox-recommendation", @multiple = "multiple", @data_actions_box = "true", @disabled = "true" })
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.Recommendation, Model.Recommendations, new { @class = "form-control ges-combobox", @id = "combobox-recommendation", @multiple = "multiple", @data_actions_box = "true" })
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="advance-search-container">
+    <!--Row 2-->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-field">
+                    <small>@Html.LabelFor(m => m.ISIN)</small>
+                    @Html.TextBoxFor(m => m.ISIN, new { @class = "form-control", @id = "textbox-company-isin", @maxlength = "12", @placeholder = Resources.TypeISINCode })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-field">
+                    <small>@Html.LabelFor(m => m.Industry)</small>
+                    @Html.DropDownListFor(m => m.Industry, Model.Industries, null, new {@class = "form-control", @id = "combobox-industry", @multiple = "multiple", @data_actions_box = "true"})
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="editor-field">
+                    <a class="link-to-glossary" title="@Resources.TheIndicatorDescribesHowTheCompanyRespondsToGESInquiries" target="_blank" href="/Glossary#response"><small>@Html.LabelFor(m => m.Response)</small></a>
+                    @if (@Model.ClientType == ClientType.GlobalEthicalStandardOnly)
+                    {
+                        @Html.DropDownListFor(m => m.Response, Model.Responses, null, new { @class = "form-control ges-control-disabled", @id = "combobox-response", @multiple = "multiple", @data_actions_box = "true", @disabled = true })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.Response, Model.Responses, null, new { @class = "form-control", @id = "combobox-response", @multiple = "multiple", @data_actions_box = "true" })
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="advanced-search-box" class="collapse">
+        <!--Row 3-->
+        <div class="row">
+            <div class="col-md-4">
+                
+                <div class="form-group">
+                    <div class="editor-field">
+                        <small>@Html.LabelFor(m => m.SustainalyticsId)</small>
+                        @Html.TextBoxFor(m => m.SustainalyticsId, new { @type = "number", @class = "form-control", @id = "textbox-sustainalytics-id", @placeholder = Resources.TypeSustainalyticsID })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="editor-field">
+                        <small>@Html.LabelFor(m => m.Location)</small>
+                        @Html.DropDownListFor(m => m.Location, Model.Locations, null, new { @class = "form-control", @id = "combobox-location", @multiple = "multiple", @data_actions_box = "true" })
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="editor-field">
+                        <a class="link-to-glossary" title="@Resources.TheIndicatorDescribesWhetherOrNotTheViolationContinuesOrHowTheCompanyWorkToPreventFutureViolationsIsDeveloping" target="_blank" href="/Glossary#progress">
+                            <small>@Html.LabelFor(m => m.Progress)</small>
+                        </a>
+                        @if (@Model.ClientType == ClientType.GlobalEthicalStandardOnly)
+                    {
+                        @Html.DropDownListFor(m => m.Progress, Model.Progresses, null, new { @class = "form-control ges-control-disabled", @id = "combobox-progress", @multiple = "multiple", @data_actions_box = "true", @disabled = true })
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.Progress, Model.Progresses, null, new { @class = "form-control", @id = "combobox-progress", @multiple = "multiple", @data_actions_box = "true" })
+            }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Row 4-->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <small>@Html.LabelFor(m => m.PortfolioIndex)</small>
+                    @*@Html.DropDownListFor(m => m.PortfolioIndex, Model.PortfolioIndexes, "All Portfolios/Indices", new {@class = "form-control", @id = "combobox-portfolio", @multiple = "multiple"})*@
+                    @Html.DropDownListFor(m => m.PortfolioIndex, Model.PortfolioIndexes, new { @class = "form-control", @id = "combobox-portfolio", @multiple = "multiple", @data_actions_box = "true" })
+
+                </div>
+
+                
+            </div>
+
+            <div class="col-md-4 col-sustainalyticsid-text">
+                <div class="form-group">
+                    <div class="editor-field">
+                        <small>@Html.LabelFor(m => m.HomeCountry)</small>
+                        @Html.DropDownListFor(m => m.HomeCountry, Model.HomeCountries, null, new { @class = "form-control", @id = "combobox-homeCountries", @multiple = "multiple", @data_actions_box = "true" })
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="col-md-4">
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-4 col-md-4 group-checkboxes">
+        <div class="form-group">
+            <div class="checkbox margin-top-none">
+                <label>
+                    @Html.CheckBoxFor(m => m.ShowClosedCases, new { @id = "checkbox-not-show-close-case" })
+                    @Html.DisplayNameFor(m => m.ShowClosedCases)
+                </label>
+            </div>
+            @Html.HiddenFor(m => m.OnlyCompaniesWithActiveCases, new { @id = "checkbox-only-companies-with-active-case" })
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-4 group-advanced-search">
+        <div data-toggle="collapse" data-target="#advanced-search-box" id="btn-advanced-search">
+            <span id="lbl-advanced-search">@Resources.SearchAdvance</span><br/>
+            <span id="fa-advanced-search" class="fa fa-2x fa-angle-double-down" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-4 text-xs-center text-sm-right text-md-right text-lg-right group-buttons">        
+        <button class="btn btn-primary-new btn-ges-light-blue btn-reset-search-company" id="reset" type="submit">@Resources.Reset</button>
+        <button class="btn btn-primary-new-dark btn-ges-primary btn-search-company" id="submit-search" type="submit">@Resources.Search »</button>
+
+        @Html.HiddenFor(m => m.onlySearchCompany, new { @id = "hiddenOnlySearchCompany" })
+        @Html.HiddenFor(m => m.onlyShowFocusList, new { @id = "hiddenOnlyShowFocusList" })
+        @Html.HiddenFor(m => m.CompanyId, new { @id = "hiddenCompanyIdSelected" })
+    </div>
+    <div class="col-xs-12 text-bold ">
+        <span id="lbl-search-message-result"></span>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 text-left page-focus-only">
+        <a href="/Company/List" class="btn btn-primary-new-dark btn-ges-primary" id="add-companies-to-focus-list">@Resources.AddCompaniesToMyFocusList</a>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 text-right page-focus-only">
+        @*<input class="btn btn-info export-prescreening-search-list-btn" type="button" data-loading-text="Processing..." value="Export" />*@
+        <a class="btn btn-default btn-xs export-btn export-selected-search-list-btn disabled" data-loading-text="@Resources.Processing..."><i class="fa fa-fw fa-upload"></i>&nbsp;@Resources.ExportSelected</a>
+        <a class="btn btn-default btn-xs export-btn export-prescreening-search-list-btn" data-loading-text="@Resources.Processing..."><i class="fa fa-fw fa-upload"></i>&nbsp;@Resources.ExportAll</a>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 text-right page-search-only btn-group-export">
+        @*<input class="btn btn-info export-prescreening-search-list-btn" type="button" data-loading-text="Processing..." value="Export" />*@
+        <a class="btn btn-default btn-xs add-to-focus-list-btn disabled" data-loading-text="Processing..."><i class="fa fa-dot-circle-o"></i>&nbsp;@Resources.AddAllToMyFocusList</a>
+        <a class="btn btn-default btn-xs export-btn export-selected-search-list-btn disabled" data-loading-text="@Resources.Processing..."><i class="fa fa-fw fa-upload"></i>&nbsp;@Resources.ExportSelected</a>
+        <a class="btn btn-default btn-xs export-btn export-prescreening-search-list-btn" data-loading-text="@Resources.Processing..."><i class="fa fa-fw fa-upload"></i>&nbsp;@Resources.ExportAll</a>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 text-right page-export-all-holdings-only">
+        <a class="btn btn-default btn-xs export-all-holdings-btn" data-loading-text="@Resources.Processing..."><i class="fa fa-fw fa-upload"></i>&nbsp;@Resources.ExportAllHoldings</a>
+    </div>
+</div>

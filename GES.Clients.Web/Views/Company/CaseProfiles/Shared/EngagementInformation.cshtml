@@ -1,0 +1,75 @@
+﻿@using System.Text
+@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Helpers
+@using GES.Clients.Web.Models
+@using GES.Common.Configurations
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@using GES.Inside.Data.Models.Anonymous
+@using GES.Inside.Data.Models.CaseProfiles
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileEngagementInformationViewModel
+
+@{
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isSrEmeCase = gesCaseReportType == GesCaseReportType.SrEmeEngage || gesCaseReportType == GesCaseReportType.SrEmeArchived;
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+}
+
+@Html.RenderBlockContent(m => m.GapAnalysis)
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CHANGE-OBJECTIVE"))
+{
+    if (!string.IsNullOrEmpty(Model.ChangeObjective))
+    {
+        @Html.RenderBlockContent(m => m.ChangeObjective, Model.ChangeObjectiveDateTime)
+    }
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "MILESTONE"))
+{
+    if (!string.IsNullOrEmpty(Model.LatestMilestone))
+    {
+        if (isSrEmeCase)
+        {
+            // @Html.RenderBlockContent(m => m.LatestMilestone, Model.LatestMilestoneDateTime, Resources.MilestoneArchive)
+            Html.RenderPartial("~/Views/Company/CaseProfiles/Shared/EmeMilestones.cshtml", new ModalPopupViewModel
+            {
+                ModalTitle = Resources.MilestoneArchive,
+                DateContentWithAttributePairs = Model.Milestones?.Select(o => new KeyValueAttributeObject<string, string, string>(o.MilestoneModified?.ToString(Configurations.DateFormat), o.Description, @CommonHelper.GetMilestoneIcon(o.Description, (o.GesMilestoneTypes?.Level ?? 0)))).ToList()
+            });
+
+        }
+        else
+        {
+            var customContent = new StringBuilder("<p class='ges-content milestone-wrapper'>");
+            var milestoneImg = CommonHelper.GetMilestoneIcon(Model.LatestMilestone, Model.LatestMilestoneLevel);
+
+            if (!milestoneImg.Contains("0"))
+            {
+                customContent.Append($"<img class='tooltip-hint milestone-icon' data-tooltip-title='{Resources.MilestoneStatus}' data-tooltip-content='milestone-hint' alt='milestone achieved' " +
+                                     $"src='/Content/img/icons/{milestoneImg}' />");
+            }
+
+            customContent.Append(CommonHelper.RemoveMilestoneAchived(Model.LatestMilestone));
+            customContent.Append("</p>");
+
+            @Html.RenderBlockContentWithCustomContent(Html.DisplayNameFor(m => m.LatestMilestone).ToHtmlString(), customContent.ToString(), Model.LatestMilestoneDateTime, Resources.MilestoneArchive)
+
+        }
+
+        Html.RenderPartial("~/Views/Shared/_MilestonesDialog.cshtml", new ModalPopupViewModel
+        {
+            ModalTitle = Resources.MilestoneArchive,
+            DateContentWithAttributePairs = Model.Milestones?.Select(o => new KeyValueAttributeObject<string, string, string>(o.MilestoneModified?.ToString(Configurations.DateFormat), o.Description, @CommonHelper.GetMilestoneIcon(o.Description, (o.GesMilestoneTypes?.Level ?? 0)))).ToList()
+        });
+    }
+
+}
+
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "NEXT-STEP"))
+{
+    if (!string.IsNullOrEmpty(Model.NextStep)
+        && !(gesCaseReportType == GesCaseReportType.SrArchived || gesCaseReportType == GesCaseReportType.SrEmeArchived))
+    {
+        @Html.RenderBlockContent(m => m.NextStep, Model.NextStepDateTime)
+    }
+}

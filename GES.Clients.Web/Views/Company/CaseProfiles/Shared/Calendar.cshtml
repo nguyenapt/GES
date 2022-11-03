@@ -1,0 +1,23 @@
+﻿@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+@model IEnumerable<GES.Inside.Data.Models.EventListViewModel>
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isStCase = gesCaseReportType == GesCaseReportType.StAlert || gesCaseReportType == GesCaseReportType.StandardAlertAndIndication || gesCaseReportType == GesCaseReportType.StArchived || gesCaseReportType == GesCaseReportType.StConfirmed || gesCaseReportType == GesCaseReportType.StIndicationOfViolation || gesCaseReportType == GesCaseReportType.StResolved;
+}
+
+@if ((!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-EVENT") || isStCase) && Model != null && Model.Any())
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i> @Resources.Calendar
+            </h3>
+        </div>
+        <div class="box-body">
+            @Html.Partial("~/Views/Company/_Profile_Events.cshtml", Model)
+        </div>
+    </div>
+}

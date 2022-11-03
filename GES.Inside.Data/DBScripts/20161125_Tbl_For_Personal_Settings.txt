@@ -1,0 +1,10 @@
+
+----- Deploy
+- Copy "EntityFramework.6.1.3" folder to the same level as deployment folder
+- Cmd:
+C:\inetpub\EntityFramework.6.1.3\tools>migrate.exe Ges.Inside.Data GES.Inside.Data.Migrations.GesRefresh.Configuration  /startupdirectory:..\..\ges.inside\bin /startUpConfigurationFile:..\..\ges.inside\Web.config
+
+
+----- Run in visual:
+update-database -ConfigurationTypeName GES.Inside.Data.Migrations.GesRefresh.Configuration
+

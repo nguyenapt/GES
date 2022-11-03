@@ -1,0 +1,93 @@
+<div *ngIf="issueIndicator.Assessment">
+    <div class="ges-content-block">
+        <div class="row">
+            <div class="col-md-4">
+                <span class="text-bold">UN Global Compact Assessment</span><br />
+                <div *ngIf="isEdit;else else_un_compact_assessment">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="selected" (ngModelChange)="selectUNGlobal()">
+                            <mat-option value="-1">Blank</mat-option>
+                            <mat-option value="0">Compliant</mat-option>
+                            <mat-option value="1">Watchlist</mat-option>
+                            <mat-option value="2">Non-Compliant</mat-option>
+                        </mat-select>
+                        <!--<mat-hint align="end">UN Global Compact Assessment</mat-hint>-->
+                    </mat-form-field>
+                </div>
+                <ng-template #else_un_compact_assessment>
+
+                </ng-template>
+            </div>
+            <div class="col-md-4">
+                <span class="text-bold">Assessment Effective Since</span><br />
+                <mat-form-field style="width:70px">
+                    <mat-select disabled="{{!isEditAssessment}}">
+                        <mat-option value="-1">Blank</mat-option>
+                        <mat-option value="1">Q1</mat-option>
+                        <mat-option value="2">Q2</mat-option>
+                        <mat-option value="3">Q3</mat-option>
+                        <mat-option value="4">Q4</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field style="width:100px;margin-left:20px">
+                    <mat-select disabled="{{!isEditAssessment}}">
+                        <mat-option value="-1">Blank</mat-option>
+                        <mat-option *ngFor="let year of years" [value]="year">
+                            {{ year }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="edit-pencil glyphicon glyphicon-pencil"></div>
+            </div>
+            <div class="col-md-4">
+                <span class="text-bold">Basis for Non-Compliance</span><br />
+                <mat-form-field>
+                    <mat-select disabled="{{!isEditBasisForNonCompliance}}">
+                        <mat-option value="-1">Blank</mat-option>
+                        <mat-option value="1">Official Source</mat-option>
+                        <mat-option value="2">Company Admittance of Guilt</mat-option>
+                        <mat-option value="3">Multiple Independent Sources</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="edit-pencil glyphicon glyphicon-pencil"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <span class="text-bold">Basis for Non-Compliance Comment</span>
+            </div>
+            <div class="col-md-8">
+                <textarea matInput rows="5"  placeholder="Basis for Non-Compliance Comment" [(ngModel)]="issueIndicator.Assessment.BasisForNonComplianceComment"></textarea>       
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div *ngIf="isEdit;else else_ungp_assessment">
+                    <span class="text-bold" (click)="openOCEDGuideline()">OECD Guideline fir Multinational Enterprises</span><div class="edit-pencil glyphicon glyphicon-pencil" (click)="openOCEDGuideline()"></div>
+                </div>
+                <ng-template #else_ungp_assessment>
+                    <span class="text-bold">OECD Guideline fir Multinational Enterprises</span>
+                </ng-template>
+            </div>
+            <div class="col-md-4">
+                <div *ngIf="isEdit;else else_ungp_assessment">
+                    <span class="text-bold" (click)="openUNGPBusinessHumanRight()">UN Guiding Principle on Business and Human Rights</span><div class="edit-pencil glyphicon glyphicon-pencil" (click)="openUNGPBusinessHumanRight()"></div>
+                </div>
+                <ng-template #else_ungp_assessment>
+                    <span class="text-bold">UN Guiding Principle on Business and Human Rights</span>
+                </ng-template>
+                
+            </div>
+            <div class="col-md-4">
+                <div *ngIf="isEdit;else else_other_related_convention_assessment">
+                    <span class="text-bold" (click)="openOtherRelatedConventions()">Other Related Conventions</span><div class="edit-pencil glyphicon glyphicon-pencil" (click)="openOtherRelatedConventions()"></div>
+                </div>
+                <ng-template #else_other_related_convention_assessment>
+                    <span class="text-bold">Other Related Conventions</span>
+                </ng-template>                
+            </div>
+        </div>
+    </div>
+</div>

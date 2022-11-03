@@ -1,0 +1,136 @@
+﻿<div ng-form="organizationSelectForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelOrganizationSelect()">×</span>
+        </button>
+        <h4 class="modal-title text-bold">Select organization information</h4>
+    </div>
+    <div class="modal-body" style="overflow-y: auto;max-height: 664px;">   
+        <input class="btn btn-primary pull-right" type="button" value="Add organization" style="margin-left:10px" ng-click="addGesOrganization()">
+        <div class="" style="margin-top:40px">
+            <table id="tblOrganization" class="table table-bordered table-striped"></table>
+            <div id="myPager_1"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="button" value="Select" data-dismiss="modal" id="btn-organization-select" ng-click="organizationSelect(ngDialogData.editingGesContact)"/>        
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelOrganizationSelect()" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var postUrl = "/client/GetAllDataForClientsJqGrid";
+        var grid = $("#tblOrganization");
+
+        var getProgressStatuses = function () {
+            return progressStatuses;
+        }
+
+        var getIndustries = function () {
+            return industries;
+        }
+
+        var getCountries = function () {
+            return countries;
+        }
+        var getClientsStatuses = function () {
+            return clientStatus;
+        },
+            setStatusesSelect = function (columnName) {
+                this.jqGrid("setColProp", columnName, {
+                    stype: "select",
+                    searchoptions: {
+                        value: buildSearchSelect(getClientsStatuses.call(this)),
+                        sopt: ["eq"]
+                    }
+                });
+            },
+            setProgressStatusesSelect = function (columnName) {
+                this.jqGrid("setColProp", columnName, {
+                    stype: "select",
+                    searchoptions: {
+                        value: buildSearchSelect(getProgressStatuses.call(this)),
+                        sopt: ["eq"]
+                    }
+                });
+            },
+            setIndustriesSelect = function (columnName) {
+                this.jqGrid("setColProp", columnName, {
+                    stype: "select",
+                    searchoptions: {
+                        value: buildSearchSelect(getIndustries.call(this)),
+                        sopt: ["eq"]
+                    }
+                });
+            },
+            setCountriesSelect = function (columnName) {
+                this.jqGrid("setColProp", columnName, {
+                    stype: "select",
+                    searchoptions: {
+                        value: buildSearchSelect(getCountries.call(this)),
+                        sopt: ["eq"]
+                    }
+                });
+            };
+
+        $.jgrid.defaults.responsive = true;
+        //$.jgrid.defaults.styleUI = "Bootstrap";
+        grid.bind("jqGridLoadComplete", function (e, rowid, orgClickEvent) {
+            $(window).resize();
+
+            // odd, even row
+            $("tr.jqgrow:even").addClass("jqgrid-row-even");
+        });
+        grid.jqGrid({
+            url: postUrl,
+            datatype: "json",
+            mtype: "post",
+            colNames: ["Id", "Name", "Industry", "Country", "Created", "Modified", "Employees", "TotalAssets"],
+            colModel: [
+                { name: "Id", width: "35px", align: "right", hidden: true, search: false },
+                {
+                    name: "Name", searchoptions: {
+                        searchOperators: true,
+                        sopt: ["cn", "ew", "en", "bw", "bn"]
+                    }
+                },
+                { name: "Industry", searchoptions: { sopt: ["cn", "ew", "en", "bw", "bn", "nu"] } },                
+                { name: "Country", searchoptions: { sopt: ["cn", "ew", "en", "bw", "bn", "nu"] } },
+                { name: "Created", width: "85px", formatter: dateFormatter, searchoptions: { sopt: ["eq", "lt", "gt"] } },
+                { name: "Modified", hidden: true, width: "85px", formatter: dateFormatter, searchoptions: { sopt: ["eq", "lt", "gt", "nu"] } },
+                { name: "Employees", hidden: true, align: "right", width: "85px", searchoptions: { sopt: ["eq", "ne", "lt", "le", "gt", "ge"] } },
+                { name: "TotalAssets", hidden: true, align: "right", width: "100px", searchoptions: { sopt: ["eq", "ne", "lt", "le", "gt", "ge"] } }                
+            ],
+            toppager: true,
+            pager: $("#myPager_1"),
+            rowNum: 50,
+            rowList: [20, 50, 100],
+            autowidth: true,
+            shrinkToFit: true,            
+            //loadonce: true,
+            rownumbers: false,
+            //pagerpos: "left",
+            gridview: true,
+            //width: "auto",
+            height: "auto",
+            viewrecords: true,
+            caption: "",
+            sortname: "Name",
+            sortorder: "asc",
+            ondblClickRow: function() {
+                $('#btn-organization-select').click();
+            }
+        });
+        setIndustriesSelect.call(grid, "Industry");
+        setStatusesSelect.call(grid, "Status");
+        setProgressStatusesSelect.call(grid, "ProgressStatus");
+        setCountriesSelect.call(grid, "Country");
+        setFilterDate.call(grid, "Created");
+        setFilterDate.call(grid, "Modified");
+
+        grid.jqGrid("navGrid", "#myPager_1", { edit: false, add: false, del: false, search: false, refresh: true, 'cloneToTop': true });
+
+        grid.jqGrid("filterToolbar", { stringResult: true, searchOnEnter: true, defaultSearch: "cn", searchOperators: true });
+
+    });
+</script>

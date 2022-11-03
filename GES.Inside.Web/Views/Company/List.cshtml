@@ -1,0 +1,24 @@
+﻿@using GES.Inside.Web.Helpers
+@{
+    ViewBag.PageClass = "page-company page-company-list";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-company-list")
+}
+<script type="text/javascript">
+    var countries = @Html.Raw(Json.Encode(ViewBag.Countries));
+</script>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                @*<h3 class="box-title">Data Table With Full Features</h3>*@
+
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="tblcompanies" class="table table-bordered table-striped"></table>
+                <div id="myPager"></div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

@@ -1,0 +1,18 @@
+﻿<div class="tab-pane" id="tab-market-cap-sync">
+    @using (Html.BeginForm("MarketCap", "Data", FormMethod.Post,
+                                new { enctype = "multipart/form-data", id = "_form_market_cap_upload" }))
+    {
+        <div class="box-body">
+
+            <div class="form-group">
+                <label >Market Cap Data File:</label>
+                <input type="file" id="marketCapFileInput" name="marketCapFileInput" accept=".xlsx" />
+                <p class="help-block">Select a data file (.xlsx) and click "Sync" button below.</p>
+                <p class="help-block">It might take a few minutes to process data.</p>
+            </div>
+        </div>
+        <div class="box-footer">
+            <input type="submit" data-loading-text="Processing..." class="btn btn-primary" id="btn-submit-marketcap-sync" value="Sync" />
+        </div>
+    }
+</div>

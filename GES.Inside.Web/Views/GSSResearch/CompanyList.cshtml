@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Company List";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-gss-research-company-list")
+    @Scripts.Render("~/bundles/angular2")
+}
+
+@section styling {
+   @Styles.Render("~/bundles/page-gss-research-company-css")
+}
+
+<script type="text/javascript">
+    var assessments = @Html.Raw(Json.Encode(ViewBag.Assessments));
+    var workflowStatues = @Html.Raw(Json.Encode(ViewBag.WorkflowStatues));
+    var flags = @Html.Raw(Json.Encode(ViewBag.Flags));
+    var gssocReviews = @Html.Raw(Json.Encode(ViewBag.GssocReviews));
+
+</script>
+<my-app></my-app>
+

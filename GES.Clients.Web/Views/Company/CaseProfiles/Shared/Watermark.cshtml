@@ -1,0 +1,15 @@
+﻿@using GES.Common.Enumeration
+@model GesCaseReportType
+
+@if (Model == GesCaseReportType.BcArchived 
+    || Model == GesCaseReportType.BcDisengage 
+    || Model == GesCaseReportType.BcResolved 
+    || Model == GesCaseReportType.SrArchived 
+    || Model == GesCaseReportType.SrEmeArchived
+    || Model == GesCaseReportType.SrGovArchived
+    || Model == GesCaseReportType.SrGovResolved
+    || Model == GesCaseReportType.StArchived
+    || Model == GesCaseReportType.StResolved)
+{
+    <div class="stamp stamp-@Model"></div>
+}

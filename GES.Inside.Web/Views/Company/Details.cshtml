@@ -1,0 +1,685 @@
+﻿
+@using System.Web.Configuration
+@using System.Web.Mvc.Html
+@using GES.Inside.Web.Helpers
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CompanyDetailViewModel
+@{
+    ViewBag.PageClass = "page-company page-company-details";
+    ViewBag.Title = @Model.CompanyName;
+    ViewBag.SubTitle = @Resources.CompanyDetails;
+
+    var companyId = ViewBag.Id ?? TempData["Id"];
+
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-company-details")
+}
+<script type="text/javascript">
+    var countries = @Html.Raw(Json.Encode(ViewBag.Countries));
+</script>
+@section contentHeader{
+    <section class="content-header" ng-form="companyHeaderForm">
+        <h1>
+            <input type="text" class="input-header" id="company-name-input" click-to-edit placeholder="Company name" ng-model="companyDetails.CompanyName" ng-required="true" ng-disabled="true" />
+            <span class="GSS-parked" ng-if="companyDetails.IsParkedForGssResearchSince != null">GSS Parked since: <span ng-bind="companyDetails.IsParkedForGssResearchSince | date:'yyyy-MM-dd'"></span></span>
+        </h1>
+        <div class="page-buttons hidden-print">
+            @*<button class="btn btn-success not-outer-right-btn" ng-click="UpdateCompanyData()" ng-disabled="companyForm.$invalid || isSaving || IsGSSParked">
+                <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+            </button>*@
+            <input class="btn" type="button" value="Cancel" id="cancel-save"
+                   data-confirm-title="Do you want to leave this site?"
+                   data-confirm-message="Changes you made may not be saved"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay" />
+        </div>
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<script type='text/javascript'>
+    var oldClientsSiteUrl = '@WebConfigurationManager.AppSettings["oldInsideSiteUrl"]' + "en-US/analyzer/company.aspx?";
+
+</script>
+
+<div class="animation-loading">
+    <div class="osahan-loading"></div>
+</div>
+<div class="row">
+<div class="col-md-8 col-xs-12">
+<div class="box box-primary box-management-systems">
+    <div class="box-header with-border">
+        <h3 class="box-title">Company overview</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs hidden-print">
+                <li class="active">
+                    <a href="#company-overview" data-toggle="tab">Company Overview</a>
+                </li>
+                <li>
+                    <a href="#company-description" data-toggle="tab">Description</a>
+                </li>
+                <li>
+                    <a href="#company-other" data-toggle="tab">Other informations</a>
+                </li>
+            </ul>
+            <div class="tab-content hidden-print">
+                <div class="active tab-pane" id="company-overview">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyOtherName1</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <input type="text" click-to-edit ng-model="companyDetails.OtherName1" ng-disabled="true" />
+                        </div>
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyOtherName2</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <input click-to-edit ng-model="companyDetails.OtherName2" ng-disabled="true"/>
+                        </div>
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyOtherName3</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <input click-to-edit ng-model="companyDetails.OtherName3" ng-disabled="true"/>
+                        </div>
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyOldName</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <input click-to-edit ng-model="companyDetails.OldName" ng-disabled="true"/>
+                        </div>
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyMediaName</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <input click-to-edit ng-model="companyDetails.MediaName" ng-disabled="true"/>
+                        </div>
+                        @* <div class="ges-content-block"> *@
+                        @*     <div class="header"> *@
+                        @*         <div class="title col-lg-9 col-md-8"> *@
+                        @*             <p>@Resources.CompanyMasterCompany</p> *@
+                        @*         </div> *@
+                        @*     </div> *@
+                        @*     <hr class="style10" /> *@
+                        @*     <div class="input-group"> *@
+                        @*         <div class="form-group has-feedback has-clear"> *@
+                        @*             <input type="text" class="form-control" id="txtContactFullName" ng-readonly="true" ng-model="companyDetails.MasterCompanyName" placeholder="Select master company"> *@
+                        @*             <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span> *@
+                        @*         </div> *@
+                        @*         <span class="input-group-btn"> *@
+                        @*             <button type="button" class="btn btn-primary" id="btnContactSelect" data-toggle="modal" data-target="#company-list-dialog" ng-click="setValuesForPopup(companyDetails.MasterCompanyId)">Select</button> *@
+                        @*         </span> *@
+                        @*     </div> *@
+                        @* </div> *@
+                    </div>
+                </div>
+                <div class="tab-pane" id="company-description">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyDescription</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <textarea click-to-edit-text-area ng-model="companyDetails.Overview" ng-disabled="true"></textarea>
+                        </div>
+
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyMostMaterialRisk</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            {{companyDetails.KeyEsgIssues}}
+                        </div>
+
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyTransparencyDisclosure</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <textarea click-to-edit-text-area ng-model="companyDetails.TransparencyDisclosure" ng-disabled="true"></textarea>
+                        </div>
+
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.UnGlobalCompact</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <textarea click-to-edit-text-area ng-model="companyDetails.UnGlobalCompact" ng-disabled="true"></textarea>
+                        </div>
+
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.GriAlignedDisclosure</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <textarea click-to-edit-text-area ng-model="companyDetails.GriAlignedDisclosure" ng-disabled="true"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="company-other">
+                    <div class="tab-wrapper">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanySedol</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <input type="text" click-to-edit ng-model="companyDetails.Sedol" ng-disabled="true"/>
+                        </div>
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyInformationSource</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <input click-to-edit ng-model="companyDetails.InformationSource" ng-disabled="true"/>
+                        </div>
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.CompanyListSource</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <input click-to-edit ng-model="companyDetails.ListSource" ng-disabled="true"/>
+                        </div>
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.SecurityDescription</p>
+                                </div>
+                            </div>
+                            <hr class="style10" />
+                            <textarea click-to-edit-text-area ng-model="companyDetails.SecurityDescription" ng-disabled="true"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box box-primary box-management-systems" ng-controller="CompanyManagementSystemController">
+    <div class="box-header with-border">
+        <h3 class="box-title">@Resources.CompanyManagementSystem ({{companyManagementSystemsOriginal.length}})</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="ges-content-block">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <br />
+                        <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addCompanyManagementSystem()" ng-disabled="isSaving"><i class="fa fa-plus"></i> Add company management system</button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div style="overflow-x: auto;">
+                <table class="table table-bordered" ng-table="companyManagementSystemTableParams">
+                    <thead>
+                    <tr>
+                        <th style="width: 100px; background-color: #68aaa3; color: white">@Resources.Created</th>
+                        <th style="width: 200px; background-color: #68aaa3; color: white">@Resources.ManagementSystem</th>
+                        <th style="width: 120px; background-color: #68aaa3; color: white">@Resources.Certification</th>
+                        <th style="width: 120px; background-color: #68aaa3; color: white">@Resources.Coverage</th>
+                        <th style="width: 70px; background-color: #68aaa3; color: white"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="companyManagementSystem in $data">
+                        <td>
+                            {{companyManagementSystem.Created | date: "yyyy-MM-dd"}}
+                        </td>
+                        <td>
+                            {{getManagementSystemName(companyManagementSystem.I_ManagementSystems_Id)}}
+                        </td>
+                        <td>
+                            {{companyManagementSystem.Certification}}
+                        </td>
+                        <td>
+                            {{companyManagementSystem.Coverage}}
+                        </td>
+                        <td>
+                            <a class="edit-t01" title="Edit" ng-click="editCompanyManagementSystem(companyManagementSystem)"><i class="material-icons">&#xe22b;</i></a>
+                            <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteCompanyManagementSystem(companyManagementSystem)"><i class="material-icons">&#xE872;</i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+<div  ng-controller="CompanyEventsController">
+    @{ Html.RenderPartial("CompanyEventList"); }
+    @{ Html.RenderPartial("CompanyEventDialog"); }
+        
+
+</div><!-- /.col -->
+</div><!-- /.col -->
+
+<div class="col-md-4 col-xs-12">
+    <div class="box box-primary box-edit">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> @Resources.CompanyInfo</h3>
+        </div>
+        <div class="box-body" ng-form="companyForm">
+            <dl class="dl-horizontal" >
+                <dt class="simple-control">@Resources.Isin</dt>
+                <dd>
+                    <input type="text" ng-model="companyDetails.Isin" class="form-control form-control-text" ng-readonly="true"/>
+                </dd>
+                <br />
+                <dt>@Resources.HQCountry</dt>
+                <dd>
+                    @*<select style="width: 100%" class="form-control" ng-model="companyDetails.CountryId" ng-options="country.Id as country.FullName for country in countries" id="countryInc{{$index}}" name="countryInc{{$index}}" ng-init="companyDetails.CountryId=companyDetails.CountryId" ng-disabled="true">
+                        <option value="">Select Country</option>
+                    </select>*@
+                    <input type="text" ng-model="companyDetails.Country" class="form-control form-control-text" ng-readonly="true" />
+                </dd>
+                <br />
+                @*<dt>@Resources.CompanyCountryReg</dt>
+    <dd>
+            <select style="width: 100%" class="form-control" ng-model="companyDetails.CountryRegId" ng-options="country.G_Countries_Id as country.FullName for country in countries" id="countryReg{{$index}}" name="countryReg{{$index}}" ng-init="companyDetails.CountryRegId=companyDetails.CountryRegId" ng-disabled="true">
+            <option value="">Select Country</option>
+        </select>
+    </dd>
+    <br />*@
+                <dt>@Resources.Website</dt>
+                <dd>
+                    <input type="text" ng-model="companyDetails.Website" class="form-control form-control-text" ng-readonly="true" />
+                </dd>
+                <br />
+                @*<dt>@Resources.CompanyFTSE</dt>
+    <dd ng-controller="CompanyFTSEController">
+        <combobox class="tree-dropdown" ddlclass="ftse" id="ftses" data="ftsesSorted" selected="companyDetails.FTSE" ng-disabled="true" ></combobox>
+    </dd>
+    <br />
+    <dt>@Resources.CompanyMSCI</dt>
+    <dd ng-controller="CompanyMSCIController">
+        <combobox class="tree-dropdown" ddlclass="msci" id="mscis" data="mscisSorted" selected="companyDetails.MSCI"></combobox>
+            <input type="text" value="{{getMsciName(companyDetails.MSCI)}}" class="form-control form-control-text" ng-disabled="true" />
+    </dd>
+    <br />*@
+                <dt>@Resources.PeerGroup</dt>
+                <dd>
+                    @*<select style="width: 100%" class="form-control" ng-model="companyDetails.SubPeerGroupId" ng-options="subPeerGroup.Id as subPeerGroup.Name for subPeerGroup in subPeerGroups" id="SubPeerGroups" name="SubPeerGroupId" ng-init="companyDetails.SubPeerGroupId=companyDetails.SubPeerGroupId" ng-disabled="true">
+                        <option value="">Select peer group</option>
+                    </select>*@
+                    <input type="text" ng-model="companyDetails.SubPeerGroup" class="form-control form-control-text" ng-readonly="true" />
+                </dd>
+                <br />
+                <dt>@Resources.BloombergTickerId</dt>
+                <dd>
+                    <input type="text" ng-model="companyDetails.BbgID" class="form-control form-control-text" ng-readonly="true"/>
+                </dd>
+                <br />
+                <dt>@Resources.CompanyMasterCompany</dt>
+                <dd>
+                    <div class="input-group">
+                        <div class="form-group has-feedback has-clear">
+                            <input type="text" class="form-control" id="txtContactFullName" ng-readonly="true" ng-model="companyDetails.MasterCompanyName" placeholder="Select master company">
+                            <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                        </div>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary" id="btnContactSelect" data-toggle="modal" data-target="#company-list-dialog" ng-click="setValuesForPopup(companyDetails.MasterCompanyId)" ng-disabled="true">Select</button>
+                            <span style="margin-left: 5px"><button type="button" class="btn" ng-click="mastercompanyClear()" ng-disabled="true">Clear</button> &nbsp;</span>
+                        </span>
+                    </div>
+                </dd>
+                 
+                    
+            </dl>
+        </div>
+    </div>
+    <div class="box box-primary box-edit" ng-controller="CompanyAdditionalDocumentController">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> @Resources.AdditionalDocuments</h3>
+        </div>
+        <div class="box-body" ng-form="companyAdditionalDocumentsForm">
+            <div class="ges-content-block">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <br />
+                            <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addCompanyAdditionalDocument()" ng-disabled="isSaving"><i class="fa fa-plus"></i> Add document</button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div style="overflow-x: auto;">
+                    <table class="table table-bordered" ng-table="companyAdditionalDocumentTableParams">
+                        <thead>
+                        <tr>
+                            <th style="width: 190px; background-color: #68aaa3; color: white">@Resources.DocumentName</th>
+                            <th style="width: 170px; background-color: #68aaa3; color: white">@Resources.DocumentComment</th>
+                            @* <th style="width: 100px; background-color: #68aaa3; color: white">@Resources.UploadedDate</th> *@
+                            <th style="width: 70px; background-color: #68aaa3; color: white"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="companyAdditionalDocument in $data">
+                            <td>
+                                {{companyAdditionalDocument.Name}}
+                            </td>
+                            <td>
+                                {{companyAdditionalDocument.Comment}}
+                            </td>
+                            @* <td> *@
+                            @*     {{companyAdditionalDocument.Created | date: "yyyy-MM-dd"}} *@
+                            @* </td> *@
+                            <td>
+                                <a class="edit-t01" title="Edit" ng-click="editCompanyAdditionalDocument(companyAdditionalDocument)"><i class="material-icons">&#xe22b;</i></a>
+                                <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteCompanyAdditionalDocument(companyAdditionalDocument)"><i class="material-icons">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+@* <div class="row"> *@
+@*     <div class="col-md-8 col-xs-12" ng-controller="CompanyManagementSystemController"> *@
+@*         <!-- Company Management System Box --> *@
+@*         <div class="box box-primary box-management-systems" ng-controller="CompanyManagementSystemController"> *@
+@*             <div class="box-header with-border"> *@
+@*                 <h3 class="box-title">@Resources.CompanyManagementSystem ({{companyManagementSystemsOriginal.length}})</h3> *@
+@*             </div><!-- /.box-header --> *@
+@*             <div class="box-body"> *@
+@*                 <div class="ges-content-block"> *@
+@*                     <div class="table-title"> *@
+@*                         <div class="row"> *@
+@*                             <div class="col-sm-8"> *@
+@*                                 <br /> *@
+@*                                 <button type="button" class="btn btn-primary add-new-t01" data-toggle="modal" ng-click="addCompanyManagementSystem()" ng-disabled="isSaving"><i class="fa fa-plus"></i> Add company management system</button> *@
+@*                             </div> *@
+@*                         </div> *@
+@*                     </div> *@
+@*                     <br /> *@
+@*                     <div style="overflow-x: auto;"> *@
+@*                         <table class="table table-bordered" ng-table="companyManagementSystemTableParams"> *@
+@*                             <thead> *@
+@*                                 <tr> *@
+@*                                     <th style="width: 100px; background-color: #68aaa3; color: white">@Resources.Created</th> *@
+@*                                     <th style="width: 200px; background-color: #68aaa3; color: white">@Resources.ManagementSystem</th> *@
+@*                                     <th style="width: 120px; background-color: #68aaa3; color: white">@Resources.Certification</th> *@
+@*                                     <th style="width: 120px; background-color: #68aaa3; color: white">@Resources.Coverage</th> *@
+@*                                     <th style="width: 70px; background-color: #68aaa3; color: white"></th> *@
+@*                                 </tr> *@
+@*                             </thead> *@
+@*                             <tbody> *@
+@*                                 <tr ng-repeat="companyManagementSystem in $data"> *@
+@*                                     <td> *@
+@*                                         {{companyManagementSystem.Created | date: "yyyy-MM-dd"}} *@
+@*                                     </td> *@
+@*                                     <td> *@
+@*                                         {{getManagementSystemName(companyManagementSystem.I_ManagementSystems_Id)}} *@
+@*                                     </td> *@
+@*                                     <td> *@
+@*                                         {{companyManagementSystem.Certification}} *@
+@*                                     </td> *@
+@*                                     <td> *@
+@*                                         {{companyManagementSystem.Coverage}} *@
+@*                                     </td> *@
+@*                                     <td> *@
+@*                                         <a class="edit-t01" title="Edit" ng-click="editCompanyManagementSystem(companyManagementSystem)"><i class="material-icons">&#xe22b;</i></a> *@
+@*                                         <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteCompanyManagementSystem(companyManagementSystem)"><i class="material-icons">&#xE872;</i></a> *@
+@*                                     </td> *@
+@*                                 </tr> *@
+@*                             </tbody> *@
+@*                         </table> *@
+@*                     </div> *@
+@*                 </div> *@
+@*             </div><!-- /.box-body --> *@
+@*         </div><!-- /.box --> *@
+@*     </div><!-- /.col --> *@
+@* </div> *@
+<div class="row">
+    <div class="col-md-8 col-xs-12">
+        <div class="box box-primary box-management-systems">
+            <div class="box-header with-border">
+                <h3 class="box-title">Company following indexes and portfolios</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="nav-tabs-custom" ng-controller="CompanyFollowingPortfolioController">
+                    <ul class="nav nav-tabs hidden-print">
+                        <li class="active">
+                            <a href="#standard-universe" data-toggle="tab">GES Standard Universe ({{companyFollowingStandardPortfolios.length}})</a>
+                        </li>
+                        <li>
+                            <a href="#other-indexes" data-toggle="tab">Other Indexes ({{companyFollowingOtherPortfolios.length}})</a>
+                        </li>
+                        <li>
+                            <a href="#customer-portfolios" data-toggle="tab">Customer Portfolios ({{companyFollowingCustomerPortfolios.length}})</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content hidden-print">
+                        <div class="active tab-pane" id="standard-universe">
+                            <div class="tab-wrapper">
+                                <div class="ges-content-block">
+                                    <div style="overflow-x: auto;">
+                                        <table class="table table-bordered" ng-table="companyFollowingPortfolioStandardTableParams">
+                                            <tbody>
+                                            <tr ng-repeat="portfolio in $data">
+                                                <td data-title="'Portfolio'" filter="{'PortfolioName': 'text' }" sortable="'PortfolioName'" header-class="'ng-table-column ng-table-column-250'">
+                                                    {{portfolio.PortfolioName}}
+                                                </td>
+                                                <td data-title="'Client'" filter="{'OrganizationName': 'text' }" sortable="'OrganizationName'" header-class="'ng-table-column ng-table-column-200'">
+                                                    {{portfolio.OrganizationName}}
+                                                </td>
+                                                <td data-title="'Created'" filter="{'Created': 'text' }" sortable="'Created'" header-class="'ng-table-column ng-table-column-100'">
+                                                    {{portfolio.Created | date: "yyyy-MM-dd"}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="other-indexes">
+                            <div class="tab-wrapper">
+                                <div class="ges-content-block">
+                                    <div style="overflow-x: auto;">
+                                        <table class="table table-bordered" ng-table="companyFollowingPortfolioOtherTableParams">
+                                            <tbody>
+                                            <tr ng-repeat="portfolio in $data">
+                                                <td data-title="'Portfolio'" filter="{'PortfolioName': 'text' }" sortable="'PortfolioName'" header-class="'ng-table-column ng-table-column-250'">
+                                                    {{portfolio.PortfolioName}}
+                                                </td>
+                                                <td data-title="'Client'" filter="{'OrganizationName': 'text' }" sortable="'OrganizationName'" header-class="'ng-table-column ng-table-column-200'">
+                                                    {{portfolio.OrganizationName}}
+                                                </td>
+                                                <td data-title="'Created'" filter="{'Created': 'text' }" sortable="'Created'" header-class="'ng-table-column ng-table-column-100'">
+                                                    {{portfolio.Created | date: "yyyy-MM-dd"}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="customer-portfolios">
+                            <div class="tab-wrapper">
+                                <div class="ges-content-block">
+                                    <div style="overflow-x: auto;">
+                                        <table class="table table-bordered" ng-table="companyFollowingPortfolioCustomerTableParams" show-filter="true">
+                                            <tbody>
+                                            <tr ng-repeat="portfolio in $data">
+                                                <td data-title="'Portfolio'" filter="{'PortfolioName': 'text' }" sortable="'PortfolioName'" header-class="'ng-table-column ng-table-column-250'">
+                                                    {{portfolio.PortfolioName}}
+                                                </td>
+                                                <td data-title="'Client'" filter="{'OrganizationName': 'text' }" sortable="'OrganizationName'" header-class="'ng-table-column ng-table-column-200'">
+                                                    {{portfolio.OrganizationName}}
+                                                </td>
+                                                <td data-title="'Created'" filter="{'Created': 'text' }" sortable="'Created'" header-class="'ng-table-column ng-table-column-100'">
+                                                    {{portfolio.Created | date: "yyyy-MM-dd"}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 col-xs-12" ng-controller="CompanyPortfolioController">
+        <!-- Company Portfolio Box -->
+        <div class="box box-primary box-management-systems">
+            <div class="box-header with-border">
+                <h3 class="box-title">@Resources.CompanyPortfolio ({{companyPortfolios.length}})</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="ges-content-block">
+                    <div style="overflow-x: auto;">
+                        <table class="table table-bordered" ng-table="companyPortfolioTableParams">
+                            <tbody>
+                            <tr ng-repeat="companyPortfolio in $data">
+                                <td data-title="'Portfolio'" filter="{'PortfolioName': 'text' }" sortable="'PortfolioName'" header-class="'ng-table-column ng-table-column-200'">
+                                    <a href="~/Portfolio/Details?id={{companyPortfolio.PortfolioId}}">{{companyPortfolio.PortfolioName}}</a>
+                                </td>
+                                <td data-title="'Client'" filter="{'OrganizationName': 'text' }" sortable="'OrganizationName'" header-class="'ng-table-column ng-table-column-200'">
+                                    <a href="~/Client/Details/{{companyPortfolio.OrganizationId}}">{{companyPortfolio.OrganizationName}}</a>
+                                </td>
+                                <td data-title="'Org Nr'" filter="{'OrgNr': 'text' }" sortable="'OrgNr'" header-class="'ng-table-column ng-table-column-150'">
+                                    {{companyPortfolio.OrgNr}}
+                                </td>
+                                <td data-title="'Phone'" filter="{'Phone': 'text' }" sortable="'Phone'" header-class="'ng-table-column ng-table-column-150'">
+                                    {{companyPortfolio.Phone}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-xs-12">
+        <div class="box box-primary box-management-systems">
+            <div class="box-header with-border">
+                <h3 class="box-title">Case Profiles ({{caseProfiles.length}})</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="ges-content-block">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <br />
+                                <a class="btn btn-primary add-new-t01" data-toggle="modal" data-target="#case-profile-template-dialog"><i class="fa fa-plus"></i> Add new Case Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div style="overflow-x: auto;">
+                        <table class="table table-bordered" ng-table="caseProfilesTableParams">
+                            <thead>
+                            <tr>
+                                <th style="width: 70px; background-color: #68aaa3; color: white">Case Id</th>
+                                <th style="width: 250px; background-color: #68aaa3; color: white">Issue</th>
+                                <th style="width: 150px; background-color: #68aaa3; color: white">Company Name</th>
+                                <th style="width: 120px; background-color: #68aaa3; color: white">Location</th>
+                                <th style="width: 200px; background-color: #68aaa3; color: white">Norm/Theme</th>
+                                <th style="width: 120px; background-color: #68aaa3; color: white">Engagement status</th>
+                                <th style="width: 100px; background-color: #68aaa3; color: white">Entry date</th>
+                                <th style="width: 70px; background-color: #68aaa3; color: white"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="caseProfile in $data">
+                                <td>
+                                    {{caseProfile.Id}}
+                                </td>
+                                <td>
+                                    <a href="~/CaseProfile/Edit/{{caseProfile.Id}}" target="_blank">{{caseProfile.IssueName}}</a>
+                                </td>
+                                <td>
+                                    {{caseProfile.CompanyName}}
+                                </td>
+                                <td>
+                                    {{caseProfile.Location}}
+                                </td>
+                                <td>
+                                    {{caseProfile.EngagementThemeNorm}}
+                                </td>
+                                <td>
+                                    {{caseProfile.Recommendation}}
+                                </td>
+                                <td>
+                                    {{caseProfile.EntryDate | date: "yyyy-MM-dd"}}
+                                </td>
+                                <td>
+                                    <a class="edit-t01" title="Edit" href="~/CaseProfile/Edit/{{caseProfile.Id}}" target="_blank"><i class="material-icons">&#xe22b;</i></a>
+                                    @*<a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteCaseProfile(caseProfile)"><i class="material-icons">&#xE872;</i></a>*@
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+@{ Html.RenderPartial("CompanyList"); }
+@{ Html.RenderPartial("..//CaseProfile/CaseProfileTemplateDialog"); }
+
+
+@* <!-- Company Event --> *@
+@* <div class="row"> *@
+@*     <div class="col-md-8 col-xs-12" ng-controller="CompanyEventsController"> *@
+@*         @{ Html.RenderPartial("CompanyEventList"); } *@
+@*         @{ Html.RenderPartial("CompanyEventDialog"); } *@
+@*          *@
+@* *@
+@*     </div><!-- /.col --> *@
+@* </div><!-- /.row --> *@

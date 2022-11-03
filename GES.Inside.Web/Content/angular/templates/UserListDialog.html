@@ -1,0 +1,76 @@
+﻿<div ng-form="userSelectForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelUserSelect()">×</span>
+        </button>
+        <h4 class="modal-title text-bold">Select user for role</h4>
+    </div>
+    <div class="modal-body" style="overflow-y: auto;max-height: 664px;">   
+        <div class="" style="margin-top:40px">
+            <table id="tblSelectUser" class="table table-bordered table-striped"></table>
+            <div id="myPager_1"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="button" value="Select" data-dismiss="modal" id="btn-organization-select" ng-click="selectUserToRole()"/>        
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelUserSelect()" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var postUrl = "/roles/GetAllUserForRoleJqGrid";
+        var grid = $("#tblSelectUser");
+
+        $.jgrid.defaults.responsive = true;
+        //$.jgrid.defaults.styleUI = "Bootstrap";
+        grid.bind("jqGridLoadComplete", function (e, rowid, orgClickEvent) {
+            $(window).resize();
+
+            // odd, even row
+            $("tr.jqgrow:even").addClass("jqgrid-row-even");
+        });
+        grid.jqGrid({
+            url: postUrl,
+            postData: { roleId: roleId},
+            datatype: "json",
+            mtype: "post",
+            colNames: ["Id", "UserName", "FirstName", "LastName", "Email", "OrgName"],
+            colModel: [
+                { name: "Id", width: "35px", align: "right", hidden: true, search: false },
+                {
+                    name: "UserName", searchoptions: {
+                        searchOperators: true,
+                        sopt: ["cn", "ew", "en", "bw", "bn"]
+                    }
+                },
+                { name: "FirstName", searchoptions: { sopt: ["cn", "ew", "en", "bw", "bn", "nu"] } },                
+                { name: "LastName", searchoptions: { sopt: ["cn", "ew", "en", "bw", "bn", "nu"] } },
+                { name: "Email", searchoptions: { sopt: ["cn", "ew", "en", "bw", "bn", "nu"] } },
+                { name: "OrgName", searchoptions: { sopt: ["cn", "ew", "en", "bw", "bn", "nu"] } }
+            ],
+            toppager: true,
+            pager: $("#myPager_1"),
+            rowNum: 50,
+            rowList: [20, 50, 100],
+            autowidth: true,
+            shrinkToFit: true,            
+            //loadonce: true,
+            rownumbers: false,
+            //pagerpos: "left",
+            gridview: true,
+            //width: "auto",
+            height: "auto",
+            viewrecords: true,
+            caption: "",
+            sortname: "UserName",
+            sortorder: "asc",
+            ondblClickRow: function() {
+                $('#btn-organization-select').click();
+            }
+        });
+        grid.jqGrid("navGrid", "#myPager_1", { edit: false, add: false, del: false, search: false, refresh: true, 'cloneToTop': true });
+
+        grid.jqGrid("filterToolbar", { stringResult: true, searchOnEnter: true, defaultSearch: "cn", searchOperators: true });
+
+    });
+</script>

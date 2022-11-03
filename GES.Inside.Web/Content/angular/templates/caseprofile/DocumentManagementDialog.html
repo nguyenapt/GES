@@ -1,0 +1,52 @@
+﻿<div ng-form="documentManagementDialogorm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelDocumentManagement(ngDialogData.editingDocument)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">Document management</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <div class="row">
+            <div class="col-md-2 required-field" style="font-weight: bold">Select file</div>
+            <div class="col-md-10">
+                <div ngf-drop ngf-select ngf-change="changeFile($file)" ng-model="file" class="drop-box"
+                     ngf-drag-over-class="'dragover'" accept=".pdf"
+                     style="height: 35px; margin-top: 0; float: left; padding: 0 10px; width: auto">
+                    <div class="drop-box-text">Select file</div>
+                </div>
+                <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px">
+            <div class="col-md-2 required-field" style="font-weight: bold">Name</div>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="txtName" ng-required="true" ng-model="ngDialogData.editingDocument.Name">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px">
+            <div class="col-md-2 required-field" style="font-weight: bold">File Name</div>
+            <div class="col-md-10">
+                <div style="float: left; line-height: 35px; margin-right: 10px;">
+                    <a href="{{ngDialogData.editingDocument.DownloadUrl}}" target="_blank" ng-show="ngDialogData.editingDocument.DownloadUrl.length !== 0">{{ngDialogData.editingDocument.FileName}}</a>
+                    <div ng-show="ngDialogData.editingDocument.DownloadUrl.length === 0">{{ngDialogData.editingDocument.FileName}}</div>
+                </div>
+                <!--<input type="text" class="form-control" id="txtFileName" ng-model="ngDialogData.editingDocument.FileName">-->
+            </div>
+        </div>
+        <div class="row" style="margin-top: 15px">
+            <div class="col-md-2" style="font-weight: bold">Created</div>
+            <div class="col-md-10">
+                <input type="date" class="form-control" id="txtCreated" ng-readonly="true" ng-model="ngDialogData.editingDocument.Created"  pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isCompanydialoguelogDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-save-document" ng-click="saveManagedDocument(ngDialogData.editingDocument)" ng-disabled="documentManagementDialogorm.$invalid" />
+            <span ng-if="ngDialogData.editingDocument != null && ngDialogData.editingDocument.G_ManagedDocuments_Id !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-document" ng-click="deleteDocument(ngDialogData.editingDocument.G_ManagedDocuments_Id)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelDocumentManagement(ngDialogData.editingDocument)" />
+    </div>
+</div>

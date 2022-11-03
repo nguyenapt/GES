@@ -1,0 +1,1 @@
+﻿UPDATE G_Services SET Name = 'GES Global Ethical Standard' WHERE G_Services_Id = 20

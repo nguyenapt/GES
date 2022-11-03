@@ -1,0 +1,9 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIssueComponent
+
+@Html.RenderBlockContent(m => m.AlertText, Model.AlertDate, blockTitle: "")
+
+@Html.RenderBlockContent(m => m.AlertSource)

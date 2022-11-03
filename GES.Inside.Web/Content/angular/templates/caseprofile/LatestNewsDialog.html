@@ -1,0 +1,45 @@
+﻿<div class="modal-content" ng-form="latestNewsForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-bold">Latest news</h4>
+    </div>
+
+    <div class="modal-body" style="min-height: 0;max-height: 430px; overflow-y: auto">
+        <div class="box-body box-edit">
+            <div class="ges-content-block">
+                <div class="header">
+                    <div class="title col-lg-9 col-md-8">
+                        <p>Description</p>
+                    </div>
+                </div>
+                <hr class="style10" />
+                <textarea ng-model="ngDialogData.editingNews.Description" class="form-control form-control-text" ng-required="true" name="description" style="height:250px"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    Modified Date
+                </div>
+                <div class="col-md-9">
+                    <input type="date" style="width: 145px; -webkit-box-shadow: none" name="modified-date" id="modified-date" ng-required="true" ng-model="ngDialogData.editingNews.LatestNewsModified" ng-required="true" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="modal-footer">
+        <span ng-hide="isNewsDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-news-update" ng-disabled="latestNewsForm.$invalid" ng-click="saveNews(ngDialogData.editingNews)" />
+            <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-news-update" ng-disabled="latestNewsForm.$invalid" ng-click="saveNews(ngDialogData.editingNews,true)" />
+            <span ng-if="ngDialogData.editingNews.I_GesLatestNews_Id !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteNews(ngDialogData.editingNews,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelNews(ngDialogData.editingNews)" />
+    </div>
+</div>
+
+<style>
+    textarea { resize: vertical; }
+</style>

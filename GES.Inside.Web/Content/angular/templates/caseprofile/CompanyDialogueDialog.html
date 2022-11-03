@@ -1,0 +1,106 @@
+﻿<div ng-form="dialogueDialogForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelDialogue(ngDialogData.editingDialogue)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingDialogue.I_GesCompanySourceDialogues_Id == 0 ? "Add New" : "Edit"}} {{ngDialogData.editingDialogue.DialogueType}} Dialogue</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 450px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Contact</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <div class="input-group">
+                    <div class="form-group has-feedback has-clear">
+                        <input type="text" class="form-control" id="txtContactFullName" ng-readonly="true" ng-model="ngDialogData.editingDialogue.ContactFullName" placeholder="Select Contact">
+                        <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                    </div>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" id="btnContactSelect" data-toggle="modal" data-target="#case-profile-contacts-dialog" ng-click="openContactList(ngDialogData.editingDialogue.G_Individuals_Id)">Select</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Contact date</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <input type="date" style="border: none; width: 100%; -webkit-box-shadow: none" name="EventDate{{$index}}" id="EventDate{{$index}}" ng-model="ngDialogData.editingDialogue.ContactDate" ng-model-options="{timezone: 'utc'}" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Contact type</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <select style="width: 100%" class="form-control" ng-model="ngDialogData.editingDialogue.ContactTypeId" ng-options="contactType.ContactTypeId as contactType.Name for contactType in contactTypes" id="contactType{{$index}}" name="contactType{{$index}}" is-edit-state="isNewCaseProfile" ng-init="ngDialogData.editingDialogue.ContactTypeId=ngDialogData.editingDialogue.ContactTypeId">
+                    <option value="">Select contact type</option>
+                </select>
+            </div>
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Direction</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <select style="width: 100%" class="form-control" ng-model="ngDialogData.editingDialogue.ContactDirectionId" ng-options="contactDirection.I_ContactDirections_Id as contactDirection.Name for contactDirection in contactDirections" id="contactDirection{{$index}}" name="contactDirection{{$index}}" is-edit-state="isNewCaseProfile" ng-init="ngDialogData.editingDialogue.ContactDirectionId=ngDialogData.editingDialogue.ContactDirectionId">
+                    <option value="">Select direction type</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Action</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <textarea type="text" ng-model="ngDialogData.editingDialogue.Action" class="form-control form-control-text" name="action"></textarea>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Status</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <textarea type="text" ng-model="ngDialogData.editingDialogue.Notes" class="form-control form-control-text" name="notes"></textarea>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Send/Received</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <textarea type="text" ng-model="ngDialogData.editingDialogue.Text" class="form-control form-control-text" name="text"></textarea>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:15px" ng-if="ngDialogData.editingDialogue.I_GesCompanySourceDialogues_Id !== 0">
+            <div class="col-lg-2 col-md-2 col-xs-12">
+                
+            </div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <button type="button" class="btn btn-primary" id="btnDocumentManagement" data-toggle="modal" ng-click="openDocumentManagement(ngDialogData, ngDialogData.editingDialogue.I_GesCompanySourceDialogues_Id, ngDialogData.editingDialogue.DialogueType)">Document Management</button>
+                <!--<span>{{ngDialogData.editingDialogue.FileName}}</span>-->
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Show in CSC</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="checkbox" ng-model="ngDialogData.editingDialogue.ShowInCsc" name="showInCsc" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Show in Report</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <input type="checkbox" ng-model="ngDialogData.editingDialogue.ShowInReport" name="showInReport" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Class A</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="checkbox" ng-model="ngDialogData.editingDialogue.ClassA" name="classA" />
+            </div>
+            <!--<div ng-if="ngDialogData.editingDialogue.DialogueType === 'Company'">
+                <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Send Notification</div>
+                <div class="col-lg-3 col-md-3 col-xs-12">
+                    <input type="checkbox" ng-model="ngDialogData.editingDialogue.SendNotifications" name="sendNotifications" />
+                </div>
+            </div>-->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isCompanydialoguelogDisabled">
+            <input class="btn btn-success"  type="button" value="Save" data-dismiss="modal" id="btn-submit-dialogue" ng-click="saveDialogue(ngDialogData.editingDialogue)" ng-disabled="dialogueDialogForm.$invalid" />
+            <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew-dialogue" ng-click="saveDialogue(ngDialogData.editingDialogue,true)" ng-disabled="dialogueDialogForm.$invalid" />
+            <span ng-if="ngDialogData.editingDialogue.I_GesCompanySourceDialogues_Id !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteDialogue(ngDialogData.editingDialogue,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelDialogue(ngDialogData.editingDialogue)" />
+    </div>
+</div>
+
+<style>
+    textarea { resize: vertical; }
+</style>

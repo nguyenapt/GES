@@ -1,0 +1,43 @@
+﻿
+<div class="modal-content" ng-form="stakeholderForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelStakeholderView(ngDialogData.editingStakeholderView)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingStakeholderView.OtherStakeholderViewsId == 0 ? "Add New" : "Edit"}} other stakeholder</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 450px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12 required-field" style="font-weight:bold">Name</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingStakeholderView.Name" ng-required="true" class="form-control form-control-text" name="name" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Description</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <textarea type="text" ng-model="ngDialogData.editingStakeholderView.Description" class="form-control form-control-text" name="description" style="height:250px"></textarea>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Url</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingStakeholderView.Url" class="form-control form-control-text" name="url" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isOtherstakeholdersDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-save-stakeholder" ng-click="saveStakeholderView(ngDialogData.editingStakeholderView)" ng-disabled="stakeholderForm.$invalid" />
+            <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-save-addnew-stakeholder" ng-click="saveStakeholderView(ngDialogData.editingStakeholderView,true)" ng-disabled="stakeholderForm.$invalid" />
+            <span ng-if="ngDialogData.editingStakeholderView.OtherStakeholderViewsId !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteStakeholderView(ngDialogData.editingStakeholderView,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelStakeholderView(ngDialogData.editingStakeholderView)" />
+    </div>
+</div>
+
+<style>
+    textarea { resize: vertical; }
+</style>

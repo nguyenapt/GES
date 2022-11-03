@@ -1,0 +1,42 @@
+﻿@using GES.Inside.Web.Helpers
+@{
+    ViewBag.PageClass = "page-client page-documentmgmt-list";
+    ViewBag.Title = "Position Papers Document List";
+    var btnSyncUserText = "Add Document";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-documentmgmt-list")
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                 <div id="newGesDocumentModalDialog" class="inline-div" title=""></div>
+                @Ajax.ActionLink("New Document", "CreateForm_Document", "DocumentMgmt",
+                     new
+                     {
+                         UserName = ""
+                     }, new AjaxOptions
+                     {
+                         UpdateTargetId = "newGesDocumentModalDialog",
+                         HttpMethod = "Post",
+                         OnBegin = "$('.btn-new-gesdocument').button('loading')",
+                         OnSuccess = "OpenDialog(newGesDocumentModalDialog)",
+                         OnComplete = "resetNewGesDocumentButton()"
+                     }, new
+                     {
+                         @class = "btn btn-success btn-create-edit-document",
+                         @data_loading_text = "Please wait..."
+                     })
+                
+                <input class="btn batch-delete-document btn-danger pull-right" disabled type="button" value="Delete Selected Document(s)" />
+
+                <br/>
+                <br />
+                <table id="tblgesdocuments" class="table table-bordered table-striped"></table>
+                <div id="myPager"></div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

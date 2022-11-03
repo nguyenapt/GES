@@ -1,0 +1,104 @@
+﻿@using GES.Common.Resources
+@model GES.Inside.Data.Models.CompanyDetailViewModel
+<div class="modal fade" id="company-profile-export-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 400px; height: auto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">@Resources.SelectExportInformation</h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 400px; overflow-y: auto">
+                <div class="">
+                    <table class="table table-striped table-export-option">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="company-export" id="check-cover-page" value="showCoverPage" />
+                                </td>
+                                <td>
+                                    <label for="check-cover-page">Cover page</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="company-export" id="check-company-info" value="showCompanyInfo" />
+                                </td>
+                                <td>
+                                    <label for="check-company-info">Company info</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="company-export" id="check-dialogue" value="showDialogue" />
+                                </td>
+                                <td>
+                                    <label for="check-dialogue">Dialogue statistics</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="company-export" id="check-company-overview" value="showCompanyOverview" />
+                                </td>
+                                <td>
+                                    <label for="check-company-overview">Company overview</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="company-export" id="check-case-profiles" value="showCaseProfiles" />
+                                </td>
+                                <td>
+                                    <label for="check-case-profiles">Cases</label>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="company-export" id="check-alerts" value="showAlerts" />
+                                </td>
+                                <td>
+                                    <label for="check-alerts">Alerts</label>
+                                </td>
+                            </tr>
+
+                            @if (Model.Events != null && Model.Events.Any(x => x.EventDate >= DateTime.Today))
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="company-export" id="check-company-events" value="showCompanyEvents" />
+                                    </td>
+                                    <td>
+                                        <label for="check-company-events">Upcoming company events</label>
+                                    </td>
+                                </tr>
+                            }
+
+                            @if (Model.Documents != null && Model.Documents.Any())
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="company-export" id="check-documents" value="showDocuments" />
+                                    </td>
+                                    <td>
+                                        <label for="check-documents">Documents</label>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary-new-dark pull-left" onclick="companyExportPdf.toogleSelect('company-export')" id="btn-export-select">Select all</button>
+                <input class="btn azure-background" type="button" value="Export" data-dismiss="modal" id="btn-company-export" onclick="companyExportPdf.goToExportPage('company-export')" disabled="disabled" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

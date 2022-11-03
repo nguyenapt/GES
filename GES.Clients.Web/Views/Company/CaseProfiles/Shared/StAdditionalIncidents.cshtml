@@ -1,0 +1,59 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+
+@{
+    var tabContent = new Dictionary<string, KeyValuePair<string, string>>();
+
+    var itemCase = new KeyValuePair<string, string>("Cases", Html.Partial("CaseProfiles/Shared/CompanyRelatedCaseProfiles").ToHtmlString());
+    tabContent.Add(CommonHelper.ConvertNameToHtmlElementId("Cases"), itemCase);
+
+    var itemAlert = new KeyValuePair<string, string>("Alerts", Html.Partial("CaseProfiles/Shared/CompanyRelatedAlerts").ToHtmlString());
+    tabContent.Add(CommonHelper.ConvertNameToHtmlElementId("Alerts"), itemAlert);
+
+}
+
+<script id="summary-modal-template" type="text/x-handlebars-template">
+    <div id="{{type}}SummaryModal-{{id}}" class="{{type}}SummaryModal modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{title}}</h4>
+                    <small class="modal-subtitle">{{companyName}} > {{typeText}}</small><br />
+                    <span class="text-bold text-primary">{{alertType}}</span>
+                </div>
+                <div class="modal-body">
+                    <p>({{date}})</p>
+                    <p>{{summary}} {{source}}</p>
+                    <p class="notices-italic">{{notices}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/javascript" charset="utf-8">
+    var _caseReportId = @ViewBag.CaseReportId;
+    var i_companyId = @ViewBag.CompanyId;
+    var i_companyName = @Html.Raw(Json.Encode(ViewBag.CompanyName));
+</script>
+
+<div class="box box-primary" id="div-additional-incident">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <i class="fa fa-list-alt" aria-hidden="true"></i> @Resources.CompanyRelatedItems
+        </h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+
+        @SharedComponents.BuildTabContent(Html, tabContent)
+    </div>
+</div>
+
+@{ Html.RenderPartial("_UnSubscribed_Box_Message"); }

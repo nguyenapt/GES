@@ -1,0 +1,72 @@
+﻿@model GES.Inside.Data.Models.GesContact
+@using GES.Common.Configurations
+@using GES.Common.Enumeration
+@using GES.Common.Helpers
+@using GES.Common.Resources
+
+@{
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var userFileName = !string.IsNullOrEmpty(Model.Email) ? Model.Email.Trim().Replace(Configurations.OldEmailDomain, "").Replace(Configurations.EmailDomain, "").Replace(".", "-")
+                                                          : $"{Model.FirstName.ToLower().Trim().Unidecode()}-{Model.LastName.ToLower().Trim().Unidecode()}";
+    var userAvatarLink = string.Format(Configurations.BaseImageLink, userFileName);
+
+}
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            @Resources.GESContactInformation
+        </h3>
+    </div>
+
+    <div class="box-body">
+        <table style="width:100%">
+            @if (Model != null)
+            {
+                var fullName = $"{Model.FirstName} {Model.LastName}";
+                var isNeutralAnalystUser = fullName == Configurations.NeutralAnalystUser;
+
+                <tr>
+                    <td class="user-icon-container" style="width:100px">
+                        <object data="@userAvatarLink" type="image/png" class="profile-user-img profile-user-img-custom img-responsive img-circle">
+                            <img class="img-responsive img-circle" src="/Content/img/win-tiles/square.png" alt="User profile picture" />
+                        </object>
+                    </td>
+                    <td class="user-info-container">
+                        <div class="user-info-wrapper">
+                            <div class="user-info">
+                                @if (isNeutralAnalystUser)
+                                {
+                                    @: If you have questions in relation to this closed case, please contact
+                                    <span class='word-break-container'><a href="mailto:engagement.support@sustainalytics.com">engagement.support@sustainalytics.com</a></span>
+                                    @: with your request.
+                                }
+                                else
+                                {
+                                    <b>@fullName</b>
+                                }
+
+                                <br />
+
+                                @if (!string.IsNullOrEmpty(Model.JobTitle) && !isNeutralAnalystUser && gesCaseReportType != GesCaseReportType.BcArchived && gesCaseReportType != GesCaseReportType.BcResolved)
+                                {
+                                    @Model.JobTitle
+                                    <br />
+                                }
+
+                                @if (!isNeutralAnalystUser && !string.IsNullOrEmpty(Model.Email))
+                                {
+                                    <div class="word-break-container">
+                                        <a href="mailto:@Model.Email">
+                                            @Model.Email
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

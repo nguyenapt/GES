@@ -1,0 +1,86 @@
+﻿@using GES.Common.Resources
+
+<style>
+    input.submitted.ng-invalid
+    {
+        border:1px solid #f00;
+    }
+   
+    .input-error {
+        border: solid 1px red !important;
+    }
+    .input-success {
+        border-right: solid 5px green !important;
+    }
+    .entity-disable {
+        color: gray;
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
+
+    <div class="modal fade" id="case-profile-template-dialog" style="display: none;" ng-controller="CaseProfileTemplateController">
+        <div class="modal-dialog modal-lg" style="width: 800px; height: auto" >
+            <div class="modal-content" ng-form="caseProfileTemplateForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title text-bold" id="title">Case profile template</h4>
+                </div>
+                <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold; margin-top: 15px;">@Resources.Company</div>
+                        <div class="col-lg-9 col-md-9 col-xs-12">
+                            <div class="row" style="margin-top: 15px">
+                                <div class="input-group" style="width: 90%;    margin-left: 15px;">
+                                    <div class="form-group has-feedback has-clear">
+                                        <input type="text" class="form-control" id="txtCompany" ng-readonly="true" required ng-model="CompanyName" placeholder="Select Company">
+                                        <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                                    </div>
+                                    <span class="input-group-btn" ng-hide="!isAllowChangeCompanyValue">
+                                        <button type="button" class="btn btn-primary" id="btnCompanySelect" data-toggle="modal" data-target="#case-profile-company-dialog" ng-click="setValuesForPopup(engagementTypeDetails.ContactG_Users_Id)">Select</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px">
+                        <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.EngagementType</div>
+                        <div class="col-lg-9 col-md-9 col-xs-12">
+                            <select style="width: 95%" ng-model="engagementTypeId" required id="engagement-type-select" name="engagementTypeSelect" class="form-control" ng-required="true">
+                                <option value="">Select Engagement type</option>
+                                <option ng-repeat="engagementType in engagementTypes" value="{{engagementType.Id}}">{{engagementType.Name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px">
+                        <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.EngagementStatus</div>
+                        <div class="col-lg-9 col-md-9 col-xs-12">
+                            <select style="width: 95%" ng-model="recommendationId" required id="recommendation-select" class="form-control">
+                                <option value="">Select Engagement status</option>
+                                <option ng-repeat="recommendation in recommendations" value="{{recommendation.I_GesCaseReportStatuses_Id}}">{{recommendation.Name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+        
+                <div class="modal-footer">
+                    <div class="row" style="margin-top: 15px">
+                        <div class="col-lg-5 col-md-5 col-xs-12" style="text-align: left;"></div>
+                        <div class="col-lg-7 col-md-7 col-xs-12">
+                            <input class="btn btn-success" type="button" value="Next" data-dismiss="modal" id="btn-submit-case-prifile-details" ng-disabled="caseProfileTemplateForm.$invalid" ng-click="nextStep()"/>
+                            <input type="button" class="btn btn-default" style="margin-left: 5px" data-dismiss="modal" value="Cancel"/>
+                        </div>
+                    </div>
+
+                </div>
+            
+            </div>
+        </div>
+      
+    </div>
+
+   
+@{ Html.RenderPartial("CompanyList"); }

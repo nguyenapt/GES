@@ -1,0 +1,16 @@
+<h3 matDialogTitle>UN Guiding Principles on Business and Human Rights</h3>
+<mat-dialog-content style="width:800px">
+    <div class="row">        
+        <div class="col-md-12 col-lg-12 col-xs-12">
+            <mat-selection-list #ungp [(ngModel)]="selectedUNGPs">
+                <mat-list-option *ngFor="let ungp of ungpBusinessHumanRights" [value]="ungp.value">
+                    {{ungp.text}}
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+    </div>    
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="saveUNGPBusinessHumanRight()">Save</button>
+    <button mat-raised-button matDialogClose>Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,103 @@
+﻿@using GES.Common.Resources
+
+<div class="modal fade" id="document-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 665px; height: 700px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">{{editingDocument.G_ManagedDocuments_Id == 0 ? "Add New" : "Edit"}} Document</h4>
+            </div>
+            <br />
+            <div class="modal-body" style="min-height: 0; max-height: 630px; overflow-y: auto" ng-form="documentDialogForm">
+                    <div class="box-body box-edit">
+                        <dl class="dl-horizontal">
+                            <dt>File</dt>
+                            <dd>
+                                <div style="float: left; line-height: 35px; margin-right: 10px;">
+                                    <a href="{{editingDocument.DownloadUrl}}" target="_blank" ng-show="editingDocument.DownloadUrl.length !== 0">{{editingDocument.FileName}}</a>
+                                    <div ng-show="editingDocument.DownloadUrl.length === 0">{{editingDocument.FileName}}</div>
+                                </div>
+                                <div ngf-drop ngf-select ngf-change="changeFile($file)" ng-model="file" class="drop-box"
+                                     ngf-drag-over-class="'dragover'"
+                                     style="height: 35px; margin-top: 0; float: left; padding: 0 10px; width: auto">
+                                    <div class="drop-box-text">@Resources.AddNewDocument</div>
+                                </div>
+                                <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+                            </dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt class="required-field">Document Name</dt>
+                            <dd>
+                                <input type="text" ng-model="editingDocument.Name" class="form-control form-control-text" ng-required="true" name="documentName" />
+                            </dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>Taxonomy</dt>
+                            <dd>
+                                <select ng-model="editingDocument.G_DocumentManagementTaxonomies_Id" id="taxonomy-select" name="taxonomy-select" class="form-control select-dialog" style="width: 100%">
+                                    <option value="" selected="selected">Select Taxonomy</option>
+                                    <option ng-repeat="taxonomy in taxonomies" value="{{taxonomy.G_DocumentManagementTaxonomies_Id}}">{{taxonomy.Name}}</option>
+                                </select>
+                            </dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>Service</dt>
+                            <dd>
+                                <select ng-model="editingDocument.G_ManagedDocumentServices_Id" id="document-service-select" name="document-service-select" class="form-control select-dialog" style="width: 100%">
+                                    <option value="" selected="selected">Select Service</option>
+                                    <option ng-repeat="documentService in documentServices" value="{{documentService.G_ManagedDocumentServices_Id}}">{{documentService.Name}}</option>
+                                </select>
+                            </dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>MSCI</dt>
+                            <dd>
+                                <input type="text" placeholder="TODO" class="form-control form-control-text" disabled="disabled" name="msci" />
+                            </dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>FTSE</dt>
+                            <dd>
+                                <input type="text" placeholder="TODO" class="form-control form-control-text" disabled="disabled" name="ftse" />
+                            </dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>Source</dt>
+                            <dd>
+                                <input type="text" ng-model="editingDocument.Source" class="form-control form-control-text" name="source" />
+                            </dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>
+                                Keywords (separate with ;)
+                            </dt>
+                            <dd>
+                                <textarea ng-model="editingDocument.Keywords" class="form-control form-control-text" name="keywords"></textarea>
+                            </dd>
+                        </dl>
+
+                        <dl class="dl-horizontal">
+                            <dt>Comment</dt>
+                            <dd>
+                                <textarea ng-model="editingDocument.Comment" class="form-control form-control-text" name="comment"></textarea>
+                            </dd>
+                        </dl>
+                    </div>
+            </div>
+            <br />
+            <div class="modal-footer">
+                <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" ng-disabled="documentDialogForm.$invalid" ng-click="saveManagedDocument()" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"/>
+            </div>
+        </div>
+    </div>
+</div>

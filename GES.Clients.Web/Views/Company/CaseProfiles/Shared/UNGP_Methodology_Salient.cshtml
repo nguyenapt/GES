@@ -1,0 +1,81 @@
+﻿@using GES.Common.Resources
+
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileUNGPAssessmentComponent
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-9 col-md-8 col-xs-12">
+            <p>Introduction</p>
+        </div>
+    </div>
+    <hr class="style10" />
+    <div class="box-body" style="text-align:justify">
+        <p>Sustainalytics’ UNGP performance assessments evaluate companies’ alignment with the Guiding Principles on Business and Human Rights (UNGPs).</p>
+        <p>The assessment has two parts, evaluating human rights salience of the case(s) linked to the company in question and evaluating the company’s preparedness to align its practices with the UNGPs. The latter draws from the three key parts in the UNGPs regarding responsibility of the companies to respect human rights.</p>
+        <div class="ungp-methodology-desc">
+            <p>Level of human rights salience and Company preparedness parts are weighed separately and scores between 0 - 2 are given per indicator. For each part, aggregated scores from the indicators results in a Low, Medium or High score for Level of human rights salience and Company preparedness respectively.</p>
+            <div>
+                <span><strong>Level of human rights salience</strong></span><br />
+                <p>In this section we evaluate the scale of the adverse human rights impacts, whether they are ongoing and/or systematic impacts, and whether they are confirmed violations of international norms (according to Sustainalytics methodology). There are six indicators and the following thresholds are applied:</p>
+                <span class="ungp-sl-score-low">Low = 1 - 4</span><br />
+                <span class="ungp-sl-score-medium">Medium = 5 - 7</span><br />
+                <span class="ungp-sl-score-high">High = 8 - 10</span>
+            </div>
+            <br />
+            <div>
+                <span><strong>Company’s preparedness</strong></span>
+                <p>The whole Company preparedness section is divided into three parts: human rights policy, human rights due diligence processes and human rights remediation. Scores for each part are also counted and available. There are 19 indicators and the following thresholds are applied:</p>
+                <span class="ungp-cp-score-low">Low = 0 - 13</span><br />
+                <span class="ungp-cp-score-medium">Medium = 14 - 27</span><br />
+                <span class="ungp-cp-score-high">High = 28 - 38</span>
+            </div>
+            <br />
+        </div>
+        <br />
+        <p>Please see below a table of the specific indicators and sub-indicators used in Sustainalytics’ UNGP assessments.</p>
+    </div>
+</div>
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-9 col-md-8 col-xs-12">
+            <p>1. Level of human rights salience</p>
+        </div>
+    </div>
+    <hr class="style10" />
+    <div class="box-body">
+        <table class="table">
+            <thead>
+                <tr class="table-row-blue">
+                    <th scope="col" style="width:250px">Indicator</th>
+                    <th scope="col">Sub-indicator</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="2" class="table-row-2">Scale</td>
+                    <td class="table-row-2">The extent of harm</td>
+                </tr>
+                <tr>
+                    <td class="table-row-2">The number of people affected</td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="table-row-2">Systematic</td>
+                    <td class="table-row-2">Over several years</td>
+                </tr>
+                <tr>
+                    <td class="table-row-2">Several locations</td>
+                </tr>
+                <tr>
+                    <td class="table-row-2">Ongoing</td>
+                    <td class="table-row-2">Is the (alleged) violation still occurring?</td>
+                </tr>
+                <tr>
+                    <td class="table-row-2">Sustainalytics Confirmed</td>
+                    <td class="table-row-2">Is the case a Sustainalytics’ confirmed violation of international norms?</td>
+                </tr>
+                <tr class="table-row-blue">
+                    <td colspan="2"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIncidentAnalysisComponent
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isStCase = gesCaseReportType == GesCaseReportType.StAlert || gesCaseReportType == GesCaseReportType.StandardAlertAndIndication || gesCaseReportType == GesCaseReportType.StArchived || gesCaseReportType == GesCaseReportType.StConfirmed || gesCaseReportType == GesCaseReportType.StIndicationOfViolation || gesCaseReportType == GesCaseReportType.StResolved;
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "360-CLOSING-INCIDENT-ANALYSIS-DIALOGUE-AND-ANALYSIS") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "360-CLOSING-INCIDENT-ANALYSIS-CONCLUSION") || isStCase)
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">@Resources.ClosingDetails</h3>
+        </div>
+        <div class="box-body">
+            @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "360-CLOSING-INCIDENT-ANALYSIS-DIALOGUE-AND-ANALYSIS") || isStCase)
+            {
+                if (Model.RecommendationType == RecommendationType.Archived)
+                {
+                    @Html.RenderBlockContent(m => m.IncidentAnalysisDialogueAndAnalysis)
+                }
+            }
+
+            @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "360-CLOSING-INCIDENT-ANALYSIS-CONCLUSION") || isStCase)
+            {
+                if (Model.RecommendationType == RecommendationType.Resolved)
+                {
+                    @Html.DisplayTextFor(m => m.IncidentAnalysisConclusion)
+                }
+                else
+                {
+                    @Html.RenderBlockContent(m => m.IncidentAnalysisConclusion)
+                }
+            }
+        </div>
+    </div>
+}

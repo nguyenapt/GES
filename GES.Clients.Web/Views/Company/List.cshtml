@@ -1,0 +1,91 @@
+﻿@using System.Web.Configuration
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@model GES.Clients.Web.Models.CompanySearchBoxViewModel
+
+@{
+    var hideFormOrNotClass = ViewBag.IsFocusList ? "hidden" : "";
+    ViewBag.PageClass = ViewBag.IsFocusList ? "page-search page-focus-list" : "page-search";
+    if (!ViewBag.IsFocusList && ViewBag.ExportAllHoldings)
+    {
+        ViewBag.PageClass += " page-export-all-holdings";
+    }
+}
+
+@section globalVar {
+    <script type="text/javascript">
+        var oldClientsSiteUrl = '@WebConfigurationManager.AppSettings["oldClientsSiteUrl"]';
+        var kpiPieColors = {};
+        kpiPieColors.Low = '@Configurations.KpiPerformanceColors["Low"]';
+        kpiPieColors.Medium = '@Configurations.KpiPerformanceColors["Medium"]';
+        kpiPieColors.High = '@Configurations.KpiPerformanceColors["High"]';
+    </script>
+}
+
+@section styling {
+    @Styles.Render("~/Content/plugins/iCheck/iCheck-css-bundle")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-company-search-list")
+    <script type="text/javascript">
+        function Open(theme) {
+            var message = '';
+            if (theme.indexOf("Burma") >= 0) {
+                message = '@Resources.UnsubscribeBurma';
+            }
+            else if (theme.indexOf("Carbon") >= 0) {
+                message = '@Resources.UnsubscribeCarbon';
+            }
+            else if (theme.indexOf("EME") >= 0) {
+                message = '@Resources.UnsubscribeEME';
+            }
+            else if (theme.indexOf("Palm Oil") >= 0) {
+                message = '@Resources.UnsubscribePalmOil';
+            }
+            else if (theme.indexOf("Taxation") >= 0) {
+                message = '@Resources.UnsubscribeTaxation';
+            }
+            else if (theme.indexOf("Water") >= 0) {
+                message = '@Resources.UnsubscribeWater';
+            }
+            else if (theme.indexOf("Bespoke") >= 0) {
+                message = '@Resources.UnsubscribeBespoke';
+            }
+            else {
+                message = '@Resources.UnsubscribedServiceContent';
+            }
+
+            $('#unsubscribed-body').html(message);
+            $('#pop-up-unsubscribed').modal('show');
+        }
+
+        var clientType;
+    </script>
+}
+<script type="text/javascript">
+    var isNew = @Html.Raw(Json.Encode(ViewBag.IsNew));
+</script>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="">
+                    @Html.Partial("_CompanySearchBox", Model)
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <br />
+                        <table id="tblcompanies" class="table table-bordered table-striped"></table>
+                        <div id="myPager"></div>
+                    </div>
+                </div>
+                @Html.Partial("~/Views/Company/_SignUp_Box_Messagebox.cshtml")
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<div id="myEndorsementModalContainer"></div>
+
+@{ Html.RenderPartial("_UnSubscribed_Box_Message"); }

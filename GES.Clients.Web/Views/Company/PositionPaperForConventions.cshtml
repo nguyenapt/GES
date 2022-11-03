@@ -1,0 +1,27 @@
+﻿@model IEnumerable<GES.Inside.Data.Models.Reports.ReportViewModel>
+@using GES.Common.Resources
+@{
+    ViewBag.Title = Resources.PositionPapers;
+    ViewBag.PageClass = "page-report page-report-position-papers";
+}
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-body">
+                    <ul class="position-paper">
+                        @foreach (var report in Model)
+                        {
+                            <li>
+                                <a target="_blank" href="@Url.Action("Download", new { documentId = report.DocumentId })">@report.Name</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

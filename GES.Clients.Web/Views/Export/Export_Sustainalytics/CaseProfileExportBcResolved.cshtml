@@ -1,0 +1,46 @@
+﻿@using GES.Inside.Data.Models;
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Inside.Data.Models.CaseProfiles
+@using GES.Clients.Web.Extensions;
+@using System.Text;
+@using GES.Clients.Web.Helpers;
+@using WebGrease.Css.Extensions;
+
+@model GES.Inside.Data.ExportModels.GesExportModel<CaseProfileCoreViewModel>
+
+@{
+    var bcResolvedViewModel = (CaseProfileBcResolvedViewModel)Model.Data;
+
+    CaseProfileEngagementInformationViewModel bcResolvedInformationViewModel = null;
+    if (bcResolvedViewModel != null && bcResolvedViewModel.EngagementInformationComponent != null)
+    {
+        bcResolvedInformationViewModel = (CaseProfileEngagementInformationViewModel)bcResolvedViewModel.EngagementInformationComponent;
+    }
+}
+@if (Model.ShowEngagementInformation && bcResolvedInformationViewModel.ChangeObjective != null || !string.IsNullOrEmpty(bcResolvedInformationViewModel.LatestMilestone) || bcResolvedInformationViewModel.NextStep != null)
+{
+    <div class="box box-primary " id="box-primary-alert">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-asterisk" aria-hidden="true"></i> @Resources.EngagementInformation</h3>
+        </div>
+        @if (!string.IsNullOrEmpty(bcResolvedInformationViewModel.ChangeObjective))
+        {
+            @Html.RenderBlockContentExport(m => bcResolvedInformationViewModel.ChangeObjective, bcResolvedInformationViewModel.ChangeObjectiveDateTime)
+        }
+
+        @if (!string.IsNullOrEmpty(bcResolvedInformationViewModel.LatestMilestone))
+        {
+            var customContent = new StringBuilder("<p class='ges-content milestone-wrapper'>");
+            customContent.Append($"<img class='tooltip-hint milestone-icon' data-tooltip-title='{Resources.MilestoneStatus}' data-tooltip-content='milestone-hint' alt='milestone achieved' " +
+                                 $"src='/Content/img/icons/{CommonHelper.GetMilestoneIcon(bcResolvedInformationViewModel.LatestMilestone, bcResolvedInformationViewModel.LatestMilestoneLevel)}' />");
+            customContent.Append(CommonHelper.RemoveMilestoneAchived(bcResolvedInformationViewModel.LatestMilestone));
+            customContent.Append("</p>");
+            @Html.RenderBlockContentWithCustomContent(Resources.Milestones, customContent.ToString(), bcResolvedInformationViewModel.LatestMilestoneDateTime)
+        }
+        @if (!string.IsNullOrEmpty(bcResolvedInformationViewModel.NextStep))
+        {
+            @Html.RenderBlockContentExport(m => bcResolvedInformationViewModel.NextStep, bcResolvedInformationViewModel.NextStepDateTime)
+        }
+    </div>
+}

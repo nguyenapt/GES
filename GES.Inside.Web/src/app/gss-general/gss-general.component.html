@@ -1,0 +1,85 @@
+<div *ngIf="issueIndicator">
+    <div class="box-body">
+        <div class="row">
+            <span class="text-bold">Headline</span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span>History</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div *ngFor="let headline of (issueIndicator.General.HeadLineViewModels ? issueIndicator.General.HeadLineViewModels : [])">
+                    <a href="#">{{headline.DateModified| date:'yyyy-MM-dd'}}</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <textarea matInput rows="5" placeholder="Headline" [(ngModel)]="currentHeadline.Description"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-body">
+        <div class="row">
+            <span class="text-bold">Case summary</span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span>History</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div *ngFor="let case of (issueIndicator.General.CaseSummaryViewModels ? issueIndicator.General.CaseSummaryViewModels : [])">
+                    <a href="#">{{case.DateModified| date:'yyyy-MM-dd'}}</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <textarea matInput rows="5" placeholder="Case summary" [(ngModel)]="currentCase.Description"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-body">
+        <div class="row">
+            <span class="text-bold">Impact</span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span>History</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div *ngFor="let impact of (issueIndicator.General.ImpactViewModels ? issueIndicator.General.ImpactViewModels : [])">
+                    <a href="#">{{impact.DateModified| date:'yyyy-MM-dd'}}</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <textarea matInput rows="5" placeholder="Impact" [(ngModel)]="currentImpact.Description"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="box-body">
+        <div class="row">
+            <span class="text-bold">Impact Assessment</span>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span>History</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div *ngFor="let impactAssessment of (issueIndicator.General.ImpactAssessmentViewModels ? issueIndicator.General.ImpactAssessmentViewModels : [])">
+                    <a href="#">{{impactAssessment.DateModified| date:'yyyy-MM-dd'}}</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <textarea matInput rows="5" placeholder="Impact Assessment" [(ngModel)]="currentImpactAssessment.Description"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

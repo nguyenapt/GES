@@ -1,0 +1,15 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Inside.Data.Models
+
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileSdgAndGuidelineConventionComponent
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "GUIDELINES"))
+{
+    @Html.RenderBlockContent(m => m.Guidelines)
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CONVENTIONS"))
+{
+    @Html.RenderBlockContentWithListValues(m => m.Conventions)
+}

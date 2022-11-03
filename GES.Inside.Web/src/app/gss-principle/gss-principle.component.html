@@ -1,0 +1,57 @@
+<div class="panel-group" id="issueIndicators">
+    <div *ngFor="let issueIndicator of filteredIssueIndicators">
+        <div class="panel">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#issueIndicators" href="#{{issueIndicator.Id}}">{{issueIndicator.Title}}</a>
+                </h4>
+            </div>
+            <div id="{{issueIndicator.Id}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs hidden-print">
+                            <li class="active">
+                                <a href="#gss-assessment-{{issueIndicator.Id}}" data-toggle="tab">Assessment</a>
+                            </li>
+                            <li>
+                                <a href="#gss-general-{{issueIndicator.Id}}" data-toggle="tab">General</a>
+                            </li>
+                            <li>
+                                <a href="#gss-upgrade-criteria-{{issueIndicator.Id}}" data-toggle="tab">Upgrade Criteria</a>
+                            </li>
+                            <li>
+                                <a href="#gss-company-contact-{{issueIndicator.Id}}" data-toggle="tab">Company Contact</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content hidden-print">
+                            <div class="active tab-pane" id="gss-assessment-{{issueIndicator.Id}}">
+                                <div class="tab-wrapper">
+                                    <app-gss-assessment [issueIndicator]="issueIndicator"></app-gss-assessment>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="gss-general-{{issueIndicator.Id}}">
+                                <div class="tab-wrapper">
+                                    <app-gss-general [issueIndicator]="issueIndicator"></app-gss-general>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="gss-upgrade-criteria-{{issueIndicator.Id}}">
+                                <div class="tab-wrapper">
+                                    <app-gss-upgrade-criteria [issueIndicator]="issueIndicator"></app-gss-upgrade-criteria>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="gss-company-contact-{{issueIndicator.Id}}">
+                                <div class="tab-wrapper">
+                                    <app-gss-company-contact [issueIndicator]="issueIndicator"></app-gss-company-contact>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@using GES.Inside.Data.Models.CaseProfiles
+@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Helpers
+@using GES.Clients.Web.Models
+@using GES.Common.Configurations
+@using GES.Common.Enumeration
+@using GES.Inside.Data.Models.Anonymous
+
+@model GES.Inside.Data.Models.CaseProfileFullAttributeViewModel
+@{
+    var tabContent = new Dictionary<string, KeyValuePair<string, string>>();
+    if (!Model.CaseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CHANGE-OBJECTIVE")|| !Model.CaseProfileInvisibleEntities.Any(x => x.EntityCodeType == "MILESTONE") || !Model.CaseProfileInvisibleEntities.Any(x => x.EntityCodeType == "NEXT-STEP"))
+    {
+        var item = new KeyValuePair<string, string>($"<i class=\"fa fa-asterisk\" aria-hidden=\"true\"></i> {Resources.EngagementInformation}", Html.Partial("CaseProfiles/Shared/EngagementInformation", Model).ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.EngagementInformation), item);
+    }
+
+    if (!Model.CaseProfileInvisibleEntities.Any(x => x.EntityCodeType == "DISCUSSION-POINTS"))
+    {
+        var item = new KeyValuePair<string, string>($"<i class=\"fa fa-folder\" aria-hidden=\"true\"></i> {Resources.DiscussionPoints}", Html.Partial("CaseProfiles/Shared/Discussion", Model).ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.UnGuidingPrinciples), item);
+    }
+
+    if (!Model.CaseProfileInvisibleEntities.Any(x => x.EntityCodeType == "OTHER-STAKEHOLDERS"))
+    {
+        var item = new KeyValuePair<string, string>($"<i class=\"fa fa-group\" aria-hidden=\"true\"></i> {Resources.StakeholdersViews}", Html.Partial("CaseProfiles/Shared/OtherInvestor", Model).ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.StakeholdersViews), item);
+    }
+}
+
+@SharedComponents.BuildTabContent(Html, tabContent)

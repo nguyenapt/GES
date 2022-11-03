@@ -1,0 +1,15 @@
+﻿@model GES.Inside.Data.Models.CaseProfileCoreViewModel
+@using GES.Common.Resources
+<script type="text/javascript" charset="utf-8">
+    var _pgTitle = @Html.Raw(Json.Encode(ViewBag.pgTitle));
+</script>
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-case-report-detail")
+}
+
+<div class="row">
+    <div class="col-xs-12 text-bold">
+        @Resources.WeAreImplementingThisFeature
+    </div>
+</div>

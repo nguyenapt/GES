@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ImportSettings>
+  <ExcelTemplate Name="ImportPortfolio">
+      <Column>
+        <DatabaseField>MsciName</DatabaseField>
+        <ExcelField>MSCI NAME</ExcelField>
+        <DataType>String</DataType>
+      </Column>
+      <Column>
+        <DatabaseField>FtseName</DatabaseField>
+        <ExcelField>FTSE NAME</ExcelField>
+        <DataType>String</DataType>
+      </Column>
+      <Column>
+        <DatabaseField>SixName</DatabaseField>
+        <ExcelField>SIX NAME</ExcelField>
+        <DataType>String</DataType>
+      </Column>
+      <Column>
+        <DatabaseField>OtherName</DatabaseField>
+        <ExcelField>OTHER NAME</ExcelField>
+        <DataType>String</DataType>
+      </Column>
+      <Column>
+        <DatabaseField>Sedol</DatabaseField>
+        <ExcelField>SEDOL</ExcelField>
+        <DataType>String</DataType>
+      </Column>
+      <Column>
+        <DatabaseField>Isin</DatabaseField>
+        <ExcelField>ISIN</ExcelField>
+        <DataType>String</DataType>
+      </Column>
+      <Column>
+        <DatabaseField>MsciCode</DatabaseField>
+        <ExcelField>MSCI</ExcelField>
+        <DataType>String</DataType>
+      </Column>
+      <Column>
+        <DatabaseField>FtseCode</DatabaseField>
+        <ExcelField>FTSE</ExcelField>
+        <DataType>String</DataType>
+      </Column>
+  </ExcelTemplate>
+
+  <ExcelTemplate Name="ImportCompanies">
+    <Column>
+      <DatabaseField>MsciName</DatabaseField>
+      <ExcelField>MSCI NAME</ExcelField>
+      <DataType>String</DataType>
+    </Column>
+    <Column>
+      <DatabaseField>MsciName</DatabaseField>
+      <ExcelField>MSCI NAME</ExcelField>
+      <DataType>String</DataType>
+    </Column>
+  </ExcelTemplate>
+</ImportSettings>
+

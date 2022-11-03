@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "SDG configurations";
+    ViewBag.PageClass = "page-config page-config-sdg";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-edit-angular")
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <label ng-show="sdgs === null || sdgs.length === 0">There is no SDG. Please add new SDG.</label>
+                <table class="table table-striped sdg-table" ng-hide="sdgs === null || sdgs.length === 0">
+                    <thead>
+                    <tr>
+                        <th>Icon</th>
+                        <th>Name</th>
+                        <th>Link</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="sdg in sdgs">
+                        <td>
+                            <img style="width: 60px" src="@Url.Action("Download", "DocumentMgmt", null, Request?.Url?.Scheme)?documentId={{sdg.DocumentId}}" alt="sdg icon"/>
+                        </td>
+                        <td>
+                            {{sdg.Sdg_Name}}
+                        </td>
+                        <td>
+                            <a href="{{sdg.Sdg_Link}}" target="_blank">{{sdg.Sdg_Link}}</a>
+                        </td>
+                        <td>
+                            <i class="document-icon icon-remove glyphicon glyphicon-remove"
+                               title="Delete SDG"
+                               data-confirm-title="Delete SDG"
+                               data-confirm-message="Do you want to delete SDG <b>{{sdg.Sdg_Name}}</b>?"
+                               data-confirm-direction="ltr"
+                               data-id="{{sdg.Sdg_Id}}"></i>
+                            <i class="document-icon document-icon-pencil glyphicon glyphicon-pencil" title="Edit SDG" data-toggle="modal" data-target="#sdg-dialog"
+                               ng-click="getSdgById(sdg.Sdg_Id)"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer">
+                <input type="button" class="btn btn-primary" value="Add new SDG" ng-click="addNewSdg()"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{ Html.RenderPartial("SdgDialog"); }

@@ -1,0 +1,62 @@
+﻿<div ng-form="gesContactForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelGesContact()">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingGesContact.UserId == 0 ? "Add New" : "Edit"}} Contact</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Organization</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <div class="input-group">
+                    <div class="form-group has-feedback has-clear">
+                        <input type="text" class="form-control" id="txtOrganizationName" ng-readonly="true" ng-model="ngDialogData.editingGesContact.OrganizationName" placeholder="Select organization" ng-required="true">
+                        <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                    </div>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" id="btnOrganizationSelect" data-toggle="modal" data-target="#contact-organization-dialog" ng-click="openOrganizationList(ngDialogData.editingGesContact.G_Organizations_Id)">Select</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">First name</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editingGesContact.FirstName" name="firstName" ng-required="!ngDialogData.editingGesContact.LastName || !ngDialogData.editingGesContact.Email"/>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Last name</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editingGesContact.LastName" name="lastName" ng-required="!ngDialogData.editingGesContact.FirstName || !ngDialogData.editingGesContact.Email"/>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Job title</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editingGesContact.JobTitle" name="jobTitle" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Phone</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editingGesContact.Phone" name="phone" />
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Email</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editingGesContact.Email" name="email" ng-required="ngDialogData.editingGesContact.FirstName || ngDialogData.editingGesContact.LastName"/>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Comment</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <textarea type="text" ng-model="ngDialogData.editingGesContact.Comment" class="form-control form-control-text" name="comment"></textarea>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-submit-contact" ng-click="saveGesContact(ngDialogData.editingGesContact)" ng-disabled="gesContactForm.$invalid" />
+        <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew-contact" ng-click="saveGesContact(ngDialogData.editingGesContact,true)" ng-disabled="gesContactForm.$invalid" />
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelGesContact()" />
+    </div>
+</div>

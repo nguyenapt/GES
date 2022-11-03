@@ -1,0 +1,22 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model IEnumerable<GES.Inside.Data.Models.ReferenceViewModel>
+
+<div class="box-references">
+    <div class="box-body table-responsive">
+        <table class="table table-striped">
+            @foreach (var reference in Model)
+            {
+                <tr>
+                    <td>
+                        @(string.IsNullOrEmpty(reference.Source) ? "" : $"{reference.Source}. ")@(reference.PublicationYear?.ToString() ?? "")@(string.IsNullOrEmpty(reference.DocumentName) ? "" : $", {reference.DocumentName}")@(reference.GesCaseReportAvailabilityStatusesText == "Online" ? ". [ONLINE]" : ". Available from GES on request.")
+                        @if (!string.IsNullOrEmpty(reference.AvailableFrom))
+                        {
+                            <span class="word-break-container"><a target="_blank" href="@reference.AvailableFrom">@reference.AvailableFrom</a></span>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

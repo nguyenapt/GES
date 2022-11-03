@@ -1,0 +1,99 @@
+﻿@using GES.Inside.Data.Models;
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Inside.Data.Models.CaseProfiles
+@using GES.Clients.Web.Extensions;
+@using System.Text;
+@using GES.Clients.Web.Helpers;
+@using WebGrease.Css.Extensions;
+
+@model GES.Inside.Data.ExportModels.GesExportModel<CaseProfileCoreViewModel>
+
+@{
+    var bcEngageViewModel = (CaseProfileBcEngageViewModel)Model.Data;
+
+    var bcEngageInformationViewModel = (CaseProfileEngagementInformationViewModel)bcEngageViewModel.EngagementInformationComponent;
+}
+
+@if (Model.ShowEngagementInformation)
+{
+    <div class="box box-primary" id="box-primary-alert">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-asterisk" aria-hidden="true"></i> @Resources.EngagementInformation</h3>
+        </div>
+        @if (bcEngageInformationViewModel != null)
+        {
+            if (!string.IsNullOrEmpty(bcEngageInformationViewModel.ChangeObjective))
+            {
+                @Html.RenderBlockContentWithCustomContent(Resources.ChangeObjective, bcEngageInformationViewModel.ChangeObjective, bcEngageInformationViewModel.ChangeObjectiveDateTime)
+            }
+
+            if (!string.IsNullOrEmpty(bcEngageInformationViewModel.LatestMilestone))
+            {
+                var customContent = new StringBuilder("<p class='ges-content milestone-wrapper'>");
+                customContent.Append($"<img class='tooltip-hint milestone-icon' data-tooltip-title='{Resources.MilestoneStatus}' data-tooltip-content='milestone-hint' alt='milestone achieved' " +
+                                     $"src='/Content/img/icons/{CommonHelper.GetMilestoneIcon(bcEngageInformationViewModel.LatestMilestone, bcEngageInformationViewModel.LatestMilestoneLevel)}' />");
+                customContent.Append(CommonHelper.RemoveMilestoneAchived(bcEngageInformationViewModel.LatestMilestone));
+                customContent.Append("</p>");
+                @Html.RenderBlockContentWithCustomContent(Resources.Milestones, customContent.ToString(), bcEngageInformationViewModel.LatestMilestoneDateTime)
+            }
+            if (!string.IsNullOrEmpty(bcEngageInformationViewModel.NextStep))
+            {
+                @Html.RenderBlockContentWithCustomContent(Resources.NextStep, bcEngageInformationViewModel.NextStep, bcEngageInformationViewModel.NextStepDateTime)
+            }
+        }
+    </div>
+}
+@if (Model.ShowDiscussionPoint && bcEngageViewModel.DiscussionPoints != null && bcEngageViewModel.DiscussionPoints.Any())
+{
+    <div class="box box-primary" id="box-primary-alert">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-folder" aria-hidden="true"></i> @Resources.DiscussionPoints</h3>
+        </div>
+
+        <dl class="dl-vertical case-report-block">
+            @foreach (var discussionPoint in bcEngageViewModel.DiscussionPoints)
+            {
+                if (discussionPoint?.Description == null)
+                { continue; }
+
+                var customContent = new StringBuilder("<ul class='ges-content normal-list'>");
+
+                discussionPoint.Description.Split('\n').Where(p => !string.IsNullOrWhiteSpace(p)).ForEach(point =>
+                {
+                    customContent.Append("<li>" + point.Replace("*", "").Trim() + "</li>");
+                });
+                customContent.Append("</ul>");
+                @Html.RenderBlockContentWithCustomContent(discussionPoint.Name, customContent.ToString())
+            }
+        </dl>
+    </div>
+}
+@if (Model.ShowOtherStakeholder)
+{
+    <div class="box box-primary" id="box-primary-alert">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-group" aria-hidden="true"></i> @Resources.StakeholdersViews</h3>
+        </div>
+        <dl class="dl-vertical case-report-block">
+            @if (!string.IsNullOrEmpty(bcEngageViewModel.InvestorInitiatives))
+            {
+                @Html.RenderBlockContentWithCustomContent(Resources.StakeholdersInvestor, bcEngageViewModel.InvestorInitiatives)
+            }
+
+            @if (bcEngageViewModel.StakeholderViews != null && bcEngageViewModel.StakeholderViews.Count > 0)
+            {
+                var customContent = new StringBuilder();
+                bcEngageViewModel.StakeholderViews.ToList().ForEach(view =>
+                {
+                    customContent.Append(view.Name);
+                    customContent.Append("<div class='ges-content'>" + view.Description + "</div><br/>");
+                    customContent.Append("<a href='" + view.Url + "' target='_blank'>" + view.Url + "</a>");
+                    customContent.Append("</br></br>");
+                });
+
+                @Html.RenderBlockContentWithCustomContent(Resources.StakeholdersViews, customContent.ToString())
+            }
+        </dl>
+    </div>
+}

@@ -1,0 +1,4 @@
+
+- GesCaseReportExtra: IX_GesCaseReport_Id
+- I_PortfoliosG_OrganizationsG_Services: IX_ I_PortfoliosG_Organizations_Id     
+- I_PortfoliosG_OrganizationsG_Services: IX_Services_Id

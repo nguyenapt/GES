@@ -1,0 +1,60 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+@model GES.Inside.Data.Models.CaseProfileCoreViewModel
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isStCase = gesCaseReportType == GesCaseReportType.StAlert || gesCaseReportType == GesCaseReportType.StandardAlertAndIndication || gesCaseReportType == GesCaseReportType.StArchived || gesCaseReportType == GesCaseReportType.StConfirmed || gesCaseReportType == GesCaseReportType.StIndicationOfViolation || gesCaseReportType == GesCaseReportType.StResolved;
+}
+
+@if (Model.CaseComponent.ConfirmedViolation && (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-CONFIRMATION-DETAILS-REVISION-CRITERIA") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-CONFIRMATION-DETAILS-BASIS-FOR-DECISION") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "REFERENCES") || isStCase))
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.References
+            </h3>
+        </div><!-- /.box-header -->
+        
+        @Html.Partial("CaseProfiles/Shared/References", Model.References)
+
+        @*<div class="box-body">*@
+            @*@{
+                var tabs = new Dictionary<string, KeyValuePair<string, string>>();
+
+                if (Model.RevisionCriterials != null && (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-CONFIRMATION-DETAILS-REVISION-CRITERIA") || isStCase))
+                {
+                    tabs[CommonHelper.ConvertNameToHtmlElementId(Resources.RevisionCriteria)] = new KeyValuePair<string, string>($"{Resources.RevisionCriteria}", Html.Partial("CaseProfiles/Shared/RevisionCriterial", Model.RevisionCriterials).ToHtmlString());
+                }
+
+                if (Model.ConfirmationInformation != null && (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-CONFIRMATION-DETAILS-BASIS-FOR-DECISION")|| isStCase))
+                {
+                    tabs[CommonHelper.ConvertNameToHtmlElementId(Resources.BasisForDecision)] = new KeyValuePair<string, string>($"{Resources.BasisForDecision}", Html.Partial("CaseProfiles/Shared/ConfirmationInformation", Model.ConfirmationInformation).ToHtmlString());
+                }
+
+                if (Model.References != null && (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "REFERENCES") || isStCase))
+                {
+
+                    tabs[CommonHelper.ConvertNameToHtmlElementId(Resources.References)] = new KeyValuePair<string, string>($"{Resources.References}", Html.Partial("CaseProfiles/Shared/References", Model.References).ToHtmlString());
+                }
+            }
+
+            @SharedComponents.BuildTabContent(Html, tabs)*@
+        @*</div>*@
+    </div>
+}
+else if (Model.CaseComponent.IndicationOfViolation && Model.References.Any() && (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "REFERENCES") || isStCase))
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.References
+            </h3>
+        </div><!-- /.box-header -->
+        @Html.Partial("CaseProfiles/Shared/References", Model.References)
+
+    </div>
+}

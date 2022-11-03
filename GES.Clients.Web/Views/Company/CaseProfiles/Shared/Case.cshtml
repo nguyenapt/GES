@@ -1,0 +1,78 @@
+﻿@using GES.Common.Resources
+@using GES.Common.Enumeration
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileCaseComponent
+@{
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-briefcase" aria-hidden="true"></i> @Resources.Case</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <dl class="dl-horizontal">
+            
+            @if (gesCaseReportType == GesCaseReportType.BcEngage ||
+                 gesCaseReportType == GesCaseReportType.BcEvaluate ||
+                 gesCaseReportType == GesCaseReportType.BcDisengage ||
+                 gesCaseReportType == GesCaseReportType.StandardAlertAndIndication)
+            {
+                <dt>@Html.DisplayNameFor(m => m.AlertEntryDate)</dt>
+                <dd>@Model.AlertEntryDate</dd>
+            }
+
+            @*@if (gesCaseReportType == GesCaseReportType.SrEvaluateBurma ||
+                 gesCaseReportType == GesCaseReportType.SrEngage ||
+                 gesCaseReportType == GesCaseReportType.SrEngageEme ||
+                 gesCaseReportType == GesCaseReportType.SrEngageCropGovernance)
+            {
+                <dt>Starting Date</dt>
+                <dd>09-23-2016</dd>
+            }*@            
+
+            <dt>@Html.DisplayNameFor(m => m.Heading)</dt>
+            <dd>@Model.Heading</dd>
+
+            <dt>@Html.DisplayNameFor(m => m.Norm)</dt>
+            <dd>@Model.Norm</dd>
+
+            <dt>@Html.DisplayNameFor(m => m.Location)</dt>
+            <dd>@Model.Location</dd>
+
+
+            @if (gesCaseReportType == GesCaseReportType.StandardAlertAndIndication)
+            {
+                <dt>@Resources.Conclusion</dt>
+                <dd>Conclusion Conclusion Conclusion Conclusion</dd>
+            }
+
+            @if (gesCaseReportType == GesCaseReportType.BcEngage ||
+                 gesCaseReportType == GesCaseReportType.BcEvaluate||
+                 gesCaseReportType == GesCaseReportType.BcDisengage)
+            {
+                <dt>@Resources.Conclusion</dt>
+                <dd>Conclusion Conclusion Conclusion Conclusion</dd>
+            }
+
+            @if (gesCaseReportType == GesCaseReportType.BcEngage ||
+                 gesCaseReportType == GesCaseReportType.BcEvaluate ||
+                 gesCaseReportType == GesCaseReportType.BcDisengage ||
+                 gesCaseReportType == GesCaseReportType.SrEngage
+                 || gesCaseReportType == GesCaseReportType.SrCarbonRiskEngage || gesCaseReportType == GesCaseReportType.SrCarbonRiskArchived || gesCaseReportType == GesCaseReportType.SrCarbonRiskResolved)
+            {
+                <dt>@Html.DisplayNameFor(m => m.Recommendation)</dt>
+                //Todo:
+                <dd><b>NEED TO GET FROM DATABASE, THAT'S ONLY FAKE DATA</b></dd>
+            }                       
+
+            @if (gesCaseReportType == GesCaseReportType.BcEngage ||
+                gesCaseReportType == GesCaseReportType.BcDisengage)
+            {
+                <dt>@Resources.ConfirmedCase</dt>
+                <dd>@Resources.Yes</dd>
+            }                
+        </dl>
+    </div>
+    <!-- /.box-body -->
+</div>

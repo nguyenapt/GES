@@ -1,0 +1,14 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@model GES.Clients.Web.Models.ConfirmedViolationModel
+
+@if (Model.ConfirmedViolation)
+{
+    <dt>@Html.DisplayNameFor(m => m.ConfirmedViolation)</dt>
+    <dd><i class="fa @(Model.ConfirmedViolation ? "fa-check" : "fa-close")" title="@(Model.ConfirmedViolation ? Resources.Confirmed: Resources.NotConfirmed)" aria-hidden="true"></i></dd>
+
+    if (!string.IsNullOrEmpty(Model.ConfirmedViolationDate))
+    {
+        @Html.RenderProperty(m => m.ConfirmedViolationDate)
+    }
+}

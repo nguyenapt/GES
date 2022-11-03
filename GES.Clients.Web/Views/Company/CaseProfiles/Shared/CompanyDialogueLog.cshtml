@@ -1,0 +1,41 @@
+﻿@using GES.Common.Configurations
+@model GES.Clients.Web.Models.BlockContentModel
+
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-6 col-md-6 col-xs-12">
+            <p>@Model.Title</p>
+        </div>
+
+        @*<div class="text-right tool-bar col-lg-6 col-md-6 col-xs-12">
+            <table style="width:100%;height:100%">
+                <tr>
+                    <td style="width:33%;padding-right:5px">
+                        <input name="fromdate" id="fromdate" type="text" style="width:100%" placeholder="From date" class="form-control form-control-text datepicker" />
+                    </td>
+                    <td style="width:33%;padding-right:5px">
+                        <input name="todate" id="todate" type="text" style="width:100%" placeholder="To date" class="form-control form-control-text datepicker" />
+                    </td>
+                    <td style="vertical-align:top;width:33%">
+                        <button class="btn btn-warning" id="submit-download" onclick="caseProfileExportPdf.goToDownLoadDialoguePage()" style="width:100%">
+                            <i class="fa fa-file-pdf-o" id="download-company-dialogue-icon"></i><i class="fa fa-refresh fa-spin" id="download-company-dialogue-loading" style="display: none"></i>&nbsp;&nbsp;Download
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>*@
+    </div>
+    <hr class="style10" style="clear:both" />
+    @if (!string.IsNullOrEmpty(Model.CustomContent))
+    {
+        @Html.Raw(Model.CustomContent)
+    }
+    else
+    {
+        <p class="ges-content">@Html.Raw(Model.Content)</p>
+    }
+    @if (!string.IsNullOrEmpty(Model.PopupModalTitle))
+    {
+        @SharedComponents.BuildViewArchivedLink(Model.PopupModalTitle);
+    }
+</div>

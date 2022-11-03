@@ -1,0 +1,228 @@
+﻿@using GES.Inside.Data.Models
+@using GES.Inside.Data.Models.Anonymous
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CaseReportViewModel
+@section scripts {
+    @Scripts.Render("~/bundles/page-case-report")
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                @*<h3 class="box-title">Data Table With Full Features</h3>*@
+            </div><!-- /.box-header -->
+
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@Resources.CompanyInfo</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m=>m.CompanyName)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.CompanyName
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.Sedol)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.Sedol
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.Isin)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.Isin
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.Industry)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.Industry
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.MaterialEsgRisk)
+                                </div>
+                                <div class="col-xs-9 text-justify">
+                                    @Model.MaterialEsgRisk
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.HomeCountry)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.HomeCountry
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.UnGlobalCompact)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.UnGlobalCompact
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@Resources.EngagementBackground</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.IssueName)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.IssueName
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.Location)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.Location
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.NormArea)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.NormArea
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.ConfirmedViolation)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.ConfirmedViolation
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.Recommendation)
+                                </div>
+                                <div class="col-xs-9">
+                                    @Model.Recommendation
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.Summary)
+                                </div>
+                                <div class="col-xs-9 text-justify">
+                                    @Model.Summary
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@Resources.NewsAndDialogue</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.LatestNews)
+                                </div>
+                                <div class="col-xs-9 text-justify">
+                                    @Model.LatestNews
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 text-right">
+                                    @Html.LabelFor(m => m.CompanyDialogue)
+                                </div>
+                                <div class="col-xs-9 text-justify">
+                                    @Html.Raw(@Model.CompanyDialogue)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    @if (Model.Reports?.Count > 0)
+                    {
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">@Resources.Reports</div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Done</th>
+                                            <th>View</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+
+                                    @foreach (RelatedReportViewModel reportItem in Model.Reports)
+                                    {
+                                        <tr>
+                                            <td>@reportItem.Done</td>
+                                            <td>@reportItem.ProcessStatusName</td>
+                                            <td>@reportItem.DateChanged</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.Portfolios?.Count > 0)
+                    {
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">@Resources.Portfolios</div>
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>@Resources.Name</th>
+                                        </tr>
+                                    </thead>
+
+                                    @foreach (IdNameModel portfolio in Model.Portfolios)
+                                    {
+                                        <tr>
+                                            <td>@portfolio.Name</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@Resources.AdditionalDocuments</div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@Resources.GESContactInformation</div>
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 text-bold">
+                    @Resources.AdditionalIssues
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

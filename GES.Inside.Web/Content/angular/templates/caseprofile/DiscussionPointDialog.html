@@ -1,0 +1,36 @@
+﻿<div class="modal-content" ng-form="discussionPointForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelDiscussionPoint(ngDialogData.editingDiscussionPoint)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingDiscussionPoint.DiscussionPointsId == 0 ? "Add New" : "Edit"}} discussion point</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 450px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12 required-field" style="font-weight:bold">Name</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingDiscussionPoint.Name" ng-required="true" class="form-control form-control-text" name="name" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Description</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <textarea type="text" ng-model="ngDialogData.editingDiscussionPoint.Description" class="form-control form-control-text" name="description" style="height:250px"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isDiscussionpointsDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-save-discussion-point" ng-click="saveDiscussionPoint(ngDialogData.editingDiscussionPoint)" ng-disabled="discussionPointForm.$invalid" />
+            <input class="btn btn-success" style="margin-right:15px" type="button" value="Save & add new" id="btn-save-discussion-point" ng-click="saveDiscussionPoint(ngDialogData.editingDiscussionPoint,true)" ng-disabled="discussionPointForm.$invalid" />
+            <span ng-if="ngDialogData.editingDiscussionPoint.DiscussionPointsId !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteDiscussionPoint(ngDialogData.editingDiscussionPoint,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelDiscussionPoint(ngDialogData.editingDiscussionPoint)" />
+    </div>
+</div>
+
+<style>
+    textarea { resize: vertical; }
+</style>

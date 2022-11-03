@@ -1,0 +1,133 @@
+﻿@using GES.Common.Resources
+@model GES.Inside.Data.Models.NormModel
+
+@{
+    ViewBag.PageClass = "page-role page-role-details";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-role-details")
+}
+<script type="text/javascript">
+    var roleId = @Html.Raw(Json.Encode(ViewBag.RoleId));
+</script>
+<style>
+    .inputText {
+        width: 100% !important;
+        overflow-x: -moz-scrollbars-none;
+    }
+</style>
+
+@section contentHeader{
+    <section class="content-header" ng-form="roleHeaderForm">
+        <h1>
+            <input type="text" style="width: 80%" class="input-header" click-to-edit placeholder="Role name" ng-model="roleDetails.Name" ng-required="true" is-edit-state="isAddNew"/>
+        </h1>
+        
+        <div class="page-buttons hidden-print">
+            <button class="btn btn-success not-outer-right-btn" ng-click="UpdateRole()" ng-disabled="roleHeaderForm.$invalid || roleForm.$invalid || isSaving">
+                <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+            </button>
+            <input class="btn btn-danger" type="button" value="Delete" id="delete-role" 
+                   data-confirm-title="Delete Role"
+                   data-confirm-message="Are you sure you want to delete selected role?"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Delete" 
+                   data-confirm-cancel="Cancel" 
+                   ng-disabled="isNewRole"/>
+            <input class="btn" type="button" value="Cancel" id="cancel-save"
+                   data-confirm-title="Do you want to leave this site?"
+                   data-confirm-message="Changes you made may not be saved"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay" />
+        </div>
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="box box-primary box-company-overview">
+            <div class="box-body" ng-form="roleForm">
+
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.SetPermission</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="checkbox" style="font-weight: bold; margin-left: 70px">
+                            <input type="checkbox" ng-model="chkSelectAll" ng-change="SelectAllForm()" id="select-all" />
+                            Select All
+                        </label>
+                    </div>
+                    <div class="row">
+                        <span ng-repeat="item in rolePermissions">
+                            <label class="checkbox" style="font-weight: normal; margin-left: 70px" for="{{item.FormId}}">
+                                <input type="checkbox" ng-model="item.AllowedRead" name="group" id="{{item.FormId}}" />
+                                {{item.FormName}}
+                            </label>
+                        </span>
+                    </div>
+                    
+                    <hr/>
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>Users in role</p>
+                        </div>
+                        </div>
+                        <div>
+                            <div class="table-title" >
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <button type="button" class="btn btn-primary add-new-t01" id="btnAddUser" ng-click="openUserList(roleDetails.Id)" ng-disabled="isSaving||isNewRole"><i class="fa fa-plus"></i> Add user to Role</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div style="overflow-x: auto;">
+                                <table class="table table-bordered" ng-table="userInRoleTableParams" show-filter="true">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 120px; background-color: #68aaa3; color: white">@Resources.UserName</th>
+                                        <th style="background-color: #68aaa3; color: white;">@Resources.FirstName</th>
+                                        <th style="background-color: #68aaa3; color: white;">@Resources.LastName</th>
+                                        <th style="width: 260px; background-color: #68aaa3; color: white">@Resources.Email</th>
+                                        <th style="width: 220px; background-color: #68aaa3; color: white">@Resources.Organization</th>
+                                        <th style="width: 70px; background-color: #68aaa3"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="user in $data">
+                                        <td>
+                                            {{user.UserName}}
+                                        </td>
+                                        <td>
+                                            {{user.FirstName}}
+                                        </td>
+                                        <td>
+                                            {{user.LastName}}
+                                        </td>
+                                        <td>
+                                            {{user.Email}}
+                                        </td>
+                                        <td>
+                                            {{user.OrgName}}
+                                        </td>
+                                        <td class="align-center">
+                                            <a class="delete-t01" title="Remove" data-toggle="tooltip" ng-click="deleteUserRole(user)"><i class="material-icons cursor-pointer">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+    </div><!-- /.col -->
+   
+</div><!-- /.row -->

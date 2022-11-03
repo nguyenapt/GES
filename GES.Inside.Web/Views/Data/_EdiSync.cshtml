@@ -1,0 +1,18 @@
+﻿<div class="tab-pane active" id="tab-edi-sync">
+    @using (Html.BeginForm("EdiSync", "Data", FormMethod.Post,
+                                new { enctype = "multipart/form-data", id = "_form_edi_upload" }))
+    {
+        <div class="box-body">
+
+            <div class="form-group">
+                <label for="txtfileinput">EDI Data File:</label>
+                <input type="file" id="txtfileinput" name="txtfileinput" accept=".txt" />
+                <p class="help-block">Select a data file (.txt) from EDI and click "Sync" button below.</p>
+                <p class="help-block">It might take a few minutes to process data.</p>
+            </div>
+        </div>
+        <div class="box-footer">
+            <input type="submit" data-loading-text="Processing..." class="btn btn-primary" id="btn-submit-edi-sync" value="Sync" />
+        </div>
+    }
+</div>

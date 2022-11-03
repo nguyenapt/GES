@@ -1,0 +1,75 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@using ikvm.extensions
+@model GES.Inside.Data.Models.EngagementTypeViewModel
+@{
+    var docs = Model.EngagementTypeDocuments;
+
+    var docLinks = "";
+    foreach (var doc in docs)
+    {
+        if (!string.IsNullOrEmpty(doc.Name))
+        {
+            var lastIndex = doc.FileName.LastIndexOf('.');
+            var ext = doc.FileName.Substring(lastIndex + 1);
+            var iconFileCss = "";
+            switch (ext)
+            {
+                case "pdf":
+                    iconFileCss = "icon-pdf-file";
+                    break;
+                case "doc":
+                    iconFileCss = "icon-word-file";
+                    break;
+                case "docx":
+                    iconFileCss = "icon-word-file";
+                    break;
+                case "xls":
+                    iconFileCss = "icon-excel-file";
+                    break;
+                case "xlsx":
+                    iconFileCss = "icon-excel-file";
+                    break;
+                case "ppt":
+                    iconFileCss = "icon-powerpoint-file";
+                    break;
+                case "pptx":
+                    iconFileCss = "icon-powerpoint-file";
+                    break;
+                default:
+                    iconFileCss = "fa fa-file-o";
+                    break;
+            }
+
+            iconFileCss = "<i class=\"" + iconFileCss + "\"></i>";
+
+            docLinks = docLinks + ("<a target=\"_blank\" href=\"" + @Url.Action("DownloadGesReport", new {documentId = doc.DocumentId}) + "\">" + iconFileCss + "&nbsp;" + doc.Name + " - " + doc.ReportSection + "</a><br/>");
+        }
+    }
+
+    Model.GesReports = docLinks;
+}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">@Resources.FrameworkAndDevelopments</h3>
+    </div>
+    @if (Model.Deactive != null && (bool) Model.Deactive)
+    {
+        <div class="stamp stamp-Closed"></div>
+    }
+    
+    <!-- /.box-header -->
+    <div class="box-body table-responsive">
+        @Html.RenderBlockContent(m => m.Goal)
+        @Html.RenderBlockContent(m => m.NextStep)
+        @Html.RenderBlockContent(m => m.OtherInitiatives)
+        @Html.RenderBlockContent(m => m.Sources)
+        @(Model.I_EngagementTypes_Id == (long) EngagementTypeEnum.EmerginMarket ? Html.RenderBlockContent(m => m.GesReports, null, null, null, "EME Materials") : Html.RenderBlockContent(m => m.GesReports))
+        @Html.RenderBlockContent(m => m.Contact)
+        @Html.RenderBlockContent(m => m.Participants)
+    </div>
+</div>
+
+

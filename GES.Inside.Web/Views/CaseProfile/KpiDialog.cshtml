@@ -1,0 +1,44 @@
+﻿@using GES.Common.Resources
+
+<div class="modal fade" id="kpi-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 600px; height: auto">
+        <div class="modal-content" ng-form="kpiForm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">{{editingKpi.I_GesCaseReportsI_Kpis_Id == 0 ? "Add New" : "Edit"}} KPI</h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+                <div class="row" style="margin-top:15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12 required-field" style="font-weight:bold">KPI</div>
+                    <div class="col-lg-9 col-md-9 col-xs-12">
+                        <select class="form-control kpi-select"
+                                ng-model="editingKpi.I_Kpis_Id"
+                                ng-options="value.I_Kpis_Id as value.Name for (key, value) in Kpis" style="width:300px" ng-required="true">
+                            <option value="">--Select Kpi--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">@Resources.Performance</div>
+                    <div class="col-lg-9 col-md-9 col-xs-12">
+                        <select class="form-control kpi-performance-select"
+                                ng-model="editingKpi.I_KpiPerformance_Id"
+                                ng-options="value.I_KpiPerformance_Id as value.Name for (key, value) in KpiPerformances" style="width:300px">
+                            <option value="">--Select Kpi Performance--</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-success" type="button" value="@Resources.Save" data-dismiss="modal" id="btn-save-kpi" ng-click="saveKpi(editingKpi)" ng-disabled="kpiForm.$invalid" />
+                <input class="btn btn-success" style="margin-right:15px" type="button" value="@Resources.SaveAndAddnew" id="btn-save-kpi" ng-click="saveAddNewKpi(editingKpi)" ng-disabled="kpiForm.$invalid" />
+                <span ng-if="editingKpi.I_GesCaseReportsI_Kpis_Id !== 0">
+                    <input class="btn btn-danger" type="button" value="@Resources.Delete" id="btn-delete-kpi" ng-click="deleteKpi(editingKpi)"/>
+                </span>
+                <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="@Resources.Cancel" ng-click="cancelKpi(editingKpi)" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIssueComponent
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "COMPANY-DIALOGUE-NEW"))
+{
+    @Html.RenderBlockContent(m => m.CompanyDialogueNew, Model.CompanyDialogueNewReviewed)
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "COMPANY-DIALOGUE"))
+{
+    @Html.RenderBlockContent(m => m.CompanyDialogueSummary)
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "COMPANY-DIALOGUE-LOG"))
+{
+    @Html.RenderBlockContentWithCustomContent(Resources.CompanyLog, Html.Partial("~/Views/Company/CaseProfiles/Shared/LogAndDialougeReport.cshtml", new DialogueAndLogModel { DialogueModels = Model.CompanyDialogues, ShowDocument = true }).ToString(), blockContentViewPath: "~/Views/Company/CaseProfiles/Shared/CompanyDialogueLogWithDownload.cshtml")
+}

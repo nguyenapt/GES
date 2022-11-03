@@ -1,0 +1,133 @@
+﻿/* Timeline */
+.timeline-wrapper {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#timelineContainer {
+    position: relative;
+    display: inline-table;
+    width: 100%;
+    height: 110px;
+    overflow-y: auto;
+}
+
+    #timelineContainer .day-pole {
+        bottom: 48px;
+        position: absolute;
+        width: 2px;
+        height: 16px;
+        background-color: #00008b;
+        z-index: 2;
+    }
+
+    #timelineContainer .date {
+        bottom: 20px;
+        position: absolute;
+        width: 80px;
+        text-align: center;
+        height: 20px;
+        font-size: 10px;
+        z-index: 2;
+    }
+
+    #timelineContainer .type-name {
+        bottom: 70px;
+        position: absolute;
+        width: 80px;
+        text-align: center;
+        height: 15px;
+        font-size: 11px;
+        font-weight: bold;
+        z-index: 2;
+        overflow: hidden;
+    }
+
+    #timelineContainer .recommendation-type-name {
+    }
+
+    #timelineContainer .conclusion-type-name {
+        font-style: italic;
+        color: green;
+    }
+
+    #timelineContainer .milestone-type-name {
+        bottom: 100px;
+        color: red;
+    }
+
+    #timelineContainer .star-icon {
+        bottom: 70px;
+        position: absolute;
+        width: 80px;
+        text-align: center;
+        height: 30px;
+        font-size: 20px;
+        z-index: 2;
+        color: yellow;
+        text-shadow: 1px 1px 5px #272634;
+    }
+
+.timeline-ruler {
+    left: 0;
+    bottom: 55px;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #00008b;
+    z-index: 2;
+}
+
+    .timeline-ruler:before {
+        left: 0;
+        bottom: -13px;
+        position: absolute;
+        width: 2px;
+        height: 28px;
+        background-color: #00008b;
+        z-index: 300;
+        content: " "
+    }
+
+    .timeline-ruler:after {
+        position: absolute;
+        content: " ";
+        bottom: -9px;
+        right: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-left: 10px solid #00008b;
+    }
+
+.archived-resolved-timeline-ruler {
+    left: 0;
+    bottom: 55px;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #00008b;
+    z-index: 2;
+}
+
+    .archived-resolved-timeline-ruler:before {
+        left: 0;
+        bottom: -13px;
+        position: absolute;
+        width: 2px;
+        height: 28px;
+        background-color: #00008b;
+        z-index: 300;
+        content: " "
+    }
+
+    .archived-resolved-timeline-ruler:after {
+        position: absolute;
+        content: " ";
+        bottom: -13px;
+        right: -2px;
+        width: 2px;
+        height: 28px;
+        background-color: #00008b;
+        z-index: 300;
+        content: " "
+    }

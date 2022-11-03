@@ -1,0 +1,120 @@
+﻿@model GES.Inside.Web.Models.BasicPortfolioViewModel
+@{
+    var title = Model.PortfolioId > 0 ? "Edit Portfolio:" : "New Portfolio";
+    var submitBtnText = Model.PortfolioId > 0 ? "Save" : "Create";
+}
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">@title</h3>
+                <h4>@Model.PortfolioName</h4>
+                @if (!Model.EditingPortfolioOnly)
+                {
+                <h5>for: @Model.OrganizationName</h5>
+                }
+            </div>
+
+            <div>
+                @using (Ajax.BeginForm("CreatePortfolio", "Portfolio", FormMethod.Post,
+                    new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.Replace,
+                        HttpMethod = "POST",
+                        OnBegin = "$('.btn-create-edit-portfolio').button('loading')",
+                        OnComplete = "resetCreateEditPortfolioButton()"
+                        //UpdateTargetId = "table"
+                    }))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(model => model.OrganizationId)
+                    @Html.HiddenFor(model => model.PortfolioId)
+                    @Html.HiddenFor(model => model.PortfolioTypeId)
+
+                    <div class="modal-body">
+                        @Html.ValidationSummary()
+                        <div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.PortfolioName):
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(m => m.PortfolioName, new {@class = "form-control", @id = "new-portfolio-name", @placeholder = "Portfolio name..."})
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <div class="editor-label control-label">
+                                @Html.LabelFor(m => m.PortfolioTypeId):
+                            </div>
+                            <div class="editor-field">
+                                @Html.DropDownListFor(m => m.PortfolioTypeId, Model.PortfolioTypes, new {@class = "form-control"})
+                            </div>
+                        </div>*@
+                        @if (!Model.EditingPortfolioOnly)
+                        {
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(m => m.Alerts)
+                                        @Html.DisplayNameFor(m => m.Alerts)
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group hidden">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.ShowInCsc)
+                                    @Html.DisplayNameFor(m => m.ShowInCsc)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.StandardPortfolio)
+                                    @Html.DisplayNameFor(m => m.StandardPortfolio)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.GesStandardUniverse)
+                                    @Html.DisplayNameFor(m => m.GesStandardUniverse)
+                                </label>
+                            </div>
+                        </div>
+                        @if(Model.PortfolioId <= 0) {
+                        <hr/>
+                        <strong>Options:</strong>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.IsAddAgreementServices)
+                                    @Html.DisplayNameFor(m => m.IsAddAgreementServices)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    @Html.CheckBoxFor(m => m.GoToDetailsPage)
+                                    @Html.DisplayNameFor(m => m.GoToDetailsPage)
+                                </label>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-create-edit-portfolio" id="save" data-loading-text="Processing..." type="submit">@submitBtnText</button>
+                    </div>
+                }
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

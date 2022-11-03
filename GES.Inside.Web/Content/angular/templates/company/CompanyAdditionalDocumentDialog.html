@@ -1,0 +1,38 @@
+﻿<div ng-form="documentForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelCompanyAdditionalDocument(ngDialogData.editingCompanyAdditionalDocument)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingCompanyAdditionalDocument.G_ManagedDocuments_Id == 0 ? "Add New" : "Edit"}} Additional document</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Name</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" class="form-control" style="width: 100%" ng-model="ngDialogData.editingCompanyAdditionalDocument.Name" name="Name" ng-required="true"/>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Additional document</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <a target="_blank" href="{{ngDialogData.editingCompanyAdditionalDocument.DownloadUrl}}">{{ngDialogData.editingCompanyAdditionalDocument.FileName}}</a>                
+                
+                <input class="btn btn-default" type="file" style="width: 100%" accept=".xls,.xlsx,.pdf,jpg,.doc,.docx,.ppt,.pptx" id="file"/>
+            </div>            
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Comment</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <textarea type="text" class="form-control" style="width: 100%" ng-model="ngDialogData.editingCompanyAdditionalDocument.Comment" name="Comment"> </textarea>
+            </div>
+        </div>      
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-submit-company-management-system" ng-click="saveCompanyAdditionalDocument(ngDialogData.editingCompanyAdditionalDocument)" ng-disabled="documentForm.$invalid" />
+        <!--<input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew-company-management-system" ng-click="saveCompanyAdditionalDocument(ngDialogData.editingCompanyAdditionalDocument,true)" ng-disabled="documentForm.$invalid" />-->
+        <span ng-if="ngDialogData.editingCompanyManagementSystem.I_CompaniesI_ManagementSystems_Id !== 0">
+            <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-company-management-system" ng-click="deleteCompanyAdditionalDocument(ngDialogData.editingCompanyAdditionalDocument,true)" />
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelCompanyAdditionalDocument(ngDialogData.editingCompanyAdditionalDocument)" />
+    </div>
+</div>

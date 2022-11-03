@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Tools";
+    ViewBag.PageClass = "page-utility page-utility-tools";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Engagement Forum</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <div class="form-group">
+                    <button class="btn btn-success not-outer-right-btn" id="btnClearCache" name="btnClearCache">Clear cache</button>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+@section scripts
+{
+    <script type="text/javascript">
+        $("#btnClearCache").click(function () {
+            var hostname = document.location.hostname;
+            var url = 'https://';
+            if (hostname === 'test-inside.gesinternational.com') {
+                url += 'test-services.gesinternational.com/Company/List?clearcache=true';
+            }
+            else if (hostname === 'inside.sustainalytics.com') {
+                url += 'services.sustainalytics.com/Company/List?clearcache=true';
+            }            
+            else if (hostname === 'stage.inside.sustainalytics.com') {
+                url += 'stage.services.sustainalytics.com/Company/List?clearcache=true';
+            }
+//            else {
+//                url += 'ges.client:443/Company/List?clearcache=true';
+//            }
+
+            var win = window.open(url, '_blank');
+            win.focus();
+        });
+    </script>
+}

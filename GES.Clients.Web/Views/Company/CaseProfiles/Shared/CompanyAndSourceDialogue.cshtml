@@ -1,0 +1,9 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIssueComponent
+
+@SharedComponents.BuildTabContent(Html, new Dictionary<string, KeyValuePair<string, string>>
+{
+    [CommonHelper.ConvertNameToHtmlElementId(Resources.CompanyDialogue)] = new KeyValuePair<string, string>($"<i class=\"fa fa-comments-o\" aria-hidden=\"true\"></i> {Resources.CompanyDialogue}", Html.Partial("CaseProfiles/Shared/StCompanyDialogue", Model).ToHtmlString()),
+    [CommonHelper.ConvertNameToHtmlElementId(Resources.SourceDialogue)] = new KeyValuePair<string, string>($"<i class=\"fa fa-comments\" aria-hidden=\"true\"></i> {Resources.SourceDialogue}", Html.Partial("CaseProfiles/Shared/StSourceDialogue", Model).ToHtmlString())
+})

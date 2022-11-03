@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "GES Announcement";
+    ViewBag.PageClass = "page-config page-config-announcement";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-edit-angular")
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-body">
+                <input type="button" class="btn btn-success" value="Add new announcement" ng-click="addNewAnnouncement()" />
+
+                <label ng-show="announcements === null || announcements.length === 0">There is no GES Announcement. Please add new GES Announcement.</label>
+                <table class="table table-striped sdg-table" ng-hide="announcements === null || announcements.length === 0">
+                    <thead>
+                        <tr>
+                            <th style="width:200px">Title</th>
+                            <th style="width:200px">Link title</th>
+                            <th>Content</th>
+                            <th style="width:100px">Date</th>
+                            <th style="width:70px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="announcement in announcements">
+                            <td>
+                                {{announcement.Title}}
+                            </td>
+                            <td>
+                                {{announcement.LinkTitle}}
+                            </td>
+                            <td>
+                                {{announcement.Content}}
+                            </td>
+                            <td>
+                                {{announcement.AnnouncementDate | date: "yyyy-MM-dd"}}                                
+                            </td>
+                            <td>
+                                <i class="document-icon icon-remove glyphicon glyphicon-remove"
+                                   title="Delete Announcement"
+                                   data-confirm-title="Delete Announcement"
+                                   data-confirm-message="Do you want to delete Announcement <b>{{announcement.Title}}</b>?"
+                                   data-confirm-direction="ltr"
+                                   data-id="{{announcement.GesAnnouncementId}}"></i>
+                                <i class="document-icon document-icon-pencil glyphicon glyphicon-pencil" title="Edit Announcement" data-toggle="modal" data-target="#announcement-dialog"
+                                   ng-click="editAnnouncement(announcement)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>            
+        </div>
+    </div>
+</div>
+
+@{ Html.RenderPartial("GesAnnouncementDialog"); }

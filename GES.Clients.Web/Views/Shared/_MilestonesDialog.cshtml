@@ -1,0 +1,54 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model GES.Clients.Web.Models.ModalPopupViewModel
+
+<div class="modal fade" id="@CommonHelper.ConvertNameToHtmlElementId(Model.ModalTitle)" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">@Model.ModalTitle</h4>
+            </div>
+            <br />
+            <div class="modal-body" style="min-height:0px; max-height:500px;overflow-y:auto">
+                <div>
+                    <p style="font-style:italic;">
+                        Standardised milestone system launched in March 2016. Previous milestones are listed for case continuity.
+                    </p>
+                </div>
+                <hr class="style10" />
+                <br />
+
+                @if (Model.DateContentWithAttributePairs != null && Model.DateContentWithAttributePairs.Count > 0)
+                {
+                    foreach (var pair in Model.DateContentWithAttributePairs)
+                    {
+                        <div class="row">
+                            <div class="col-md-2"><i class="fa fa-calendar" aria-hidden="true"></i> @Html.Raw(pair.Key)</div>
+                            <div class="col-md-1">
+                                <img class="tooltip-hint" status-icon alt="milestone" src="/Content/img/icons/@pair.Attribute" style="width:20px" />
+                            </div>
+                            <div class="col-md-9 pre-line-white-space">@Html.Raw(pair.Value)</div>
+                        </div>
+                        if (Model.DateContentWithAttributePairs.IndexOf(pair) < Model.DateContentWithAttributePairs.Count - 1)
+                        {
+                            <hr class="style10" />
+                        }
+                    }
+                }
+                else
+                {
+                    @Html.Raw(Resources.NoItemsInArchive);
+                }
+            </div>
+            <br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">@Resources.Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

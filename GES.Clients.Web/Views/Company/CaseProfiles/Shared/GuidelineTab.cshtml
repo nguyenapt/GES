@@ -1,0 +1,8 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model string
+@SharedComponents.BuildTabContent(Html, new Dictionary<string, KeyValuePair<string, string>>
+{
+    [CommonHelper.ConvertNameToHtmlElementId(Resources.Guidelines)] = new KeyValuePair<string, string>($"<i class=\"fa fa-exclamation-circle\" aria-hidden=\"true\"></i> {Resources.Guidelines}", Html.RenderBlockContentWithCustomContent(Resources.Guidelines, Model).ToHtmlString())
+})

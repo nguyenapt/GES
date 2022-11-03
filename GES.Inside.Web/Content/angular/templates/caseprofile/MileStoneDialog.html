@@ -1,0 +1,66 @@
+﻿<div ng-form="mileStoneDialogForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelMilestoneDialog(ngDialogData.editingMilestone)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">Milestones</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; padding: 20px;">
+        <div class="row">
+            <div class="col-md-3">
+                Date
+            </div>
+            <div class="col-md-9">
+                <input type="date" style="border: none; width: 145px; -webkit-box-shadow: none" name="milestone-date" id="milestone-date" ng-model="ngDialogData.editingMilestone.MilestoneModified" ng-model-options="{timezone: 'utc'}" ng-required="true" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd" />
+            </div>
+        </div>
+        
+        <div class="row" style="margin-top:15px">
+            <div class="col-md-3">
+                Milestone
+            </div>
+            <div class="col-md-9">
+                <!--<select class="form-control kpi-select"
+                            name="milestone-type"
+                            ng-model="ngDialogData.editingMilestone.GesMilestoneTypesId"
+                            ng-options="value.GesMilestoneTypesId as value.Name for (key, value) in ngDialogData.gesMilestoneTypes" style="width:140px" ng-required="true">
+                    <option value="">--Select Milestones--</option>
+                </select>-->
+                <select style="width: 100%" class="form-control" ng-model="ngDialogData.editingMilestone.GesMilestoneTypesId" id="milestone-type-select" name="caseprofilemilestoneSelect" is-edit-state="isNewCaseProfile">
+                    <option value="">Select Milestone</option>
+                    <option ng-repeat="milestoneType in ngDialogData.gesMilestoneTypes" value="{{milestoneType.Id}}" data-milestone-level-code="{{milestoneType.Level}}">
+                        {{milestoneType.Name}} - {{milestoneType.Description}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        
+        
+        <!--<select style="width: 100%" class="form-control" ng-model="caseProfile.MileStoneModel.GesMilestoneTypesId" id="caseprofilemilestone-select" name="caseprofilemilestoneSelect" is-edit-state="isNewCaseProfile">
+            <option value="">Select Milestone</option>
+            <option ng-repeat="milestone in milestones" value="{{milestone.Id}}" data-milestone-level-code="{{milestone.Level}}">
+                {{milestone.Name}} - {{milestone.Description}}
+            </option>
+        </select>-->
+
+
+        <div class="row" style="margin-top:15px;">
+            <div class="col-md-3">
+                Description <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-milestones-instructions" data-tooltip-title="Milestones Description Instructions"></i>
+            </div>
+            <div class="col-md-9" style="max-height: 500px; height: 300px;overflow-y: auto;">
+                <textarea type="text" maxlength="5000" click-to-edit-text-area ng-model="ngDialogData.editingMilestone.MilestoneDescription" is-edit-state="true" name="milestone-description" ng-required="true" style="height:200px"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+            <span ng-hide="isMilestoneDisabled">
+                <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-save-kpi" ng-click="saveMileStone(ngDialogData.editingMilestone)" ng-disabled="mileStoneDialogForm.$invalid" />
+            </span>
+            <input type="button" class="btn btn-default" style="margin-left: 5px" data-dismiss="modal" value="Cancel" ng-click="cancelMilestoneDialog(ngDialogData.editingMilestone)"/>
+    </div>
+</div>
+
+<style>
+    textarea { resize: none; }
+</style>

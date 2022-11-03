@@ -1,0 +1,32 @@
+﻿@using GES.Inside.Web.Helpers
+@{
+    ViewBag.PageClass = "page-config page-config-contact";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-edit-angular")
+}
+<script type="text/javascript">
+    var clientStatus = @Html.Raw(Json.Encode(ViewBag.ClientsStatuses));
+    var progressStatuses = @Html.Raw(Json.Encode(ViewBag.ClientProgressStatuses));
+    var industries = @Html.Raw(Json.Encode(ViewBag.Industries));
+    var countries = @Html.Raw(Json.Encode(ViewBag.Countries));
+</script>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <input class="btn btn-primary pull-right" type="button" value="Add organization" style="margin-left:10px" ng-click="addGesOrganization()">
+                <input class="btn btn-primary pull-right" type="button" value="Add contact" ng-click="addGesContact()">
+                <div style="margin-top:40px">
+                        <ng-jq-grid config="config"></ng-jq-grid>
+                        @*<table id="tblcontact" class="table table-bordered table-striped"></table>*@
+                    <div id="myPager"></div>
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+@*@{ Html.RenderPartial("OrganizationList"); }*@

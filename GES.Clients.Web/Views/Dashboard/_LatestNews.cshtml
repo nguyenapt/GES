@@ -1,0 +1,17 @@
+﻿@model IEnumerable< GES.Inside.Data.Models.GesLatestNewsModel>
+@using GES.Common.Resources
+@foreach (var news in Model)
+{
+    var dateStr = news.NewsCreated?.ToString("yyyy-MM-dd") ?? "N/A";
+    <div class="dashboard-item dashboard-news-item sidebar-cell">
+        <span>@dateStr</span><br />
+        <strong>@Html.ActionLink(news.CompanyName, "Profile", "Company", new { id = news.CompanyId }, new { target = "_blank", @class = "company-anchor" })</strong><br />
+        @Html.ActionLink(news.CaseReportHeading, "CaseReport", "Company", new { id = news.CaseReportId }, new { target = "_blank", @class ="cases-anchor", data_parts = $"{news.CaseReportId}-{news.EngagementTypeId}-{news.CompanyId}-{news.EngagementTypeCategoriesId}-{news.ForumMessagesTreeId}-{news.ParentForumMessagesId}" })
+        <p class="dashboard-news-desc pre-line-white-space">@news.NewsDescription</p>
+        <hr>
+    </div>
+}
+@if (!Model.Any())
+{
+    <p>@Resources.NoDataAvailable</p>
+}

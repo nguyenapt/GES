@@ -1,0 +1,57 @@
+﻿<div ng-form="sourceDialogForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelSource(ngDialogData.editingSource)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingSource.Id == 0 ? "Add New" : "Edit"}} Source</h4>fdsfsdfdsffd
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Source Name</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingSource.Source" class="form-control form-control-text" name="source" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Publication Year</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="number" ng-model="ngDialogData.editingSource.PublicationYear" class="form-control form-control-text" name="publicationYear" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Available</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <select style="width: 100%" class="form-control" ng-model="ngDialogData.editingSource.Status" ng-options="status.id as status.Name for status in ngDialogData.statuses" id="status{{$index}}" name="status{{$index}}" is-edit-state="isNewCaseProfile" ng-init="ngDialogData.editingSource.Status=ngDialogData.editingSource.Status">
+                    <option value="">Select value</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Available From</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingSource.AvailableFrom" class="form-control form-control-text" name="availableFrom" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Main Source</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <input type="checkbox" ng-model="ngDialogData.editingSource.MainSource" name="mainSource" />
+            </div>
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Show in report</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <input type="checkbox" ng-model="ngDialogData.editingSource.ShowInReport" name="showInReport" />
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isSourcesDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-submit" ng-click="saveSource(ngDialogData.editingSource)" ng-disabled="sourceDialogForm.$invalid" />
+            <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew" ng-click="saveSource(ngDialogData.editingSource,true)" ng-disabled="sourceDialogForm.$invalid" />
+            <span ng-if="ngDialogData.editingSource.Id !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteSource(ngDialogData.editingSource,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelSource(ngDialogData.editingSource)" />
+    </div>
+</div>

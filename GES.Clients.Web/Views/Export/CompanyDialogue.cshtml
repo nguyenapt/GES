@@ -1,0 +1,65 @@
+﻿@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+@model GES.Clients.Web.Models.CompanyDialogueViewModel
+
+
+@{
+    Layout = "~/Views/Shared/_Layout_Export.cshtml";
+    var data = Model.Data;
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+}
+
+@section styling {
+    @Styles.Render("~/Content/plugins/flag-icon-css/flag-css-bundle")
+    @Styles.Render("~/Content/plugins/eventify/eventify-css-bundle")
+    @Styles.Render("~/bundles/page-case-profile-print-css")
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-export-header">
+    <h1 style="padding-top: 15px">
+        <span>@Html.Raw(ViewBag.Title)</span>
+        <span style="float: right; margin-top: -5px; margin-right: -5px">
+            <img src="~/Content/img/logo.png" style="width: 85px; height: auto" alt="" /> <br />
+        </span>
+    </h1>
+</section>
+
+<section class="content content-case-profile-export">
+    @if (Model.BaseComponent != null)
+    {
+        <div class="box box-primary box-company-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> @Resources.CompanyInfo
+                </h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+
+                <dl class="dl-horizontal">
+                    <dt>@Resources.Company</dt>
+                    <dd class="text-muted">@Model.BaseComponent.CompanyName</dd>
+
+                    <dt>@Resources.Isin</dt>
+                    <dd class="text-muted">@Model.BaseComponent.CompanyIsin</dd>
+
+                    <dt>@Resources.HomeCountry</dt>
+                    <dd class="text-muted">@Model.BaseComponent.CompanyHomeCountry <span class="flag-icon flag-icon-@Model.BaseComponent.CompanyHomeCountryCode"></span></dd>
+
+                    @if (gesCaseReportType == GesCaseReportType.SrEngage || gesCaseReportType == GesCaseReportType.SrArchived || gesCaseReportType == GesCaseReportType.SrCarbonRiskEngage || gesCaseReportType == GesCaseReportType.SrCarbonRiskArchived || gesCaseReportType == GesCaseReportType.SrCarbonRiskResolved)
+                    {
+                        <dt>@Resources.MaterialESGRisksAndOpportunities</dt>
+                        <dd>@Resources.MaterialESGRisksAndOpportunitiesMaterialESGRisksAndOpportunitiesMaterialESGRisksAndOpportunities</dd>
+                    }
+                </dl>
+                @if (gesCaseReportType != GesCaseReportType.SrEngage && gesCaseReportType != GesCaseReportType.SrCarbonRiskEngage)
+                {
+                    @Html.Partial("~/Views/Company/CaseProfiles/Shared/Watermark.cshtml", gesCaseReportType);
+                }
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    }
+
+    @Html.Partial("~/Views/Company/CaseProfiles/Shared/LogAndDialougeReport.cshtml", new DialogueAndLogModel { DialogueModels = Model.Data, ShowDocument = true })
+</section>

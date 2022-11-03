@@ -1,0 +1,163 @@
+﻿@using GES.Common.Resources
+
+<style>
+    input[type="text"] {
+        font-size: 14px;
+        
+    }
+    input[type="date"] {
+        position: relative;
+        
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        color: transparent;
+        background: none;
+        z-index: 1;
+    }
+    input[type="date"]:before {
+        color: transparent;
+        background: none;
+        display: block;
+        font-family: 'FontAwesome';
+        content: '\f073';
+        /* This is the calendar icon in FontAwesome */
+        width: 15px;
+        height: 20px;
+        position: absolute;
+        top: -1px;
+        right: 6px;
+        color: #999;
+    }
+    .required:after { content:" *"; }
+    .bootstrap-timepicker-widget.dropdown-menu {
+        z-index: 10000!important;
+    }
+    .dropdown-menu {
+        width: 280px;
+    }
+    
+    .datepicker-days table.table th:last-child {
+        width: 12%;
+    }
+    
+    .datepicker-days table.table-condensed thead  {
+        background-color: #E7E7E7;
+    }
+    .prev {
+        padding-left: 20px;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<div class="modal fade" id="company-event-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 850px; height: auto">
+        <div class="modal-content" ng-form="companyEventForm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" ng-click="CancelUpdateEvent(editingCompanyEvent)">×</span>
+                </button>
+                <h4 class="modal-title text-bold">{{editingCompanyEvent.Id == 0 ? "Add New" : "Edit"}} @Resources.CompanyEvent</h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.Subject <span class="required"></span></div>
+                    <div class="col-lg-9 col-md-9 col-xs-12">
+                        <input type="text" class="form-control" style="width: 100%" ng-model="editingCompanyEvent.EventTitle" name="EventTitle" ng-required="true"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.EventLocation</div>
+                    <div class="col-lg-9 col-md-9 col-xs-12">
+                        <input type="text" class="form-control input-small" style="width: 100%" ng-model="editingCompanyEvent.EventLocation" name="Location"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.StartTime <span style="font-weight: normal">(in CET/CEST)</span><span class="required"></span></div>
+
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                        @* <input type="date" class="form-control date-picker" name="EventDate" id="eventdate" ng-model="editingCompanyEvent.EventDate"  pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" placeholder="yyyy-MM-dd" ng-required="true"/> *@
+                        
+                        <div class="input-group date" id="eventdate">
+                            <input type="text" date='yyyy-MM-dd' class="form-control" ng-model="editingCompanyEvent.EventDate" placeholder="yyyy-MM-dd" ng-required="true"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span> 
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                        <div class="input-group bootstrap-timepicker timepicker">
+                            <input id="timepickerStartTime" type="text" class="form-control" ng-model="editingCompanyEvent.StartTime" format="HH:mm" ng-change="TimeChange()" required="true"/>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight: bold">@Resources.AllDayEvent</div>
+                    <div class="col-lg-1 col-md-1 col-xs-12">
+                        <input type="checkbox" class="form-check-input" ng-model="editingCompanyEvent.AllDayEvent" name="AllDayEvent" ng-change="AllDayEventChange(editingCompanyEvent)"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.Endtime <span style="font-weight: normal">(in CET/CEST)</span><span class="required"></span></div>
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                        @* <input type="date" class="form-control date-picker" name="EventEndDate" ng-model="editingCompanyEvent.EventEndDate" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd" ng-required="true"/> *@
+                        
+                        <div class="input-group date" id="eventenddate">
+                            <input type="text" date='yyyy-MM-dd' class="form-control" ng-model="editingCompanyEvent.EventEndDate" placeholder="yyyy-MM-dd" ng-required="true"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span> 
+                        </div>
+                        
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                        <div class="input-group bootstrap-timepicker timepicker">
+                            <input id="timepickerEndTime" type="text" class="form-control" ng-model="editingCompanyEvent.EndTime" ng-change="TimeChange()" required="true"/>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.GesEvent</div>
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                        <input type="checkbox" ng-model="editingCompanyEvent.IsGesEvent" name="AllDayEvent"/>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.EventDescription <span class="required"></span></div>
+                    <div class="col-lg-9 col-md-9 col-xs-12">
+                        <textarea class="form-control" rows="5" ng-model="editingCompanyEvent.Description" ng-required="true"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-12 col-md-12 col-xs-12" ng-show="!formValid">
+                        <div ng-repeat="error in errorMessages">
+                            <p style="color: red"><i class="fa fa-warning"></i> {{error.text}}</p>
+                        </div>
+                        
+                    </div>
+            </div>
+            </div>
+      
+        <div class="modal-footer">
+            <div class="row" style="margin-top: 15px">
+                <div class="col-lg-8 col-md-8 col-xs-12" style="text-align: left;"><i>Fields marked with <span class="required"></span> are required</i>
+                    <br/>
+                    <i>Editing or Deleting calendar event sends an automatic email notification to all Attendees</i>
+                    </div>
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <input class="btn btn-success" type="button" value="Save"  id="btn-submit-company-event" ng-click="SaveCompanyEvent(editingCompanyEvent)" ng-disabled="companyEventForm.$invalid"/>
+                    <span ng-if="editingCompanyEvent.Id !== 0">
+                        <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-company-management-system" ng-click="DeleteCompanyEvent(editingCompanyEvent)"/>
+                    </span>
+                    <input type="button" class="btn btn-default" style="margin-left: 5px" data-dismiss="modal" value="Cancel" ng-click="CancelUpdateEvent(editingCompanyEvent)"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</div>

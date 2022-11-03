@@ -1,0 +1,223 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Models
+@using GES.Common.Helpers
+@using GES.Common.Resources
+@model List<GES.Inside.Data.Models.GlossaryViewModel>
+@{
+    ViewBag.Title = "Glossary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styling
+{
+    @Styles.Render("~/bundles/page-glossary-css")
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-glossary")
+}
+
+<p>Here is a glossary of terms corresponding to the Engagement Forum website.</p>
+<p>The Glossary & Methodology describes Sustainalytics's definitions and processes. More items will continuously be added here. If you are looking for a definition that you can not find, please contact <a href="mailto:clientsupport@sustainalytics.com">clientsupport@sustainalytics.com</a>.</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h2 class="box-title">@Resources.TableOfContents</h2>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <ul>                    
+                    <li>
+                        <a href="#alert" class="smooth-anchor">@Resources.Alert</a>
+                    </li>
+                    <li>
+                        <a href="#global-standard-engagement" class="smooth-anchor">@Resources.GlobalStandardEngagement</a>
+                    </li>
+                    <li>
+                        <a href="#change-objective" class="smooth-anchor">@Resources.ChangeObjective</a>
+                    </li>                    
+                    <li>
+                   
+                        <a href="#description" class="smooth-anchor">@Resources.Description</a>
+                    </li>
+                    <li>
+                        <a href="#engagement-since" class="smooth-anchor">@Resources.EngagementSince</a>
+                    </li>
+                    <li>
+                        <a href="#entry-date" class="smooth-anchor">@Resources.EntryDate</a>
+                    </li>                    
+
+
+                        <a href="#involvement" class="smooth-anchor">@Resources.Involvement</a>
+                    </li>
+                    <li>
+                        <a href="#location" class="smooth-anchor">@Resources.Location</a>
+                    </li>
+                    <li>
+                        <a href="#milestone" class="smooth-anchor">@Resources.Milestone</a>
+                    </li>
+                    <li>
+                        <a href="#norm-area" class="smooth-anchor">@Resources.NormArea</a>
+                    </li>
+                    <li>
+                        <a href="#performance" class="smooth-anchor">@Resources.Performance</a>
+                    </li>
+                    <li>
+                        <a href="#progress" class="smooth-anchor">@Resources.Progress</a>
+                    </li>
+                    <li>
+                        <a href="#response" class="smooth-anchor">@Resources.Response</a>
+                    </li>
+                    <li>
+                        <a href="#engagementstatus" class="smooth-anchor">@Resources.EngagementStatus</a>
+                        <ul>
+                            <li>
+                                <a href="#evaluate-engagementstatus" class="smooth-anchor">- @Resources.EvaluateEngagementStatus</a>
+                            </li>
+                            <li>
+                                <a href="#engage-engagementstatus" class="smooth-anchor">- @Resources.EngageEngagementStatus</a>
+                            </li>
+                            <li>
+                                <a href="#disengage-engagementstatus" class="smooth-anchor">- @Resources.DisengageEngagementStatus</a>
+                            </li>
+                            <li>
+                                <a href="#archived-engagementstatus" class="smooth-anchor">- @Resources.ArchivedEngagementStatus</a>
+                            </li>
+                            <li>
+                                <a href="#resolved-engagementstatus" class="smooth-anchor">- @Resources.ResolvedEngagementStatus</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-default">
+            <div class="box-body">                
+                <section id="alert">
+                    <h2 class="page-header"><a href="#alert" class="smooth-anchor">@Resources.Alert</a>
+                    </h2>
+                    <p>An alert is created when a company, that is allegedly involved in a violation of international norms, is investigated and analysed.</p>
+                </section>
+                <section id="global-standard-engagement">
+                    <h2 class="page-header"><a href="#global-standard-engagement" class="smooth-anchor">Global Standards Engagement</a>
+                    </h2>
+                    <p>Global Standards Engagement is performed on companies, which have been documented to conduct business in a manner contrary to well-established international ESG guidelines. Convention breaches covers engagement on companies regarding their compliance with international conventions and guidelines on environment, human rights and corruption. Sustainalytics engages on corporate policies, management systems, management or corporate governance and seeks to influence changes as necessary.</p>
+                </section>
+                <section id="change-objective">
+                    <h2 class="page-header"><a href="#change-objective" class="smooth-anchor">Change objective</a>
+                    </h2>
+                    <p>The goal set out for the engagement. Only valid for Engage cases.</p>
+                </section>                
+                <section id="description">
+                    <h2 class="page-header"><a href="#description" class="smooth-anchor">Description</a>
+                    </h2>
+                    <p>Summary description of the case.</p>
+                </section>
+                <section id="engagement-since">
+                    <h2 class="page-header"><a href="#engagement-since" class="smooth-anchor">Engagement since</a>
+                    </h2>
+                    <p>Date when Sustainalytics changed its Engagement status to Engage in relation to the case.</p>
+                </section>
+                <section id="entry-date">
+                    <h2 class="page-header"><a href="#entry-date" class="smooth-anchor">Entry date</a>
+                    </h2>
+                    <p>Date when the Alert was issued and the case was included in Sustainalytics analysis process.</p>
+                </section>                
+                <section id="involvement">
+                    <h2 class="page-header"><a href="#involvement" class="smooth-anchor">Involvement</a>
+                    </h2>
+                    <p>Sustainalytics categorises all cases according to the UN Global Compact principles Human Rights, Labour Rights, Environment and Business Ethics.</p>
+                </section>
+                <section id="location">
+                    <h2 class="page-header"><a href="#location" class="smooth-anchor">Location</a>
+                    </h2>
+                    <p>Country where the incident(s) occurred.</p>
+                </section>
+                <section id="milestone">
+                    <h2 class="page-header"><a href="#milestone" class="smooth-anchor">Milestone</a>
+                    </h2>
+                    <p>The indicator describes the milestone achieved.</p>
+                    <p><img class="glossary-img-milestone" src="~/Content/img/icons/milestone_1.png" alt="" height="30" />&nbsp;&nbsp;Milestone 1: Initial communication sent to the engagement company</p>
+                    <p><img class="glossary-img-milestone" src="~/Content/img/icons/milestone_2.png" alt="" height="30" />&nbsp;&nbsp;Milestone 2: Dialogue established</p>
+                    <p><img class="glossary-img-milestone" src="~/Content/img/icons/milestone_3.png" alt="" height="30" />&nbsp;&nbsp;Milestone 3: Company commits to address issue</p>
+                    <p><img class="glossary-img-milestone" src="~/Content/img/icons/milestone_4.png" alt="" height="30" />&nbsp;&nbsp;Milestone 4: Company develops a strategy to address issue(s)</p>
+                    <p><img class="glossary-img-milestone" src="~/Content/img/icons/milestone_5.png" alt="" height="30" />&nbsp;&nbsp;Milestone 5: Company is at an advanced stage of implementing the strategy</p>
+                </section>
+                <section id="norm-area">
+                    <h2 class="page-header"><a href="#norm-area" class="smooth-anchor">Norm area</a>
+                    </h2>
+                    <p>Sustainalytics categorises all engagement cases according to UN Global Compact’s principles: </p>
+                    <p><img class="glossary-img-norm-area" src="~/Content/img/icons/norm_area_4_32.png" alt="" height="32" />&nbsp;&nbsp;Human Rights</p>
+                    <p><img class="glossary-img-norm-area" src="~/Content/img/icons/norm_area_5_32.png" alt="" height="32" />&nbsp;&nbsp;Labour Rights</p>
+                    <p><img class="glossary-img-norm-area" src="~/Content/img/icons/norm_area_3_32.png" alt="" height="32" />&nbsp;&nbsp;Environment</p>
+                    <p><img class="glossary-img-norm-area" src="~/Content/img/icons/norm_area_2_32.png" alt="" height="32" />&nbsp;&nbsp;Business Ethics</p>                    
+                </section>
+                <section id="performance">
+                    <h2 class="page-header"><a href="#performance" class="smooth-anchor">Performance</a>
+                    </h2>
+                    <p>The indicator describes the combined company progress and response performance.</p>
+                    <p><img class="glossary-img-performance" src="~/Content/img/elements/dev-high.svg" alt="" width="20" />&nbsp;&nbsp;High performance: good or excellent response and / or progress of the global standards issue</p>
+                    <p><img class="glossary-img-performance" src="~/Content/img/elements/dev-medium.svg" alt="" width="20" />&nbsp;&nbsp;Medium performance: standard level of response and progress</p>
+                    <p><img class="glossary-img-performance" src="~/Content/img/elements/dev-low.svg" alt="" width="20" />&nbsp;&nbsp;Low performance: poor or no response in combination with poor or no progress</p>
+                </section>
+                <section id="progress">
+                    <h2 class="page-header"><a href="#progress" class="smooth-anchor">Progress</a>
+                    </h2>
+                    <p>The indicator describes whether or not the violation continues, or how the company’s work to prevent future violations is developing.</p>
+                    <p><img class="glossary-img-progress" src="~/Content/img/elements/a-excellent.svg" alt="" height="16" />&nbsp;&nbsp;(the company has adopted a proactive approach and addressed the issues related to the change objective)</p>
+                    <p><img class="glossary-img-progress" src="~/Content/img/elements/a-good.svg" alt="" height="16" />&nbsp;&nbsp;(the company has taken sufficient measures to address the issues related to the change objective)</p>
+                    <p><img class="glossary-img-progress" src="~/Content/img/elements/a-standard.svg" alt="" height="16" />&nbsp;&nbsp;(the company has undertaken a number of measures to address the issues related to the change objective)</p>
+                    <p><img class="glossary-img-progress" src="~/Content/img/elements/a-poor.svg" alt="" height="16" />&nbsp;&nbsp;(the company has indicated willingness in addressing the issues related to the change objective, but no measures have been taken yet)</p>
+                    <p><img class="glossary-img-progress" src="~/Content/img/elements/a-none.svg" alt="" height="16" />&nbsp;&nbsp;(the company has made no effort to address the issues related to the change objective)</p>
+                </section>
+                <section id="response">
+                    <h2 class="page-header"><a href="#response" class="smooth-anchor">Response</a>
+                    </h2>
+                    <p>The indicator describes how the company responds to Sustainalytics’ inquiries.</p>
+                    <p><img class="glossary-img-response" src="~/Content/img/elements/o-excellent.svg" alt="" height="16" />&nbsp;&nbsp;(the company is proactive in communicating around the issues related to the change objective)</p>
+                    <p><img class="glossary-img-response" src="~/Content/img/elements/o-good.svg" alt="" height="16" />&nbsp;&nbsp;(the company addresses all of the issues related to the change objective)</p>
+                    <p><img class="glossary-img-response" src="~/Content/img/elements/o-standard.svg" alt="" height="16" />&nbsp;&nbsp;(the company provides information on some of the issues related to the change objective)</p>
+                    <p><img class="glossary-img-response" src="~/Content/img/elements/o-poor.svg" alt="" height="16" />&nbsp;&nbsp;(the company has responded initially but not properly addressed the issues related to the change objective and is unwilling to further communicate with Sustainalytics)</p>
+                    <p><img class="glossary-img-response" src="~/Content/img/elements/o-none.svg" alt="" height="16" />&nbsp;&nbsp;</p>
+                </section>
+                <section id="engagementstatus">
+                    <h2 class="page-header"><a href="#engagementstatus" class="smooth-anchor">Engagement status</a></h2>
+                    <p>Sustainalytics has five levels of engagement status: Evaluate, Engage, Disengage, Archived and Resolved.</p>
+                    <section id="evaluate-engagementstatus">
+                        <h3 class="page-header"><a href="#evaluate-engagementstatus" class="smooth-anchor">Evaluate status</a>
+                        </h3>
+                        <p>Sustainalytics assesses the case and the company in question.</p>
+                    </section>
+                    <section id="engage-engagementstatus">
+                        <h3 class="page-header"><a href="#engage-engagementstatus" class="smooth-anchor">Engage status</a>
+                        </h3>
+                        <p>Sustainalytics recommends its clients to engage in dialogue and/or active ownership with the company since the company is, or might be, violating international environmental, social or governance standards.</p>
+                    </section>
+                    <section id="disengage-engagementstatus">
+                        <h3 class="page-header"><a href="#disengage-engagementstatus" class="smooth-anchor">Disengage status</a>
+                        </h3>
+                        <p>Sustainalytics recommends its clients to disengage if after two years all engagement options have been ineffective and there is poor/no progress or response.</p>
+                    </section>
+                    <section id="archived-engagementstatus">
+                        <h3 class="page-header"><a href="#archived-engagementstatus" class="smooth-anchor">Archived status</a>
+                        </h3>
+                        <p>The case has been archived without the need for engagement activities.</p>
+                    </section>
+                    <section id="resolved-engagementstatus">
+                        <h3 class="page-header"><a href="#resolved-engagementstatus" class="smooth-anchor">Resolved status</a></h3>
+                        <p>The engagement objectives have been achieved and no further engagement activities are required at this stage.</p>
+                    </section>
+                </section>
+
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</div>

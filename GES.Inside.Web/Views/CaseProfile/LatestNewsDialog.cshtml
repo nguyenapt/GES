@@ -1,0 +1,36 @@
+﻿@using GES.Common.Resources
+<div class="modal fade" id="news-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 665px; height: 700px">
+        <div class="modal-content" ng-form="latestNewsForm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">@Resources.LatestNews</h4>
+            </div>
+
+            <div class="modal-body" style="min-height: 0; max-height: 700px; overflow-y: auto" ng-form="newsDialogForm">
+                <div class="box-body box-edit">        
+                    <div class="ges-content-block">
+                        <div class="header">
+                            <div class="title col-lg-9 col-md-8">
+                                <p>@Resources.NewsDescription</p>
+                            </div>
+                        </div>
+                        <hr class="style10" />
+                        <textarea ng-model="editingNews.Description"  class="form-control form-control-text" ng-required="true" name="description" style="height:250px"></textarea>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="modal-footer">
+                <input class="btn btn-success" type="button" value="@Resources.Save" data-dismiss="modal" id="btn-news-update" ng-disabled="latestNewsForm.$invalid" ng-click="saveNews(editingNews)" />
+                <input class="btn btn-success" type="button" style="margin-right:15px" value="@Resources.SaveAndAddnew" id="btn-news-update" ng-disabled="latestNewsForm.$invalid" ng-click="saveNews(editingNews,true)" />
+                <span ng-if="editingNews.I_GesLatestNews_Id !== 0">
+                    <input class="btn btn-danger" type="button" value="@Resources.Delete" id="btn-delete-kpi" ng-click="deleteNews(editingKpi)" />
+                </span>
+                <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="@Resources.Cancel" ng-click="cancelNews(editingNews)" />
+            </div>
+        </div>
+    </div>
+</div>

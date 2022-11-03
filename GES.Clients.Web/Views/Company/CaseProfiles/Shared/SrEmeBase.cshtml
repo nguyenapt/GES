@@ -1,0 +1,27 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CaseProfiles.SrEmeCaseProfileBaseComponent
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-info-circle" aria-hidden="true"></i> @Resources.CompanyInfo</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(m => m.CompanyName)</dt>
+            <dd>@Html.ActionLink(Model.CompanyName, "Profile", new { id = Model.CompanyId })</dd>
+
+            @Html.RenderProperty(m => m.CompanyIsin)
+            @Html.RenderProperty(m => m.CompanyIndustry)
+            @Html.RenderProperty(m => m.CompanyHomeCountry)
+            
+            <dt>@Html.DisplayNameFor(m => m.Gri)</dt>
+            <dd>@(Model.Gri ? Resources.Yes : Resources.No)</dd>
+            
+            <dt>@Html.DisplayNameFor(m => m.GlobalCompactMember)</dt>
+            <dd>@(Model.GlobalCompactMember ? Resources.Yes : Resources.No)</dd>
+        </dl>
+    </div>
+    <!-- /.box-body -->
+</div>

@@ -1,0 +1,76 @@
+﻿@using GES.Common.Enumeration
+@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CaseProfileCoreViewModel
+
+@{
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+}
+
+<script type="text/javascript">
+    function Open(theme) {
+        var message = '';
+        if (theme.indexOf("Burma") >= 0) {
+            message = '@Resources.UnsubscribeBurma';
+        }
+        else if (theme.indexOf("Carbon") >= 0) {
+            message = '@Resources.UnsubscribeCarbon';
+        }
+        else if (theme.indexOf("EME") >= 0) {
+            message = '@Resources.UnsubscribeEME';
+        }
+        else if (theme.indexOf("Palm Oil") >= 0) {
+            message = '@Resources.UnsubscribePalmOil';
+        }
+        else if (theme.indexOf("Taxation") >= 0) {
+            message = '@Resources.UnsubscribeTaxation';
+        }
+        else if (theme.indexOf("Water") >= 0) {
+            message = '@Resources.UnsubscribeWater';
+        }
+        else if (theme.indexOf("Bespoke") >= 0) {
+            message = '@Resources.UnsubscribeBespoke';
+        }
+        else {
+            message = '@Resources.UnsubscribedServiceContent';
+        }
+
+        $('#unsubscribed-body').html(message);
+        $('#pop-up-unsubscribed').modal('show');
+    }
+
+    var clientType = '@ViewBag.ClientType';
+</script>
+
+<script type="text/javascript" charset="utf-8">    
+    var _initialHeading = @Html.Raw(Json.Encode(ViewBag.InitialHeading));    
+</script>
+@section styling {
+    @Styles.Render("~/Content/plugins/flag-icon-css/flag-css-bundle")
+    @Styles.Render("~/Content/plugins/eventify/eventify-css-bundle")
+    @*@Styles.Render("~/bundles/timelineControl-css")*@
+
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-case-report-detail")
+    @*@Scripts.Render("~/bundles/timelineControl-js")*@
+}
+
+<script type="text/javascript">
+    var i_caseProfileId = @Html.Raw(Json.Encode(Model.CaseProfileId));
+    var i_companyName = @Html.Raw(Json.Encode(Model.BaseComponent.CompanyName));
+    var i_caseProfileName = @Html.Raw(Json.Encode(Model.CaseComponent?.Heading));
+</script>
+
+@section pageButtons {
+    <button class="btn btn-sm azure-background" data-toggle="modal" data-target="#case-profile-export-dialog" id="export-button">
+    <i class="fa fa-file-pdf-o" id="export-icon"></i><i class="fa fa-refresh fa-spin" id="export-loading" style="display: none"></i>&nbsp;&nbsp;@Resources.ExportPdf</button>
+}
+
+<div class="row">
+    @Html.RenderCaseReport(gesCaseReportType)
+</div>
+@{ Html.RenderPartial("CaseProfileExportDialog", Model); }
+
+@{ Html.RenderPartial("_UnSubscribed_Box_Message"); }

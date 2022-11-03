@@ -1,0 +1,31 @@
+﻿@using System.Text
+@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CaseProfileFullAttributeViewModel
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+}
+<dl class="dl-vertical case-report-block">
+    @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "OTHER-STAKEHOLDERS-INVESTOR-INITIATIVES") && !string.IsNullOrEmpty(Model.InvestorInitiatives))
+    {
+        @Html.RenderBlockContent(m => m.InvestorInitiatives)
+    }
+    @if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "OTHER-STAKEHOLDERS"))
+    {
+        if (Model.StakeholderViews != null && Model.StakeholderViews.Count > 0)
+        {
+            var customContent = new StringBuilder();
+            Model.StakeholderViews.ToList().ForEach(view =>
+            {
+                customContent.Append($"<strong>{view.Name}</strong>");
+                customContent.Append("<br/>");
+                customContent.Append($"{view.Description}<br/>");
+                customContent.Append($"<a href='{view.Url}' target='_blank'>{view.Url}</a>");
+                customContent.Append("</br></br>");
+            });
+
+        @Html.RenderBlockContentWithCustomContent(Resources.StakeholdersViews, customContent.ToString())
+        }
+    }
+</dl>

@@ -1,0 +1,94 @@
+﻿@using GES.Common.Resources
+@using GES.Inside.Web.Extensions
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">@Resources.MainNavigation</li>
+            <li class="@Html.IsSelected("List", "Company")"><a href="@Url.Action("List", "Company")"><i class="fa fa-money"></i> @Resources.Companies</a></li>
+            <li class="@Html.IsSelected(null, "CaseProfile") treeview">
+                <a href="#">
+                    <i class="fa fa-newspaper-o"></i> <span>@Resources.CaseProfiles</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected("List", "CaseProfile")"><a href="@Url.Action("List", "CaseProfile")"><i class="fa fa-circle-o"></i>@Resources.CaseProfileList</a></li>
+                    <li class="@Html.IsSelected("SignedUpCaseProfiles", "CaseProfile")"><a href="@Url.Action("SignedUpCaseProfiles", "CaseProfile")"><i class="fa fa-circle-o"></i>@Resources.Endorsement</a></li>
+                </ul>
+            </li>
+            
+            <li class="@Html.IsSelected(null, "GSSResearch") treeview">
+                <a href="#">
+                    <i class="fa fa-briefcase"></i> <span>@Resources.GSSResearch</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected("CompanyList", "GSSResearch")"><a href="@Url.Action("CompanyList", "GSSResearch")"><i class="fa fa-circle-o"></i> @Resources.CompanyList2</a></li>
+                    <li class="@Html.IsSelected("ResourceAllocation", "GSSResearch")"><a href="@Url.Action("ResourceAllocation", "GSSResearch")"><i class="fa fa-circle-o"></i> @Resources.ResourceAllocation</a></li>
+                    <li class="@Html.IsSelected("BulkStatusChange", "GSSResearch")"><a href="@Url.Action("BulkStatusChange", "GSSResearch")"><i class="fa fa-circle-o"></i> @Resources.BulkStatusChange</a></li>
+                    <li class="@Html.IsSelected("BulkCompliantAssessment", "GSSResearch")"><a href="@Url.Action("BulkCompliantAssessment", "GSSResearch")"><i class="fa fa-circle-o"></i> @Resources.BulkCompliantAssessment</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected("Index", "GesContact") treeview"><a href="@Url.Action("Index", "GesContact")"><i class="fa fa-book"></i><span> @Resources.GesContact</span></a></li>
+            
+            <li class="@Html.IsSelected("List", "Client")"><a href="@Url.Action("List", "Client")"><i class="fa fa-users"></i> @Resources.Clients</a></li>
+
+            <li class="@Html.IsSelected(null, "Portfolio") treeview">
+                <a href="#">
+                    <i class="fa fa-briefcase"></i> <span>@Resources.Portfolios</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected("List", "Portfolio")"><a href="@Url.Action("List", "Portfolio")"><i class="fa fa-circle-o"></i> @Resources.PortfolioList</a></li>
+                    <li class="@Html.IsSelected("ControActivPresets", "Portfolio")"><a href="@Url.Action("ControActivPresets", "Portfolio")" title="Controversial Activities Presets"><i class="fa fa-circle-o"></i> @Resources.ControActivPresets</a></li>
+                </ul>
+            </li>
+           
+            <li class="@Html.IsSelected("List", "AccountMgmt")"><a href="@Url.Action("List", "AccountMgmt")"><i class="fa fa-user"></i> @Resources.Accounts</a></li>
+            @*Export*@
+            <li class="@Html.IsSelected(null, "Export") treeview">
+                <a href="#">
+                    <i class="fa fa-download"></i> <span>@Resources.Export</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected("ScreeningReport", "Export")"><a href="@Url.Action("ScreeningReport", "Export")"><i class="fa fa-file-excel-o"></i> Screening Report (Excel)</a></li>
+                    <li class="@Html.IsSelected("ExportEFStatusReport", "Export")"><a href="@Url.Action("ExportEFStatusReport", "Export")"><i class="fa fa-file-excel-o"></i> EF Status Report</a></li>
+                </ul>
+            </li>
+            <li class="@Html.IsSelected(null, "Utility") treeview">
+                <a href="#">
+                    <i class="fa fa-wrench"></i> <span>@Resources.Utilities</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected("Index", "Data")"><a href="@Url.Action("Index", "Data")"><i class="fa fa-book"></i> @Resources.DataUtilities</a></li>
+                </ul>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected("FormatIsins", "Utility")"><a href="@Url.Action("FormatIsins", "Utility")"><i class="fa fa-circle-o"></i> Format ISINs</a></li>
+                </ul>
+                <ul class="treeview-menu">
+                    <li class="@Html.IsSelected("Tools", "Utility")"><a href="@Url.Action("Tools", "Utility")"><i class="fa fa-circle-o"></i> Tools</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(null, "Data") treeview">
+                <a href="#">
+                    <i class="fa fa-gear"></i> <span>@Resources.Config</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    
+                    <li class="@Html.IsSelected("Index", "SDGs")"><a href="@Url.Action("Index", "Sdg")"><i class="fa fa-circle-o"></i> @Resources.SustainableDevelopmentGoals</a></li>
+                    <li class="@Html.IsSelected("List", "GesServices")"><a href="@Url.Action("List", "GesServices")"><i class="fa fa-circle-o"></i> @Resources.GesServices</a></li>
+                    <li class="@Html.IsSelected("List", "EngagementType") treeview"><a href="@Url.Action("List", "EngagementType")"><i class="fa fa-book"></i><span> @Resources.EngagementTypes</span></a></li>
+                    <li class="@Html.IsSelected("List", "CaseProfileUIConfig")"><a href="@Url.Action("List", "CaseProfileUIConfig")"><i class="fa fa-circle-o"></i> @Resources.CaseProfileUITemplate</a></li>
+                    <li class="@Html.IsSelected("Index", "GesAnnouncement")"><a href="@Url.Action("Index", "GesAnnouncement")"><i class="fa fa-circle-o"></i> @Resources.GesAnnouncement</a></li>
+                    <li class="@Html.IsSelected("List", "Convention")"><a href="@Url.Action("List", "Convention")"><i class="fa fa-circle-o"></i> @Resources.Conventions</a></li>
+                    <li class="@Html.IsSelected("List", "Guiderlines")"><a href="@Url.Action("List", "Guiderlines")"><i class="fa fa-circle-o"></i> @Resources.Guidelines</a></li>
+                    <li class="@Html.IsSelected("List", "DocumentMgmt")"><a href="@Url.Action("List", "DocumentMgmt")"><i class="fa fa-file-o"></i> @Resources.PositionPapersDocuments</a></li>
+                    <li class="@Html.IsSelected("CompanyDocumentList", "DocumentMgmt")"><a href="@Url.Action("CompanyDocumentList", "DocumentMgmt")"><i class="fa fa-file-o"></i> @Resources.CompaniesAndCaseIssueDocuments</a></li>
+                    <li class="@Html.IsSelected("List", "Roles")"><a href="@Url.Action("List", "Roles")"><i class="fa fa-circle-o"></i> @Resources.AccountRoles</a></li>
+                    <li class="@Html.IsSelected("List", "Glossary") treeview"><a href="@Url.Action("List", "Glossary")"><i class="fa fa-book"></i><span> @Resources.Glossary</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

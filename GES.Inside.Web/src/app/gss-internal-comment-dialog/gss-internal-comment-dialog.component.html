@@ -1,0 +1,30 @@
+<h3 matDialogTitle>Add Comment</h3>
+<mat-dialog-content style="width:800px">
+    <div class="row">
+        <div class="col-md-3">
+            <span>Section</span>
+        </div>
+        <div class="col-md-9">
+            <mat-form-field>
+                <mat-label>Select Section</mat-label>
+                <mat-select [(ngModel)]="comment.Level">
+                    <mat-option *ngFor="let section of sections" [value]="section.value">
+                        {{section.text}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <span>Comment</span>
+        </div>
+        <div class="col-md-9">
+            <textarea maxlength="800" click-to-edit-text-area [(ngModel)]="comment.Comment" style="width:100%"></textarea>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="saveComment()">Save</button>
+    <button mat-raised-button matDialogClose>Cancel</button>
+</mat-dialog-actions>

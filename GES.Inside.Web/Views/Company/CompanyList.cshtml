@@ -1,0 +1,24 @@
+﻿@using GES.Common.Resources
+
+<div class="modal fade" id="company-list-dialog" style="display: none;z-index:1000000000">
+    <div class="modal-dialog modal-lg" style="width: 850px; height: auto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">@Resources.MasterCompanies</h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+                <div class="">
+                    <table id="tblcompanies" class="table table-bordered table-striped"></table>
+                    <div id="myPager"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                 <input class="btn btn-success" type="button" value="@Resources.Select" data-dismiss="modal" id="btn-contact-select" ng-click="companySelect()"  />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="@Resources.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

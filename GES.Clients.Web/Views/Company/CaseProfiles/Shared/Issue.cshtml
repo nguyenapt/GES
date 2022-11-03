@@ -1,0 +1,58 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Helpers
+@using GES.Clients.Web.Models
+@using GES.Common.Configurations
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@using GES.Inside.Data.Models.Anonymous
+@using GES.Inside.Data.Models
+@using GES.Inside.Data.Models.CaseProfiles
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIssueComponent
+
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+
+    var tabContent = new Dictionary<string, KeyValuePair<string, string>>();
+    if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "SUMMARY"))
+    {
+        var item = new KeyValuePair<string, string>(Html.DisplayNameFor(m => m.Summary).ToHtmlString(), Html.RenderBlockContent(m => m.Summary, blockTitle: "").ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Html.DisplayNameFor(m => m.Summary).ToHtmlString()), item);
+    }    
+
+    var itemCompanyPreparedness = new KeyValuePair<string, string>(Html.DisplayNameFor(m => m.CompanyPreparedness).ToHtmlString(), Html.RenderBlockContent(m => m.CompanyPreparedness).ToHtmlString());
+    tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Html.DisplayNameFor(m => m.CompanyPreparedness).ToHtmlString()), itemCompanyPreparedness);
+
+    var itemAlert = new KeyValuePair<string, string>(Resources.Alert, Html.Partial("CaseProfiles/Shared/Alert", Model).ToHtmlString());
+    tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.Alert), itemAlert);
+}
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            @Resources.CaseDescription
+        </h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+
+        @SharedComponents.BuildTabContent(Html, tabContent)
+
+        @{ Html.RenderPartial("CaseProfiles/Shared/Watermark", (GesCaseReportType)ViewBag.CaseProfileType); }
+    </div>
+</div>
+
+@if (Model.ClosingIncidentAnalysisComponent != null)
+{
+    Html.RenderPartial("CaseProfiles/Shared/ClosingIncidentAnalysis", Model.ClosingIncidentAnalysisComponent as CaseProfileIncidentAnalysisComponent);
+}
+
+@SharedComponents.BuildTabContent(Html, new Dictionary<string, KeyValuePair<string, string>>
+{
+    [CommonHelper.ConvertNameToHtmlElementId(Resources.GesCommentary)] = new KeyValuePair<string, string>($"<i class=\"fa fa-comment\" aria-hidden=\"true\"></i> {Resources.GesCommentary}", Html.RenderBlockContent(m => m.GesCommentary, Model.GesCommentaryModified, blockTitle: "").ToHtmlString()),
+    [CommonHelper.ConvertNameToHtmlElementId(Resources.LatestNews)] = new KeyValuePair<string, string>($"<i class=\"fa fa-newspaper-o\" aria-hidden=\"true\"></i> {Resources.LatestNews}", Html.RenderBlockContent(m => m.LatestNews, Model.LatestNewsModified, Resources.LatestNewsArchive, blockTitle: "").ToHtmlString())
+})
+
+@{ Html.RenderPartial("~/Views/Shared/_Dialog.cshtml", new ModalPopupViewModel
+    {
+        ModalTitle = Resources.LatestNewsArchive,
+        DateContentPairs = Model.LatestNewsArchive?.Select(o => new KeyValueObject<string, string>(o.LatestNewsModified?.ToString(Configurations.DateFormat), o.Description)).ToList()
+    });
+}

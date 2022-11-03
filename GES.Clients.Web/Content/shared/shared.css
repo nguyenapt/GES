@@ -1,0 +1,193 @@
+﻿/* qtip2 */
+.qtip-default {
+    background-color: #fff;
+}
+.qtip-default .qtip-titlebar {
+    font-size: 12px;
+}
+.qtip-default ul li {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+/* jqGrid fonts to match AdminLTE fonts */
+.ui-widget {
+    font-family: 'Source Sans Pro', sans-serif;
+    /*font-size:13px;*/
+}
+
+.ui-jqgrid .ui-jqgrid-view {
+    font-size: 12px;
+}
+
+.ui-jqgrid .ui-jqgrid-titlebar {
+    border-bottom: 0 none;
+}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: 'Source Sans Pro', sans-serif;
+    /*font-size: 1em;*/
+}
+
+.wijmo-wijmenu .wijmo-wijmenu-item input {
+    font-family: 'Source Sans Pro', sans-serif;
+    /*line-height: 1;
+    margin: 5px 10px 0 10px;
+    padding: 4px 9px;*/
+}
+
+.ui-jqgrid .ui-jqgrid-toppager {
+    border-bottom: none;
+}
+
+.ui-jqgrid .ui-pg-input, .ui-jqgrid .ui-jqgrid-toppager .ui-pg-input {
+    height: 23px;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    line-height: 13px;
+}
+
+/* jqGrid styling: second try */
+.ui-jqgrid .ui-pg-input, .ui-jqgrid .ui-jqgrid-toppager .ui-pg-input {
+    font-size: 1em;
+    text-align: center;
+    height: 25px;
+}
+.ui-jqgrid.ui-widget-content {
+    border: none;
+}
+.ui-jqgrid .ui-jqgrid-bdiv, .ui-jqgrid .ui-jqgrid-hdiv .ui-jqgrid-hbox {
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    border-left: 1px solid #aaaaaa;
+    border-top: 1px solid #aaaaaa;
+    max-width:none !important;
+    width:auto !important;
+    min-width:100% !important;
+}
+
+.ui-jqgrid tr.jqgrow.ui-state-hover:not(.ui-state-highlight):hover {
+    background: #FFF8DD;
+    background-color: #FFF8DD;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#FFF8DD), to(#FFF8DD));
+    background-image: -moz-linear-gradient(top, #FFF8DD, #FFF8DD);
+    background-image: -ms-linear-gradient(top, #FFF8DD, #FFF8DD);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FFF8DD), color-stop(100%, #FFF8DD));
+    background-image: -webkit-linear-gradient(top, #FFF8DD, #FFF8DD);
+    background-image: -o-linear-gradient(top, #FFF8DD, #FFF8DD);
+    background-image: linear-gradient(top, #FFF8DD, #FFF8DD);
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    font-size: 12px;
+}
+.ui-jqgrid .ui-pg-selbox, .ui-jqgrid .ui-jqgrid-toppager .ui-pg-selbox {
+    height: 25px;
+    font-size: 1em;
+}
+.ui-jqgrid tr.jqgrow td {
+    height: 30px;
+    padding-top: 3px;
+}
+.ui-subgrid .ui-widget-content .ui-state-default, .ui-subgrid .ui-widget-header .ui-state-default {
+    color: #858585;
+    font-weight: normal;
+    font-style: italic
+}
+.ui-subgrid .ui-widget-content {
+    /*font-style: italic;*/
+}
+/* jqgrid: remove flicker on hovering paging buttons */
+.ui-jqgrid .ui-pg-button:hover {
+    padding: 0 1px;
+}
+
+.ui-widget-content.ui-jqgrid {
+    /*border: 1px solid #f4f4f4;
+    border-top: none;
+    border-bottom: none;*/
+}
+
+/* Company Search: Heading rows */
+.ui-jqgrid .ui-jqgrid-htable th {
+    height: inherit;
+    padding-top: 8px;
+    padding-bottom: 6px;
+    background-color: #68aaa3;
+    color: #fff;
+}
+.ui-subgrid .ui-jqgrid .ui-jqgrid-htable th {
+    background-color: #68aaa3;
+}
+.ui-subgrid .ui-widget-content .ui-state-default th {
+    font-style: normal !important;
+    color: #fff;
+}
+.ui-jqgrid .ui-jqgrid-sortable {
+    height: 16px;
+}
+
+/*.ui-jqgrid .ui-subgrid th[id$="_Recommendation"],
+.ui-jqgrid .ui-subgrid th[id$="_Confirmed"],
+.ui-jqgrid .ui-subgrid th[id$="_Norm"]
+{
+    font-style: italic !important;
+}*/
+
+/* jqGrid */
+.ui-jqgrid-view tbody a, .ui-jqgrid-view tbody a:visited {
+    color: #68aaa3 !important;
+}
+
+    .ui-jqgrid-view tbody a:hover, .ui-jqgrid-view tbody a:active {
+        color: #47796e !important;
+    }
+
+.ui-jqgrid .ui-jqgrid-view .ui-search-toolbar tbody a {
+    color: #fff !important;
+}
+    .ui-jqgrid .ui-jqgrid-view .ui-search-toolbar tbody a:hover {
+        color: #EAEAEA !important;    
+    }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background-color: #fceec1;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#fceec1), to(#fceec1));
+    background-image: -moz-linear-gradient(top, #fceec1, #fceec1);
+    background-image: -ms-linear-gradient(top, #fceec1, #fceec1);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fceec1), color-stop(100%, #fceec1));
+    background-image: -webkit-linear-gradient(top, #fceec1, #fceec1);
+    /* background-color: yellow; */
+    background-image: -o-linear-gradient(top, #fceec1, #fceec1);
+    background-image: linear-gradient(top, #fceec1, #fceec1);
+}
+
+/* jquery.ui.custom */
+/* remove gradient */
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background-color: #fff;
+    background-image: none;
+}
+
+.jqgrid-row-even {
+    background-color: #eeeeee; /* Old browsers */
+    background-image: -moz-linear-gradient(top, #eeeeee 0%, #eeeeee 100%); /* FF3.6-15 */
+    background-image: -webkit-linear-gradient(top, #eeeeee 0%,#eeeeee 100%); /* Chrome10-25,Safari5.1-6 */
+    background-image: linear-gradient(to bottom, #eeeeee 0%,#eeeeee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+}
+
+/*Set style for 'No row' in qjgrid */
+.jqgrid-no-row-style {
+    padding: 12px;
+    font-weight: bold;
+    color: #68aaa3;
+}
+
+/* Glossary: hide subgrids' header */
+.page-glossary-index .ui-subgrid .ui-jqgrid-hdiv, .page-glossary-index .ui-subgrid .ui-jqgrid-titlebar {
+    display: none;
+}

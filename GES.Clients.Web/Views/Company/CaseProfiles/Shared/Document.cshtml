@@ -1,0 +1,30 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@model IEnumerable<GES.Inside.Data.Models.DocumentViewModel>
+
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+}
+
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "CLIENT-DOCUMENT") && Model.Any())
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-folder" aria-hidden="true"></i> @Resources.AdditionalDocuments</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive">
+            <table class="table table-striped">
+                @foreach (var document in Model)
+                {
+                    <tr>
+                        <td>
+                            <a target="_blank" href="@Url.Action("DownloadFile", new { fileName = document.FileName })"><i class="fa fa-book" aria-hidden="true"></i> @document.Name</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}

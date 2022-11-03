@@ -1,0 +1,32 @@
+﻿@using GES.Common.Resources
+@model GES.Inside.Data.Models.ConfirmationInformationViewModel 
+
+<div class="box-body table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <td>
+                @Resources.MainSources
+            </td>
+            <td>
+                @Model.MainSource
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Resources.Documentss
+            </td>
+            <td>
+                @Model.Document
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Resources.SourceType
+            </td>
+            <td>
+                @Model.SourceType
+            </td>
+        </tr>
+    </table>
+</div>
+

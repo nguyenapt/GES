@@ -1,0 +1,369 @@
+<!--<div class="animation-loading">
+    <div class="osahan-loading"></div>
+</div>-->
+<!--*ngIf="gssCompanyResearch?.Name-->
+<div class="row">
+    <div class="col-md-8 col-xs-12">
+        <h1>{{gssCompanyResearch?.Name}}</h1>
+    </div>
+    <div class="col-md-4 col-xs-12">
+        <div class="row ">
+            <div class="col-md-3 margin-top-8">
+                <label>Company Status:</label>
+            </div>
+            <div class="col-md-9 margin-top-8">
+                <select style="width: 100%" class="form-control">
+                    <option value="">Draft</option>
+                    <option value="">Review</option>
+                    <option value="">Editing</option>
+                    <option value="">Final</option>
+                    <option value="">Published</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-xs-12">
+        <div class="box box-primary box-management-systems">
+            <div class="box-header with-border">
+                <h3 class="box-title">Overall Status</h3>
+            </div>
+            <div class="box-body">
+                <div class="row input-row">
+                    <div class="col-md-4">
+                        <span class="text-bold">Overall Assesment</span>
+                        <br />
+                        <div class="overall-status-compliant">&nbsp;</div>
+                        <span> {{gssCompanyResearch?.OverallAssesment}}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-bold">Outlook</span>
+                        <br />
+                        <mat-button-toggle-group name="outlook">
+                            <mat-button-toggle class="outlook-button-toggle" value="Negative"><i class="fa fa-arrow-down"></i> Negative</mat-button-toggle>
+                            <mat-button-toggle class="outlook-button-toggle margin-left-8" style="border: solid 1px #696969" value="Neutral"><i class="fa fa-arrow-right"></i> Neutral</mat-button-toggle>
+                            <mat-button-toggle class="outlook-button-toggle margin-left-8" style="border: solid 1px #696969" value="Positive"><i class="fa fa-arrow-up"></i> Positive</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-bold">Outlook Effective Since</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.OutlookEffectiveSince}}</span>
+                    </div>
+                </div>
+
+                <div class="row input-row">
+                    <div class="col-md-4">
+                        <span class="text-bold">UN Global Compact</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-bold">UN Guiding Principles on Business and Human Rights</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-bold">OECD Guidelines for Multinational Enterprises</span>
+                    </div>
+                </div>
+                <div class="row input-row">
+                    <div class="col-md-4">
+                        <span>{{gssCompanyResearch?.UNGlobalCompact}}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span>{{gssCompanyResearch?.UNGuildingPrinceples}}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span>{{gssCompanyResearch?.OECDGuideline}}</span>
+                    </div>
+                </div>
+
+                <div class="row input-row" *ngIf="gssCompanyResearch">
+                    <div class="col-md-4">
+                        <span class="text-bold">Other Related Conventions</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.OtherRelatedConventions}}</span>
+
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-bold">Engagement Status</span>
+                        <br />
+                        <!--<input [(ngModel)]="gssCompanyResearch.EngagementStatus" (focusout)="updateGssCompany()" placeholder="name" />-->
+                        <span>{{gssCompanyResearch?.EngagementStatusName}}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="text-bold">Engagement Status As Of</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.EngagementStatusAsOf}}</span>
+                    </div>
+                </div>
+
+                <div class="row input-row">
+                    <div class="col-md-3">
+                        <div>
+                            <label>Internal Analyst Comment</label>
+                        </div>
+                        <div>
+                            <P>Previous Versions</P>
+
+                            <table class="table table-hover">
+                                <tbody *ngIf="gssCompanyResearch?.InternalAnalystComments">
+                                    <tr *ngFor="let internalcomment of gssCompanyResearch?.InternalAnalystComments">
+                                        <td (click)="setEdittingInternalAnalystComment($event, internalcomment)" >{{internalcomment?.Created}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <textarea maxlength="250" click-to-edit-text-area ng-model="edittingInternalAnalystComment.Description" is-edit-state="true"></textarea>
+                    </div>
+                </div>
+
+                <div class="row input-row">
+                    <div class="col-md-3">
+                        <div>
+                            <label>GSS Outlook Comments</label>
+                        </div>
+                        <div>
+                            <span>Previous Versions</span>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <textarea maxlength="250" click-to-edit-text-area ng-model="edittingOutlookComment.Description" is-edit-state="true"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="gssCompanyResearch?.GssResearchIssueIndicatorsViewModels">
+            <div class="panel-group" id="accordion">
+                <!--principle 1-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle1">Principle 1: Businesses should support and respect the protection of internationally proclaimed human rights.</a>
+                        </h4>
+                        <span class="text-bold">Human Rights</span>
+                    </div>
+                    <div id="principle1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="1" ></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 2-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle2">Principle 2: Businesses should make sure that they are not complicit in human rights abuses.</a>
+                        </h4>
+                        <span class="text-bold">Human Rights</span>
+                    </div>
+                    <div id="principle2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="2"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 3-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle3">Principle 3: Businesses should uphold the freedom of association and the effective recognition of the right to collective bargaining.</a>
+                        </h4>
+                        <span class="text-bold">Labour Rights</span>
+                    </div>
+                    <div id="principle3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="3"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 4-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle4">Principle 4: Businesses should uphold the elimination of all forms of forced and compulsory labour. </a>
+                        </h4>
+                        <span class="text-bold">Labour Rights</span>
+                    </div>
+                    <div id="principle4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="4"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 5-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle5">Principle 5: Businesses should uphold the effective abolition of child labour.</a>
+                        </h4>
+                        <span class="text-bold">Labour Rights</span>
+                    </div>
+                    <div id="principle5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="5"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 6-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle6">Principle 6: Businesses should uphold the elimination of discrimination in respect of employment and occupation.</a>
+                        </h4>
+                        <span class="text-bold">Labour Rights</span>
+                    </div>
+                    <div id="principle6" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="6"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 7-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle7">Principle 7: Businesses should support a precautionary approach to environmental challenges.</a>
+                        </h4>
+                        <span class="text-bold">Environment</span>
+                    </div>
+                    <div id="principle7" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="7"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 8-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle8">Principle 8: Businesses should undertake initiatives to promote greater environmental responsibility.</a>
+                        </h4>
+                        <span class="text-bold">Environment</span>
+                    </div>
+                    <div id="principle8" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="8"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 9-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle9">Principle 9: Businesses should encourage the development and diffusion of environmentally friendly technologies.</a>
+                        </h4>
+                        <span class="text-bold">Environment</span>
+                    </div>
+                    <div id="principle9" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="9"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+
+                <!--principle 10-->
+                <div class="panel panel-default box box-primary">
+                    <div class="panel-heading box-header with-border">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn-collapse collapsed" data-parent="#accordion" href="#principle10">Principle 10: Businesses should work against corruption in all its forms, including extortion and bribery.</a>
+                        </h4>
+                        <span class="text-bold">Business Ethics</span>
+                    </div>
+                    <div id="principle10" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <span class="text-bold">Issue Indicators</span>
+                            <app-gss-principle [issueIndicators]="gssCompanyResearch.GssResearchIssueIndicatorsViewModels" [principleGroup]="10"></app-gss-principle>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-6">
+        <!--Company info-->
+        <div class="box box-primary box-management-systems">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-archive" aria-hidden="true"></i> Company info</h3>
+            </div>
+            <div class="box-body">
+                <div class="row input-row">
+                    <div class="col-md-6">
+                        <span class="text-bold">Company Id</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.CompanyId}}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-bold">ISIN</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.ISIN}}</span>
+                    </div>
+                </div>
+                <div class="row input-row">
+                    <div class="col-md-6">
+                        <span class="text-bold">Subpeergroup</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.SubpeerGroupName}}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="text-bold">Country</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.Country}}</span>
+                    </div>
+                </div>
+                <div class="row input-row">
+                    <div class="col-md-12">
+                        <span class="text-bold">Website</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.Website}}</span>
+                    </div>
+                </div>
+                <div class="row input-row">
+                    <div class="col-md-12">
+                        <span class="text-bold">Bussiness Description</span>
+                        <br />
+                        <span>{{gssCompanyResearch?.BussinessDescription}}</span>
+                    </div>
+                </div>
+
+                <hr />
+                <br />
+                <label>Corporate Tree</label>
+
+                <br />
+                {{gssCompanyResearch?.Name}}
+                <hr class="hr-company-separate" />
+
+            </div>
+        </div>
+
+        <!--Source-->
+        <div class="box box-primary box-management-systems">
+            <app-gss-source [gssCompanyResearch]="gssCompanyResearch"></app-gss-source>
+        </div>
+
+        <!--Internal comment-->
+        <div class="box box-primary box-management-systems">
+            <app-gss-internal-comment [gssCompanyResearch]="gssCompanyResearch"></app-gss-internal-comment>
+        </div>
+
+    </div>
+</div>

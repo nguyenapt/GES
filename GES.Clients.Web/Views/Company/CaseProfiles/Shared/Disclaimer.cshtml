@@ -1,0 +1,26 @@
+﻿@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@using GES.Common.Enumeration
+
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isStCase = gesCaseReportType == GesCaseReportType.StAlert || gesCaseReportType == GesCaseReportType.StandardAlertAndIndication || gesCaseReportType == GesCaseReportType.StArchived || gesCaseReportType == GesCaseReportType.StConfirmed || gesCaseReportType == GesCaseReportType.StIndicationOfViolation || gesCaseReportType == GesCaseReportType.StResolved;
+}
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "DISCLAIMER") || isStCase)
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <i aria-hidden="true"></i> @Resources.Note
+            </h3>
+        </div>
+        <div class="box-body">
+            <div>
+                <p>
+                    GES joined Sustainalytics in January 2019.
+                </p>
+            </div>
+        </div>
+    </div>
+}

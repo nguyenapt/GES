@@ -1,0 +1,186 @@
+﻿@model GES.Inside.Data.Models.SidebarModel
+@using System.Configuration
+@using System.Web.Configuration
+@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Helpers
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@using ikvm.extensions
+@using java.util
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- search form -->
+        <form action="/Company/List" method="post" class="sidebar-form simple-search-form">
+            <div class="input-group">
+                <input type="text" name="q" id="simple-search-textbox" class="form-control auto-suggestion suggest-companies" placeholder="@Resources.SearchHere..." title="@Resources.TypeCompanyNameIssueOrKeyword" />
+                <input type="hidden" name="qrCompanyIdSelected" id="hdCompanyIdSelected" />
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="simple-search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">@Resources.MainNavigation</li>
+            <li class="menu-item-search treeview">
+                <a href="#" title="Click to search">
+                    <i class="fa fa-search"></i>
+                </a>
+            </li>
+            <li class="menu-item-home treeview">
+                <a href="/">
+                    <i class="fa fa-home"></i> <span>@Resources.Home</span>
+                </a>
+            </li>
+
+            @if (Model.ClientType != ClientType.GlobalEthicalStandardOnly)
+            {
+                <li class="active treeview">
+                    <a href="#">
+                        <i class="fa fa-users"></i> <span>Engagement Forum</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        @if (Model.ClientType == ClientType.BusinessConduct)
+                        {
+                            <li class="@Html.IsSelected("", "Dashboard", "Dashboard", Model.QueryString, Model.Action, Model.Controller)"><a href="@Url.Action("Dashboard", "Dashboard")"><i class="fa fa-pie-chart"></i><span>@Resources.PortfolioAnalysis</span></a></li>
+                            <li class="@Html.IsSelected("", "List", "Company", Model.QueryString, Model.Action, Model.Controller)"><a href="@Url.Action("List", "Company")"><i class="fa fa-search" aria-hidden="true"></i><span>@Resources.SearchAndAnalysis</span></a></li>
+                            <li class="@Html.IsSelected("isfocuslist", "List", "Company", Model.QueryString, Model.Action, Model.Controller)"><a href="@Url.Action("List", "Company", new {isFocusList = true})"><i class="fa fa-dot-circle-o" aria-hidden="true"></i><span>@Resources.FocusList</span></a></li>
+
+                            <li onclick="location.href = '/Company/BusinessConductEngagementType?engagementTypeId=2';" class="@Html.IsSelected("", "[BusinessConductEngagementType][PositionPaperForConventions]", "Company", "", Model.Action, Model.Controller)">
+                                <a href="/Company/List?serviceIds=30"><i class="fa fa-chevron-right" aria-hidden="true"></i><span>@Resources.GlobalStandards</span><i class="fa fa-angle-left pull-right"></i></a>
+                                <ul class="treeview-menu">
+                                    @foreach (var cat in Model.EngagementTypeCategoryViews)
+                                    {
+                                        if (cat.EngagementTypeViewModels != null && cat.EngagementTypeViewModels.Any())
+                                        {
+                                            foreach (var engagementType in cat.EngagementTypeViewModels)
+                                            {
+                                                if ((engagementType.Deactive == null || !(bool)engagementType.Deactive) && engagementType.I_EngagementTypeCategories_Id == 1)
+                                                {
+                                                    if (engagementType.I_EngagementTypes_Id != (long)EngagementTypeEnum.Conventions)
+                                                    {
+                                                        <li class="@Html.IsSelected(engagementType.I_EngagementTypes_Id.ToString(), "BusinessConductEngagementType", "Company", Model.QueryString, Model.Action, Model.Controller)"><a href="@Url.Action("BusinessConductEngagementType", "Company", new {engagementTypeId = engagementType.I_EngagementTypes_Id})"><i class="fa fa-circle-o"></i>@engagementType.Name.replace("Engagement", "")</a></li>
+                                                    }
+                                                }
+                                            }
+                                            
+
+                                        }
+                                    } 
+                                    <li class="@Html.IsSelected("", "PositionPaperForConventions", "Company", Model.QueryString, Model.Action, Model.Controller)">
+                                        <a href="@Url.Action("PositionPaperForConventions", "Company")"><i class="fa fa-newspaper-o"></i> @Resources.PositionPapers</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (Model.EngagementTypeCategoryViews.Any(d => d.EngagementTypeCategoriesId == (long)EngagementTypeCategoryEnum.Governance))
+                        {
+                            <li class="@Html.IsSelected("", "GovernanceType", "Company", "", Model.Action, Model.Controller)">
+                                <a href="@Url.Action("GovernanceType", "Company")"><i class="fa fa-chevron-right" aria-hidden="true"></i><span>@Resources.CorporateGovernanceLink</span></a>
+                            </li>
+                        }
+                        
+
+                        @if (Model.EngagementTypeCategoryViews.Any(d => d.EngagementTypeCategoriesId == (long)EngagementTypeCategoryEnum.StewardshipAndRisk && d.EngagementTypeViewModels.Any(c => c.IsSubscribe && c.I_EngagementTypes_Id != (long)EngagementTypeEnum.Governance)))
+                        {
+                            <li class="@Html.IsSelected("", "[StewardshipAndRiskEngagementType][PreviousEngagementType]", "Company", "", Model.Action, Model.Controller)" treeview>
+                                <a href="#">
+                                    <i class="fa fa-chevron-right"></i><span>@Resources.StewardshipAndRisk</span><i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @foreach (var cat in Model.EngagementTypeCategoryViews)
+                                    {
+                                        if (cat.EngagementTypeViewModels != null && cat.EngagementTypeViewModels.Any())
+                                        {
+                                            foreach (var engagementType in cat.EngagementTypeViewModels)
+                                            {
+                                                if ((engagementType.Deactive == null || !(bool)engagementType.Deactive) && engagementType.I_EngagementTypeCategories_Id == (long)EngagementTypeCategoryEnum.StewardshipAndRisk && engagementType.I_EngagementTypes_Id != (long)EngagementTypeEnum.Governance)
+                                                {
+                                                    <li class="@Html.IsSelected(engagementType.I_EngagementTypes_Id.ToString(), "StewardshipAndRiskEngagementType", "Company", Model.QueryString, Model.Action, Model.Controller)"><a href="@Url.Action("StewardshipAndRiskEngagementType", "Company", new {engagementTypeId = engagementType.I_EngagementTypes_Id})"><i class="fa fa-circle-o"></i>@engagementType.Name.replace("Engagement", "")</a></li>
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    <li class="@Html.IsSelected("", "PreviousEngagementType", "Company", "", Model.Action, Model.Controller)" treeview>
+                                        <a href="#">
+                                            <i class="fa fa-history"></i><span>@Resources.Previousthemes</span> <i class="fa fa-angle-left pull-right"></i>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            @foreach (var cat in Model.EngagementTypeCategoryViews)
+                                            {
+                                                if (cat.EngagementTypeViewModels != null && cat.EngagementTypeViewModels.Any())
+                                                {
+                                                    foreach (var engagementType in cat.EngagementTypeViewModels)
+                                                    {
+                                                        if (engagementType.Deactive != null && (bool)engagementType.Deactive)
+                                                        {
+                                                            <li class="@Html.IsSelected(engagementType.I_EngagementTypes_Id.ToString(), "PreviousEngagementType", "Company", Model.QueryString, Model.Action, Model.Controller)"><a href="@Url.Action("PreviousEngagementType", "Company", new {engagementTypeId = engagementType.I_EngagementTypes_Id})"><i class="fa fa-circle-o"></i>@engagementType.Name.replace("Engagement", "")</a></li>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
+                        @*Other catagories*@
+                @if (Model.EngagementTypeCategoryViews.Any(d => d.EngagementTypeCategoriesId != (long)EngagementTypeCategoryEnum.BusinessConduct && d.EngagementTypeCategoriesId != (long)EngagementTypeCategoryEnum.StewardshipAndRisk && d.EngagementTypeCategoriesId != (long)EngagementTypeCategoryEnum.Governance))
+                {
+                    foreach (var cat in Model.EngagementTypeCategoryViews.Where(d => d.EngagementTypeCategoriesId != (long)EngagementTypeCategoryEnum.BusinessConduct && d.EngagementTypeCategoriesId != (long)EngagementTypeCategoryEnum.StewardshipAndRisk && d.EngagementTypeCategoriesId != (long)EngagementTypeCategoryEnum.Governance).ToList())
+                    {
+                        if (cat.EngagementTypeViewModels != null && cat.EngagementTypeViewModels.Any(d => d.IsSubscribe))
+                        {
+                            <li class="@Html.IsSelected("", "BespokeEngagementType", "Company", "", Model.Action, Model.Controller)" treeview>
+                                <a href="#">
+                                    <i class="fa fa-chevron-right"></i><span>@cat.Name.replace("Engagement", "")</span> <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+
+                                    @foreach (var engagementType in cat.EngagementTypeViewModels)
+                                    {
+                                        <li class="@Html.IsSelected(engagementType.I_EngagementTypes_Id.ToString(), "BespokeEngagementType", "Company", Model.QueryString, Model.Action, Model.Controller)"><a href="@Url.Action("BespokeEngagementType", "Company", new {engagementTypeId = engagementType.I_EngagementTypes_Id})"><i class="fa fa-circle-o"></i>@engagementType.Name.replace("Engagement", "")</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    }
+                }
+
+                    </ul>
+                </li>
+            }
+
+            @if (Model.ClientType == ClientType.GlobalEthicalStandardOnly || Model.ClientType == ClientType.GlobalEthicalStandardAndOtherEngagmement)
+            {
+                <li class="@Html.IsSelected("", "[List][PositionPaperForGlobalEthicalStandard]", "Company", Model.QueryString, Model.Action, Model.Controller)" treeview>
+                    <a href="@Url.Action("List", "Company")"><i class="fa fa-chevron-right" aria-hidden="true"></i><span>@Resources.GlobalEthicalStandard</span><i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu" style="padding-left: 25px">
+                        <li class="@Html.IsSelected("", "List", "Company", Model.QueryString, Model.Action, Model.Controller)">
+                            <a href="@Url.Action("List", "Company")"><i class="fa fa-search" aria-hidden="true"></i><span>@Resources.Search</span></a>
+                        </li>
+
+                        <li class="@Html.IsSelected("", "PositionPaperForGlobalEthicalStandard", "Company", Model.QueryString, Model.Action, Model.Controller)">
+                            <a href="@Url.Action("PositionPaperForGlobalEthicalStandard", "Company")"><i class="fa fa-newspaper-o"></i><span>@Resources.PositionPapers</span></a>
+                        </li>
+
+                    </ul>
+                </li>
+            }
+
+            <li class="@Html.IsSelected("CalendarList", "Calendar")"><a href="@Url.Action("CalendarList", "Calendar")"><i class="fa fa-calendar"></i><span>@Resources.Calendar</span></a></li>
+            <li class="@Html.IsSelected("Index", "Glossary")"><a href="@Url.Action("Index", "Glossary")"><i class="fa fa-book"></i><span>@Resources.GlossaryMethodology</span></a></li>
+
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+

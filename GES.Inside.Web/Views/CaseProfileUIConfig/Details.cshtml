@@ -1,0 +1,157 @@
+﻿@using System.Web.Configuration
+@using System.Web.Mvc.Html
+@using GES.Inside.Web.Helpers
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.GesCaseProfileTemplatesViewModel
+
+@{
+    ViewBag.PageClass = "page--case-profile-ui-template page-ges-case-profile-ui-template-details";
+    // ViewBag.Title = @Model.Name;
+    ViewBag.SubTitle = @Resources.GesServicesDetails;
+
+
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-ges-case-profile-ui-template-details")
+}
+
+<style>
+    .inputText {
+        width: 100% !important;
+    }
+</style>
+<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+@section contentHeader{
+    <section class="content-header" ng-form="gesTemplateHeaderForm">
+        <h1>
+            <input type="text" style="width: 60%" class="input-header" click-to-edit placeholder="Add GES service name" ng-model="gesTemplateDetails.TemplateName" ng-required="true" />
+        </h1>
+
+        <div class="page-buttons hidden-print">
+            <button class="btn btn-success not-outer-right-btn" ng-click="UpdateCaseProfileUiTemplate()" ng-disabled="gesTemplateHeaderForm.$invalid || gesServiceForm.$invalid || isSaving">
+                <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+            </button>
+            <input class="btn" type="button" value="Cancel" id="cancel-save"
+                   data-confirm-title="Do you want to leave this site?"
+                   data-confirm-message="Changes you made may not be saved"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay" />
+        </div>
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <!-- Company Summary Box -->
+        <div class="box box-primary box-company-overview">
+            <div class="box-body" ng-form="gesServiceForm">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.GesServiceEngagementType</p>
+                                </div>
+                            </div>
+
+                            <select style="width: 60%" ng-model="gesTemplateDetails.EngagementTypeId" id="engagementtype-select" name="engagementtypeSelect" class="form-control">
+                                <option value="">Select Engagement Type</option>
+                                <option ng-repeat="engagementtype in engagementTypes" value="{{engagementtype.I_EngagementTypes_Id}}">{{engagementtype.CatalogName}} - {{engagementtype.Name}}</option>
+                            </select>
+
+                        </div>
+                        <div class="ges-content-block">
+                            <div class="header">
+                                <div class="title col-lg-9 col-md-8">
+                                    <p>@Resources.EngagementStatus</p>
+                                </div>
+                            </div>
+
+                            <select style="width: 60%" ng-model="gesTemplateDetails.RecomendationId" id="recommendation-select" class="form-control" ng-change="updateTemplate();">
+                                <option value="">Select Engagement status</option>
+                                <option ng-repeat="recommendation in recommendations" value="{{recommendation.I_GesCaseReportStatuses_Id}}">{{recommendation.Name}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div ng-show="isFormInvalid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-warning" style="font-size:32px;color:red" aria-hidden="true"></i> @Resources.SavingErrorList</h3>
+                            </div>
+                            <div class="box-body">
+                                <div ng-repeat="error in validateMessage">
+                                    <p style="color: red">{{error.text}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.TemplateDescription</p>
+                        </div>
+                    </div>
+                    <textarea click-to-edit-text-area ng-model="gesTemplateDetails.TemplateDescription"></textarea>
+                </div>
+                <hr class="style10" />
+                <div class="row ges-content-block">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header">
+                            <div class="title">
+                                <p>Inside</p>
+                            </div>
+                        </div>
+                        <div ng-repeat="entity in groupEntities">
+                            <div class="header" style="color: #333333;margin-left: 20px;">
+                                <div class="title">
+                                    <p style="color: #333333">- {{entity.Name}}</p>
+                                </div>
+                            </div>
+
+                            <span ng-repeat="item in entity.CaseProfileEntities">
+
+                                <label class="checkbox" style="font-weight: normal; margin-left: 70px" for="{{item.id}}">
+                                    <input type="checkbox" ng-model="selection.ids[item.id]" name="group" id="INSIDE_{{item.id}}" />
+                                    {{item.name}}
+                                </label>
+
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header">
+                            <div class="title">
+                                <p>Services</p>
+                            </div>
+                        </div>
+                        <div ng-repeat="entityClient in groupEntitiesClient">
+                            <div class="header" style="color: #333333;margin-left: 20px;">
+                                <div class="title col-lg-6 col-md-6">
+                                    <p style="color: #333333">- {{entityClient.Name}}</p>
+                                </div>
+                            </div>
+
+                            <span ng-repeat="itemClient in entityClient.CaseProfileEntities">
+
+                                <label class="checkbox" style="font-weight: normal; margin-left: 70px" for="{{item.id}}">
+                                    <input type="checkbox" ng-model="selectionClient.ids[itemClient.id]" name="group" id="SERVICES_{{itemClient.id}}" />
+                                    {{itemClient.name}}
+                                </label>
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+    </div><!-- /.col -->
+
+</div><!-- /.row -->

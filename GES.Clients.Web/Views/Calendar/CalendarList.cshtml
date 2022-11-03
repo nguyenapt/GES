@@ -1,0 +1,101 @@
+﻿@using System.Web.Configuration
+@using GES.Common.Configurations
+@using GES.Common.Resources
+
+@{
+    ViewBag.PageClass = "page-calendar page-calendar-list";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-calendar-list")
+}
+<script type="text/javascript">
+
+</script>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <table id="tblcalendars" class="table table-bordered table-striped"></table>
+                <div id="myPager"></div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->
+
+<div class="modal fade" id="calendar-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 800px; height: auto">
+        <div class="modal-content" ng-form="companyEventForm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold" id="title"></h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.Subject</div>
+                    <div class="col-lg-9 col-md-9 col-xs-12">
+                        <input type="text" class="form-control" style="width: 100%" id="eventtitle" name="EventTitle" readonly/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.EventLocation</div>
+                    <div class="col-lg-9 col-md-9 col-xs-12">
+                        <input type="text" id="eventlocation" class="form-control input-small" style="width: 100%" name="Location" readonly/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.StartTime</div>
+
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                        <input type="text" class="form-control" name="EventDate" id="eventdate" readonly/>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight: bold">@Resources.AllDayEvent</div>
+                    <div class="col-lg-1 col-md-1 col-xs-12">
+                        <input type="checkbox" class="form-check-input" name="AllDayEvent" id="alldayevent" readonly/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.Endtime</div>
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                        <input type="text" class="form-control" name="EventEndDate" id="eventenddate" readonly/>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.GesEvent</div>
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                        <input type="checkbox" name="IsGesEvent" id="isgesevent" readonly/>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight: bold">@Resources.EventDescription</div>
+                    <div class="col-lg-9 col-md-9 col-xs-12">
+                        <textarea class="form-control" rows="5" id="description" readonly></textarea>
+                    </div>
+                </div>
+                
+                <input type="hidden" name="id" id="eventid"/>
+
+            </div>
+        
+        <div class="modal-footer">
+            <div class="row" style="margin-top: 15px">
+                <div class="col-lg-5 col-md-5 col-xs-12" style="text-align: left;"></div>
+                <div class="col-lg-7 col-md-7 col-xs-12">
+                    <input class="btn btn-success" type="button" value="Email me event details" data-dismiss="modal" id="btn-submit-company-event" onclick="sendCalendarFromDiaglog()"/>
+                    <input type="button" class="btn btn-default" style="margin-left: 5px" data-dismiss="modal" value="Cancel"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</div>
+

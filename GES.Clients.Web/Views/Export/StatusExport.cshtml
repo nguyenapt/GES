@@ -1,0 +1,77 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@using GES.Inside.Data.Helpers
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileStatusViewModel
+
+@{
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isSrEmeCase = gesCaseReportType == GesCaseReportType.SrEmeEngage || gesCaseReportType == GesCaseReportType.SrEmeArchived;
+
+    var hasResponse = !string.IsNullOrEmpty(Model.ResponseName);
+    var hasProgress = !string.IsNullOrEmpty(Model.ProgressName);
+    var hasStatus = hasResponse && hasProgress;
+
+    var milestoneIcon = CommonHelper.GetMilestoneIcon(Model.LatestMilestone, Model.LatestMilestoneLevel);
+    var hasMilestone = milestoneIcon != "milestone_0.png" && hasStatus && !isSrEmeCase;
+
+    var developmentGrade = DataHelper.ConvertDevelopmentGradeToText(Model.Development);
+    var hasDevelopmentGrade = !string.IsNullOrEmpty(developmentGrade) && !isSrEmeCase;
+}
+
+@if (hasStatus)
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.Status
+            </h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @if (hasMilestone)
+            {
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-xs-3">
+                        <strong>@Resources.MilestoneStatus</strong>
+                    </div>
+                    <div class="col-md-9 col-lg-9 col-xs-9">
+                        <img class="tooltip-hint status-icon" alt="milestone" data-tooltip-title="@Resources.MilestoneStatus"
+                             data-tooltip-content="milestone-hint" src="/Content/img/icons/@CommonHelper.GetMilestoneIcon(Model.LatestMilestone, Model.LatestMilestoneLevel)" style="width:20px" />
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xs-3">
+                    <strong>@Resources.ResponseStatus</strong>
+                </div>
+                <div class="col-md-9 col-lg-9 col-xs-9">
+                    <div class="tooltip-hint status-value @Model.ResponseName.ToLower() response-status" data-tooltip-title="@Resources.ResponseStatus" data-tooltip-content="response-hint" style="background-image: url('/Content/img/icons/response_@(Model.ResponseName.ToLower()).png')">@Model.ResponseName</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-lg-3 col-xs-3">
+                    <strong>@Resources.ProgressStatus</strong>
+                </div>
+                <div class="col-md-9 col-lg-9 col-xs-9">
+                    <div class="tooltip-hint status-value @Model.ProgressName.ToLower() progress-status" data-tooltip-title="@Resources.ProgressStatus" data-tooltip-content="progress-hint" style="background-image: url('/Content/img/icons/progress_@(Model.ProgressName.ToLower()).png')">@Model.ProgressName</div>
+                </div>
+            </div>
+
+
+            @if (hasDevelopmentGrade)
+            {
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-xs-3">
+                        <strong>@Resources.PerformanceStatus</strong>
+                    </div>
+                    <div class="col-md-9 col-lg-9 col-xs-9">
+                        <img class="tooltip-hint performance-icon" alt="development status" data-tooltip-title="@Resources.DevelopmentStatus"
+                             data-tooltip-content="development-hint" src="~/Content/img/icons/development_@(developmentGrade.ToLower()).png" style="width:20px" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

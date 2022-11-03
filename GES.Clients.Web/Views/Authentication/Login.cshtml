@@ -1,0 +1,39 @@
+﻿@using GES.Common.Resources
+@using System.Web.UI.WebControls
+@model GES.Clients.Web.Models.LoginViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Blank.cshtml";
+    ViewBag.Title = Resources.Login;
+}
+<p class="login-box-msg">@Resources.SignInToStartYourSession</p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group has-feedback">
+        @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "Username/Email" }})
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group has-feedback">
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" , PlaceHolder = "Password" }})
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+    </div>
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="checkbox icheck">
+                    <label>
+                        @Html.EditorFor(model=> model.RememberMe) @Resources.RememberMe
+                    </label>
+                </div>
+        </div><!-- /.col -->
+        <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary-new btn-block btn-flat">@Resources.SignIn</button>
+        </div><!-- /.col -->
+    </div>
+    <div>
+        @Html.ActionLink("Forgot your password?", "ForgotPassword", "Authentication",new { @class= "forgot-password-text-color" })
+    </div>
+}

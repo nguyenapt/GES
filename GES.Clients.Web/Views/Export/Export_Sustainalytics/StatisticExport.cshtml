@@ -1,0 +1,41 @@
+﻿
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileStatisticViewModel
+@using GES.Common.Resources
+@using GES.Common.Enumeration
+@{
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+}
+
+<div class="box box-primary ">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i> @Resources.Statistics
+        </h3>
+    </div>
+    <div class="box-body">
+        @if (gesCaseReportType != GesCaseReportType.SrEmeEngage && gesCaseReportType != GesCaseReportType.SrEmeArchived)
+        {
+            <strong>@Html.DisplayNameFor(m => m.Contacts)</strong>
+            <span class="text-muted">@Model.Contacts</span>
+            <br />
+            <strong>
+                <span><i class="fa fa-star class-a-star tooltip-hint" aria-hidden="true" data-tooltip-content="class-a-hint"></i></span>
+                @Html.DisplayNameFor(m => m.CorrespondenceCount)
+            </strong>
+            <span class="text-muted">@Model.CorrespondenceCount</span>
+            <br />
+        }
+        <strong>@Html.DisplayNameFor(m => m.ConferenceCount)</strong>
+        <span class="text-muted">@Model.ConferenceCount</span>
+        <br />
+        <strong>@Html.DisplayNameFor(m => m.MeetingCount)</strong>
+        <span class="text-muted">@Model.MeetingCount</span>
+        <br />
+        @if (!string.IsNullOrEmpty(Model.LatestMeeting))
+        {
+            <strong>@Html.DisplayNameFor(m => m.LatestMeeting)</strong>
+            <span class="text-muted">@Model.LatestMeeting</span>
+        }
+        <br />
+    </div>
+</div>

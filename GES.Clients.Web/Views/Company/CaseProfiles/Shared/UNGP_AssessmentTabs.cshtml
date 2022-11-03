@@ -1,0 +1,38 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileUNGPAssessmentComponent
+
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+    var tabContent = new Dictionary<string, KeyValuePair<string, string>>();
+    if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "UNGP-PERFORMANCE"))
+    {
+        var item = new KeyValuePair<string, string>(Resources.UNGPPerformance, Html.Partial("CaseProfiles/Shared/UNGP_Performance", Model).ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.UNGPPerformance), item);
+    }
+    if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "UNGP-DETAILS"))
+    {
+        var item = new KeyValuePair<string, string>(Resources.Details, Html.Partial("CaseProfiles/Shared/UNGP_AssessmentTab", Model).ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.UNGPAssessment), item);
+    }
+    if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "UNGP-METHODOLOGY"))
+    {
+        var item = new KeyValuePair<string, string>(Resources.UNGPMethodology, Html.Partial("CaseProfiles/Shared/UNGP_MethodologyTab", Model).ToHtmlString());
+        tabContent.Add(CommonHelper.ConvertNameToHtmlElementId(Resources.UNGPMethodology), item);
+    }
+}
+
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "UNGP-PERFORMANCE") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "UNGP-DETAILS") || !caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "UNGP-METHODOLOGY"))
+{
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                @Resources.UNGP
+            </h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            @SharedComponents.BuildTabContent(Html, tabContent)
+        </div>
+    </div>
+}

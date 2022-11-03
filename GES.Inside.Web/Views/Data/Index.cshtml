@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Data Utilities";
+    ViewBag.PageClass = "page-data page-data-index";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-data-index")
+}
+
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#tab-edi-sync" data-toggle="tab" aria-expanded="True">EDI Sync</a>
+        </li>
+        <li>
+            <a href="#tab-market-cap-sync" data-toggle="tab" aria-expanded="True">Market Cap Sync</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        @Html.Partial("_EdiSync")
+        
+        @Html.Partial("_MarketCap")
+    </div>
+</div>

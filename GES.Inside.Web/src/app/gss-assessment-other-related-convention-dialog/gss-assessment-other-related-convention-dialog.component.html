@@ -1,0 +1,16 @@
+<h3 matDialogTitle>Other Related Conventions</h3>
+<mat-dialog-content style="width:800px">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xs-12">
+            <mat-selection-list #conventions [(ngModel)]="selectedOtherRelatedConventions">
+                <mat-list-option *ngFor="let convention of otherRelatedConventions" [value]="convention.value">
+                    {{convention.text}}
+                </mat-list-option>
+            </mat-selection-list>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="saveOtherRelatedConvention()">Save</button>
+    <button mat-raised-button matDialogClose>Cancel</button>
+</mat-dialog-actions>

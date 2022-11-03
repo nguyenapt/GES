@@ -1,0 +1,22 @@
+<div *ngIf="gssCompanyResearch">
+    <div class="box-header with-border">
+        <h3 class="box-title"><i class="fa fa-scroll" aria-hidden="true"></i> Sources</h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <br />
+                <span class="pull-right"><button type="button" class="btn btn-primary add-new-t01" (click)="addSource()"><i class="fa fa-plus"></i> Add Source</button></span>
+
+            </div>
+        </div>
+    </div>
+    <div class="box-body">
+        <table class="table borderless">
+            <tbody>
+                <tr *ngFor="let source of gssCompanyResearch.GssSourceViewModels">
+                    <td style="width:100px">{{ReviveDateTime(source.DateModified) | date:'yyyy-MM-dd'}}</td>
+                    <td>{{source.Description}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

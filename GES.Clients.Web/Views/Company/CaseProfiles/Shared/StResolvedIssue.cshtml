@@ -1,0 +1,51 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Helpers
+@using GES.Clients.Web.Models
+@using GES.Common.Configurations
+@using GES.Common.Enumeration
+@using GES.Common.Resources
+@using GES.Inside.Data.Models.Anonymous
+@using GES.Inside.Data.Models.CaseProfiles
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIssueComponent
+
+@{
+    var gesCaseReportType = (GesCaseReportType)ViewBag.CaseProfileType;
+    var isResolvedOrArchivedType = gesCaseReportType == GesCaseReportType.StResolved || gesCaseReportType == GesCaseReportType.StArchived;
+}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            @Resources.Summary
+        </h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        
+        @SharedComponents.BuildTabContent(Html, new Dictionary<string, KeyValuePair<string, string>>
+        {
+            [CommonHelper.ConvertNameToHtmlElementId(Html.DisplayNameFor(m => m.Summary).ToHtmlString())] = new KeyValuePair<string, string>(Html.DisplayNameFor(m => m.Summary).ToHtmlString(), Html.RenderBlockContent(m => m.Summary).ToHtmlString()),
+            [CommonHelper.ConvertNameToHtmlElementId(Html.DisplayNameFor(m => m.Conclusion).ToHtmlString())] = new KeyValuePair<string, string>(Html.DisplayNameFor(m => m.Conclusion).ToHtmlString(), Html.RenderBlockContent(m => m.Conclusion).ToHtmlString()),
+            [CommonHelper.ConvertNameToHtmlElementId(Resources.Alert)] = new KeyValuePair<string, string>(Resources.Alert, Html.Partial("CaseProfiles/Shared/StAlert", Model).ToHtmlString())
+       
+        })
+        
+        @{ Html.RenderPartial("CaseProfiles/Shared/Watermark", (GesCaseReportType)ViewBag.CaseProfileType); }
+    </div>
+</div>
+
+@if (Model.ClosingIncidentAnalysisComponent != null)
+{
+    Html.RenderPartial("CaseProfiles/Shared/StClosingIncidentAnalysis", Model.ClosingIncidentAnalysisComponent as CaseProfileIncidentAnalysisComponent);
+}
+
+@SharedComponents.BuildTabContent(Html, new Dictionary<string, KeyValuePair<string, string>>
+{
+    [CommonHelper.ConvertNameToHtmlElementId(Resources.LatestNews)] = new KeyValuePair<string, string>($"<i class=\"fa fa-newspaper-o\" aria-hidden=\"true\"></i> {Resources.LatestNews}", Html.RenderBlockContent(m => m.LatestNews, Model.LatestNewsModified, Resources.LatestNewsArchive, null,"").ToHtmlString())
+})
+
+@{ Html.RenderPartial("~/Views/Shared/_Dialog.cshtml", new ModalPopupViewModel
+   {
+       ModalTitle = Resources.LatestNewsArchive,
+       DateContentPairs = Model.LatestNewsArchive?.Select(o => new KeyValueObject<string, string>(o.LatestNewsModified?.ToString(Configurations.DateFormat), o.Description)).ToList()
+   });
+} 

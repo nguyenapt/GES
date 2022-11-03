@@ -1,0 +1,63 @@
+﻿@using GES.Common.Resources
+@model GES.Inside.Data.Models.EngagementTypeViewModel
+@{
+
+}
+<div class="modal fade" id="agreement-dialog" style="display: none;" ng-form="agreementForm">
+    <div class="modal-dialog modal-lg" style="width: 800px; height: auto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">@Resources.ClientAgreements</h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 600px;">
+             
+                <div class="form-group">
+                    <div class="editor-label control-label">
+                        <label>@Resources.ClientAgreementsService</label>
+                    </div>
+                    <div class="editor-field">
+                        <select style="width: 100%" ng-model="editingAgreement.ServicesId" id="service-select" name="serviceSelect" class="form-control" ng-required="{{!isExistedService}}">
+                            <option value="">Select service</option>
+                            <option ng-repeat="service in services" value="{{service.G_Services_Id}}" > {{service.FullName}}</option>
+                        </select>
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <div class="editor-label control-label">
+                        <label>@Resources.ClientAgreementsPrice</label>
+                    </div>
+                    <div class="editor-field">
+                        <input type="text" class="form-control" ng-model="editingAgreement.Price" ng-required="false"/>
+                    </div>
+                </div>
+              
+                <div class="form-group">
+                    <div class="editor-label control-label">
+                        <label>@Resources.ClientAgreementsReporting</label>
+                    </div>
+                    <div class="editor-field">
+                        <textarea class="ges-content" click-to-edit-text-area ng-model="editingAgreement.Reporting" ng-required="false"></textarea>
+                    </div>
+                </div>
+         
+                <div class="form-group">
+                    <div class="editor-label control-label">
+                        <label>@Resources.ClientAgreementsComment</label>
+                    </div>
+                    <div class="editor-field">
+                        <textarea class="ges-content" click-to-edit-text-area ng-model="editingAgreement.Comment" ng-required="false"></textarea>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-success" type="button" value="Select" data-dismiss="modal" id="btn-agreement-select" ng-click="agreementSelect()"  ng-disabled="agreementForm.$invalid && !isExistedService" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

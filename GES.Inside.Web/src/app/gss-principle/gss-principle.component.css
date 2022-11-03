@@ -1,0 +1,25 @@
+.btn-collapse {
+    font-size: 14px !important;
+    color: #337ab7 !important;
+}
+.btn-collapse:after {
+    font-family: "Glyphicons Halflings";
+    content: "\e113";
+    float: right;
+    margin-left: 15px;
+    font-size: 12px;
+}
+/* Icon when the collapsible content is hidden */
+.btn-collapse.collapsed:after {
+    content: "\e114";
+}
+
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
+.panel {
+    margin-bottom: 10px !important;
+}

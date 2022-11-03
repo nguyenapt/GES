@@ -1,0 +1,120 @@
+﻿@using System.Web.Configuration
+@using System.Web.Mvc.Html
+@using GES.Inside.Web.Helpers
+@using GES.Common.Configurations
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.ServicesModel
+
+@{
+    ViewBag.PageClass = "page-ges-services page-ges-services-details";
+    ViewBag.Title = @Model.Name;
+    ViewBag.SubTitle = @Resources.GesServicesDetails;
+
+
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-ges-services-details")
+}
+
+<style>
+    .inputText {
+        width: 100% !important;
+    }
+
+</style>
+
+@section contentHeader{
+    <section class="content-header" ng-form="gesServiceHeaderForm">
+        <h1>
+            <input type="text" style="width: 60%" class="input-header" click-to-edit placeholder="Add GES service name" ng-model="gesServiceDetails.Name" ng-required="true"/>
+        </h1>
+        <div class="page-buttons hidden-print">
+            <button class="btn btn-success not-outer-right-btn" ng-click="UpdateGesService()" ng-disabled="gesServiceHeaderForm.$invalid || gesServiceForm.$invalid || isSaving">
+                <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i> Save
+            </button>
+            <input class="btn" type="button" value="Cancel" id="cancel-save"
+                   data-confirm-title="Do you want to leave this site?"
+                   data-confirm-message="Changes you made may not be saved"
+                   data-confirm-direction="ltr"
+                   data-confirm-ok="Leave"
+                   data-confirm-cancel="Stay" />
+        </div>
+        @Html.MvcSiteMap().SiteMapPath("SiteMapPathHelperModelAdminLTE")
+    </section>
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <!-- Company Summary Box -->
+        <div class="box box-primary box-company-overview">
+            <div class="box-body" ng-form="gesServiceForm">
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.GesServiceUrl</p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <textarea click-to-edit-text-area ng-model="gesServiceDetails.Url"></textarea>
+                </div>
+                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.GesServiceReportLetter</p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <textarea click-to-edit-text-area ng-model="gesServiceDetails.ReportLetter"></textarea>
+                </div>
+                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.GesServiceEngagementType</p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <select style="width: 30%" ng-model="gesServiceDetails.EngagementTypesId" id="engagementtype-select" name="engagementtypeSelect" class="form-control">
+                        <option value="">Select Engagement Type</option>
+                        <option ng-repeat="engagementtype in engagementTypes" value="{{engagementtype.I_EngagementTypes_Id}}">{{engagementtype.Name}}</option>
+                    </select>
+                </div>
+                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.GesServiceSort</p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <textarea style="width: 30%" click-to-edit-text-area ng-model="gesServiceDetails.Sort"></textarea>
+                </div>
+                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.GesServiceShowInNavigation</p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <input type="checkbox" ng-model="gesServiceDetails.ShowInNavigation" id="showInNavigation" class="control-pointer">
+                </div>
+                
+                <div class="ges-content-block">
+                    <div class="header">
+                        <div class="title col-lg-9 col-md-8">
+                            <p>@Resources.GesServiceShowInClient</p>
+                        </div>
+                    </div>
+                    <hr class="style10" />
+                    <input type="checkbox" ng-model="gesServiceDetails.ShowInClient" id="showInClient" class="control-pointer">
+                </div>
+
+                
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+
+    </div><!-- /.col -->
+   
+</div><!-- /.row -->

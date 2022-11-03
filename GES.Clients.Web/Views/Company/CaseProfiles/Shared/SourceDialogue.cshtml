@@ -1,0 +1,22 @@
+﻿@using GES.Clients.Web.Extensions
+@using GES.Common.Resources
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileIssueComponent
+@{
+    var caseProfileInvisibleEntities = ViewBag.CaseProfileInvisibleEntities as IList<GesCaseProfileTemplatesViewModel>;
+}
+
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "SOURCE-DIALOGUE-NEW"))
+{
+    @Html.RenderBlockContent(m => m.SourceDialogueNew)
+}
+
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "SOURCE-DIALOGUE"))
+{
+    @Html.RenderBlockContent(m => m.SourceDialogueSummary)
+}
+
+@if (!caseProfileInvisibleEntities.Any(x => x.EntityCodeType == "SOURCE-DIALOGUE-LOG"))
+{
+    @Html.RenderBlockContentWithCustomContent(Resources.SourceLog, Html.Partial("/Views/Company/CaseProfiles/Shared/LogAndDialougeReport.cshtml", new DialogueAndLogModel { DialogueModels = Model.SourceDialogues, ShowDocument = false }).ToString())
+}

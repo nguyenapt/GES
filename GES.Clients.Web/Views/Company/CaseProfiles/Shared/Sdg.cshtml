@@ -1,0 +1,10 @@
+﻿@model IList<GES.Inside.Data.DataContexts.Sdg>
+
+@foreach (var sdg in Model)
+{
+    <div class="sdg-thumbnail">
+        <a href="@sdg.Sdg_Link" target="_blank">
+            <img src="@Url.Action("Download", "Report", new { documentId = sdg.DocumentId })" alt="sdg icon" />
+        </a>
+    </div>
+}

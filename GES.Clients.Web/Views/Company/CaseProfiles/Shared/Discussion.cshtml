@@ -1,0 +1,24 @@
+﻿@using System.Text
+@using GES.Clients.Web.Extensions
+@using WebGrease.Css.Extensions
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CaseProfileFullAttributeViewModel
+
+<span class="explanation">@Resources.DiscussionPointsExplanation</span>
+
+<dl class="dl-vertical case-report-block">
+    @foreach (var discussionPoint in Model.DiscussionPoints)
+    {
+        if (discussionPoint?.Description == null)
+        { continue;}
+
+        var customContent = new StringBuilder("<ul class='ges-content normal-list'>");
+
+        discussionPoint.Description.Split('\n').Where(p => !string.IsNullOrWhiteSpace(p)).ForEach(point =>
+        {
+            customContent.Append("<li>" + point.Replace("*", "").Trim() + "</li>");
+        });
+        customContent.Append("</ul>");
+        @Html.RenderBlockContentWithCustomContent(discussionPoint.Name, customContent.ToString())
+    }
+</dl>

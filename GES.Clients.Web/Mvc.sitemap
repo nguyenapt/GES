@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Dashboard" controller="Dashboard" action="Index">
+    <mvcSiteMapNode title="Engagement forum" clickable="false">
+      <mvcSiteMapNode title="Search and analysis" controller="Company" action="List">
+        <mvcSiteMapNode title="Case profile" controller="Company" action="CaseReport" preservedRouteParameters="id"/>
+        <mvcSiteMapNode title="Company profile" controller="Company" action="Profile" preservedRouteParameters="id"/>
+      </mvcSiteMapNode>      
+    </mvcSiteMapNode>
+  <mvcSiteMapNode title="Glossary" controller="Glossary" action="Index"></mvcSiteMapNode>
+  <mvcSiteMapNode title="Profile" controller="Account" action="UserProfile"></mvcSiteMapNode>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>

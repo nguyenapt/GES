@@ -1,0 +1,43 @@
+﻿@using GES.Common.Configurations
+@model GES.Clients.Web.Models.BlockContentModel
+
+<div class="ges-content-block">
+    @if (!string.IsNullOrWhiteSpace(Model.Title) || Model.DateTime != default(DateTime))
+    {
+    <div class="header">
+        <div class="title col-lg-9 col-md-8 col-xs-12">
+            <p>@Model.Title</p>
+        </div>
+
+        <div class="text-right tool-bar col-lg-3 col-md-4 col-xs-12">
+            <table style="width:100%;height:100%">
+                <tr>
+                    <td align="right" style="vertical-align:bottom">
+
+                        @if (Model.DateTime != default(DateTime))
+                        {
+                            <span>
+                                <i class="fa fa-calendar" aria-hidden="true"></i> @Model.DateTime.ToString(Configurations.DateFormat)
+                            </span>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    }
+
+    <hr class="style10" />
+    @if (!string.IsNullOrEmpty(Model.CustomContent))
+    {
+        @Html.Raw(Model.CustomContent)
+    }
+    else
+    {
+        <p class="ges-content">@Html.Raw(Model.Content)</p>
+    }
+    @if (!string.IsNullOrEmpty(Model.PopupModalTitle))
+    {
+        @SharedComponents.BuildViewArchivedLink(Model.PopupModalTitle);
+    }
+</div>

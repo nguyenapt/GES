@@ -1,0 +1,25 @@
+﻿@using GES.Common.Resources
+@using GES.Clients.Web.Models
+@model GES.Clients.Web.Models.GesUserViewModel
+@{
+    ViewBag.Title = "Profile";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/page-user-profile")
+}
+
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#generalInformation" data-toggle="tab" aria-expanded="True">@Resources.BasicInformation</a>
+        </li>
+        <li>
+            <a href="#changePassword" data-toggle="tab" aria-expanded="False">@Resources.ChangePassword</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        @Html.Partial("_BasicProfile", Model)
+        @Html.Partial("_ChangePassword", new GesUserPasswordViewModel())
+    </div>
+</div>

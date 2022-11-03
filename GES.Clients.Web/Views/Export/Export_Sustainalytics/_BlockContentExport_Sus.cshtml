@@ -1,0 +1,11 @@
+﻿@using GES.Common.Configurations
+@model GES.Clients.Web.Models.BlockContentModel
+
+<div class="box box-primary ">
+    <div class="box-header with-border">
+        <h3 class="box-title">@Model.Title</h3>
+    </div>
+    <div class="box-body">
+        <p class="ges-content text-justify">@Html.Raw(Model.Content)</p>
+    </div>
+</div>

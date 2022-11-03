@@ -1,0 +1,62 @@
+﻿<div ng-form="gesOrganizationForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelGesOrganization()">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editGesOrganization.Id == 0 ? "Add New" : "Edit"}} Organization</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Name</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editGesOrganization.Name" name="name" ng-required="true" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Address</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editGesOrganization.Address" name="address" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">City</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editGesOrganization.City" name="city" />
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Country</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <select style="width: 100%" class="form-control" ng-model="ngDialogData.editGesOrganization.CountryId" ng-options="country.G_Countries_Id as country.FullName for country in countries" id="countryInc{{$index}}" name="countryInc{{$index}}" ng-init="ngDialogData.editGesOrganization.CountryId=ngDialogData.editGesOrganization.CountryId">
+                    <option value="">Select Country</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Phone</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editGesOrganization.Phone" name="phone" />
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Postal Code</div>
+            <div class="col-lg-4 col-md-4 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editGesOrganization.PostalCode" name="postalcode" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Website</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <input type="text" class="form-control" ng-model="ngDialogData.editGesOrganization.Website" name="website" />
+            </div>            
+        </div>
+        
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-2 col-md-2 col-xs-12" style="font-weight:bold">Comment</div>
+            <div class="col-lg-10 col-md-10 col-xs-12">
+                <textarea type="text" ng-model="ngDialogData.editGesOrganization.Comment" class="form-control form-control-text" name="comment"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-submit-organization" ng-click="saveGesOrganization(ngDialogData.editGesOrganization)" ng-disabled="gesOrganizationForm.$invalid" />
+        <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew-organization" ng-click="saveGesOrganization(ngDialogData.editGesOrganization,true)" ng-disabled="gesOrganizationForm.$invalid" />
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelGesOrganization()" />
+    </div>
+</div>

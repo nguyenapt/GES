@@ -1,0 +1,32 @@
+﻿@model Dictionary<string, IEnumerable<GES.Inside.Data.Models.Reports.ReportViewModel>>
+@using GES.Common.Resources
+@{
+    ViewBag.Title = Resources.QuarterlyEngagementReports;
+    ViewBag.PageClass = "page-report page-report-quarterly-engagement-reports";
+}
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-body">
+
+                    @foreach (var anualReporst in Model)
+                    {
+                        <p class="text-bold">@anualReporst.Key</p>
+                        <ul>
+                            @foreach (var report in anualReporst.Value)
+                            {
+                                <li>
+                                    <a target="_blank" href="@Url.Action("Download", new { documentId = report.DocumentId })">- @report.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+}

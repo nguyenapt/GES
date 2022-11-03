@@ -1,0 +1,73 @@
+﻿@using GES.Common.Resources
+@using GES.Common.Helpers
+
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileUNGPAssessmentComponent
+@{
+    var score = "";
+    var scoreHrPolicy = "";
+    var scoreHrDueDiligence = "";
+    var scoreHrImpact = "";
+    var rangeHelper = new RangeHelper();
+
+    if (Model.TotalScoreForCompanyPreparedness.HasValue)
+    {
+        rangeHelper.Add(0, 13, "Low");
+        rangeHelper.Add(14, 27, "Medium");
+        rangeHelper.Add(28, 38, "High");
+        score = rangeHelper.GetResult(Model.TotalScoreForCompanyPreparedness);
+    }
+
+    if (Model.HumanRightsPolicyTotalScore.HasValue)
+    {
+        rangeHelper = new RangeHelper();
+        rangeHelper.Add(0, 3, "Low");
+        rangeHelper.Add(4, 6, "Medium");
+        rangeHelper.Add(7, 8, "High");
+        scoreHrPolicy = rangeHelper.GetResult(Model.HumanRightsPolicyTotalScore);
+    }
+
+    if (Model.TotalScoreForHumanRightsDueDiligence.HasValue)
+    {
+        rangeHelper = new RangeHelper();
+        rangeHelper.Add(0, 5, "Low");
+        rangeHelper.Add(6, 10, "Medium");
+        rangeHelper.Add(11, 14, "High");
+        scoreHrDueDiligence = rangeHelper.GetResult(Model.TotalScoreForHumanRightsDueDiligence);
+    }
+
+    if (Model.TotalScoreForRemediationOfAdverseHumanRightsImpacts.HasValue)
+    {
+        rangeHelper = new RangeHelper();
+        rangeHelper.Add(0, 5, "Low");
+        rangeHelper.Add(6, 11, "Medium");
+        rangeHelper.Add(12, 16, "High");
+        scoreHrImpact = rangeHelper.GetResult(Model.TotalScoreForRemediationOfAdverseHumanRightsImpacts);
+    }
+}
+<div class="ges-content-block">
+    <div class="header">
+        <div class="title col-lg-9 col-md-8 col-xs-12">
+            <p>Company preparedness</p>
+        </div>
+    </div>
+    <hr class="style10" />
+    <div class="box-body">
+        <div>
+            <strong>@Resources.UNGPTotalScore:</strong>
+            <span class="ungp-cp-score-@score.ToLower()" style="font-weight:bold">@score</span><span style="font-weight:bold"> (@(Model.TotalScoreForCompanyPreparedness.HasValue ? Model.TotalScoreForCompanyPreparedness.ToString() : "0")/38)</span>
+            <br />
+            <div style="padding-left:50px">
+                Human rights policy: <span class="ungp-cp-score-@scoreHrPolicy.ToLower()">@scoreHrPolicy</span><span style="font-weight:bold"> (@(Model.HumanRightsPolicyTotalScore.HasValue ? Model.HumanRightsPolicyTotalScore.ToString() : "0")/8)</span>
+            </div>
+            <div style="padding-left:50px">Human rights due diligence: <span class="ungp-cp-score-@scoreHrDueDiligence.ToLower()">@scoreHrDueDiligence</span><span style="font-weight:bold"> (@(Model.TotalScoreForHumanRightsDueDiligence.HasValue ? Model.TotalScoreForHumanRightsDueDiligence.ToString() : "0")/14)</span></div>
+            <div style="padding-left:50px">Remediation of adverse human rights impacts: <span class="ungp-cp-score-@scoreHrImpact.ToLower()">@scoreHrImpact</span><span style="font-weight:bold"> (@(Model.TotalScoreForRemediationOfAdverseHumanRightsImpacts.HasValue ? Model.TotalScoreForRemediationOfAdverseHumanRightsImpacts.ToString() : "0")/16)</span></div>
+        </div>
+        <br />
+        <strong>@Resources.GesComment:</strong>
+        <br />
+        <p class="ges-content">
+            @Model.GesCommentCompanyPreparedness
+        </p>
+    </div>
+
+</div>

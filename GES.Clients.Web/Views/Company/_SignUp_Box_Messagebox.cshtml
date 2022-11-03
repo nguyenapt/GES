@@ -1,0 +1,24 @@
+﻿@using GES.Common.Resources
+
+<div id="SignUpTypeModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">@Resources.EndorsementOptions</h4>
+                <small class="modal-subtitle">@*Do you want to sign up actively or passively?*@</small>
+            </div>
+            <div class="modal-body">
+                <p>If you endorse a case, you will receive invitations to become actively involved in the engagement process, such as signing investor letters and participate in conference calls and face-to-face meetings.</p>
+                <p>If you chose "Disclose", then your company name will show on the Engagement Forum as one of the active supporters of the case.</p>
+                <p>If you chose "Non-disclose", you will still receive invitations to be active.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-signup-type btn-signup-active btn-success" data-dismiss="modal">@Resources.Disclose</button>
+                <button type="button" class="btn btn-signup-type btn-signup-passive btn-warning" data-dismiss="modal">@Resources.NonDisclose</button>
+                <button type="button" class="btn btn-signup-cancel btn-default" data-dismiss="modal">@Resources.Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+

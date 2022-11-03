@@ -1,0 +1,16 @@
+﻿@using GES.Clients.Web.Configs
+@using GES.Common.Resources
+<footer class="main-footer">
+    <div class="">
+        <a target="_blank" href="https://www.sustainalytics.com/third-party-terms-of-use/">@Resources.TermsOfUse |</a>
+        <a target="_blank" href="https://www.sustainalytics.com/legal-disclaimers/">@Resources.LegalDisclaimers |</a>
+        <a target="_blank" href="https://www.sustainalytics.com/privacy-and-cookie-policy/">@Resources.PrivacyPolicy</a>
+    </div>
+    <div class="">
+        <div class="pull-right hidden-xs">
+            <b>@Resources.Version</b> @SiteSettings.SiteVersion
+            @*<a href="/ChangeLog">@Resources.ChangeLog</a>*@
+        </div>
+        <strong>@Resources.Copyright &copy; @DateTime.Now.Year <a target="_blank" href="https://www.sustainalytics.com">Sustainalytics</a>.</strong> @Resources.AllRightsReserved
+    </div>
+</footer>

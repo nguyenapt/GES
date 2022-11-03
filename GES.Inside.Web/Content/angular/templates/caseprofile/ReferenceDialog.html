@@ -1,0 +1,58 @@
+﻿<div ng-form="referenceDialogForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelReference(ngDialogData.editingReference)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">{{ngDialogData.editingReference.Id == 0 ? "Add New" : "Edit"}} Reference</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Reference Name</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingReference.Source" class="form-control form-control-text" name="source" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Publication Year</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="number" ng-model="ngDialogData.editingReference.PublicationYear" class="form-control form-control-text" name="publicationYear" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Available</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <select style="width: 100%" class="form-control" ng-model="ngDialogData.editingReference.Status" ng-options="status.id as status.Name for status in ngDialogData.statuses" id="status{{$index}}" name="status{{$index}}" is-edit-state="isNewCaseProfile" ng-init="ngDialogData.editingReference.Status=ngDialogData.editingReference.Status" ng-required="true">
+                    <option value="">Select value</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Available From</div>
+            <div class="col-lg-9 col-md-9 col-xs-12">
+                <input type="text" ng-model="ngDialogData.editingReference.AvailableFrom" class="form-control form-control-text" name="availableFrom" />
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px">
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Accessed</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <input type="date" style="border: none; width: 100%; -webkit-box-shadow: none" name="Accessed{{$index}}" id="Accessed{{$index}}" ng-model="ngDialogData.editingReference.Accessed" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="yyyy/MM/dd" ng-required="true" />
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-xs-12" style="font-weight:bold">Show in report</div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
+                <input type="checkbox" ng-model="ngDialogData.editingReference.ShowInReport" name="showInReport" />
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isReferencesDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-submit" ng-click="saveReference(ngDialogData.editingReference)" ng-disabled="referenceDialogForm.$invalid" />
+            <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew" ng-click="saveReference(ngDialogData.editingReference,true)" ng-disabled="referenceDialogForm.$invalid" />
+            <span ng-if="ngDialogData.editingReference.Id !== 0">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteReference(ngDialogData.editingReference,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelReference(ngDialogData.editingReference)" />
+    </div>
+</div>

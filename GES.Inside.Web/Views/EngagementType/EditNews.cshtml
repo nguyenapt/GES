@@ -1,0 +1,37 @@
+﻿@using GES.Common.Resources
+@model GES.Inside.Data.Models.EngagementTypeViewModel
+@{
+
+}
+<div class="modal fade" id="engagement-type-news-dialog" style="display: none;">
+    <div class="modal-dialog modal-lg" style="width: 800px; height: auto">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title text-bold">@Resources.EngagementTypeNews</h4>
+            </div>
+            <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+                <div class="">
+                    <dl class="dl-horizontal">
+                        <dt style="text-align: left">@Resources.EngagementTypeNewsDescription</dt>
+                        <dd>
+                            <textarea class="ges-content" click-to-edit-text-area ng-model="description" is-edit-state="isAddNew"></textarea>
+                        </dd>
+                        <dt style="text-align: left">@Resources.EngagementTypeNewsCreated</dt>
+                        <dd>
+                            <input type="text" date='yyyy/MM/dd HH:mm:ss a' ng-readonly="true" ng-model="created" class="form-control form-control-text" />
+
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-success" type="button" value="Select" data-dismiss="modal" ng-if="!editMode" id="btn-contact-select" ng-click="addNews()"  />
+                <input class="btn btn-success" type="button" value="Select" data-dismiss="modal" ng-if="editMode" id="btn-contact-select" ng-click="addNews(editIndex)" />
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

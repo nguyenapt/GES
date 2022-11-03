@@ -1,0 +1,43 @@
+<div *ngIf="issueIndicator">
+    <div class="ges-content-block">
+        <div class="header">
+            <div class="title col-lg-9 col-md-8">
+                <p>Company Last Contacted</p>
+            </div>
+        </div>
+        <hr class="style10" />
+        <div>
+            <mat-form-field>
+                <input matInput [matDatepicker]="companylastcontactpicker">
+                <mat-datepicker-toggle matSuffix [for]="companylastcontactpicker"></mat-datepicker-toggle>
+                <mat-datepicker #companylastcontactpicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="ges-content-block">
+        <div class="header">
+            <div class="title col-lg-9 col-md-8">
+                <p>Most Recent Company Response</p>
+            </div>
+        </div>
+        <hr class="style10" />
+        <div>
+            <mat-form-field>
+                <input matInput [matDatepicker]="mostRecentCompanyResponsePicker" name="mostRecentCompanyResponsePicker">
+                <mat-datepicker-toggle matSuffix [for]="mostRecentCompanyResponsePicker"></mat-datepicker-toggle>
+                <mat-datepicker #mostRecentCompanyResponsePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="ges-content-block">
+        <div class="header">
+            <div class="title col-lg-9 col-md-8">
+                <p>Company Contact Comments</p>
+            </div>
+        </div>
+        <hr class="style10" />
+        <div>
+            <textarea matInput rows="5" [(ngModel)]="issueIndicator.CompanyContact.Comment"></textarea>            
+        </div>
+    </div>
+</div>

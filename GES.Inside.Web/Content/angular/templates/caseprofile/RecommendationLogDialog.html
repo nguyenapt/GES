@@ -1,0 +1,42 @@
+﻿<div ng-form="recommendationLogDialogForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelRecommendationLog()">×</span>
+        </button>
+        <h4 class="modal-title text-bold">Engagement status history</h4>
+    </div>
+    <div class="modal-body" style="min-height: 0; max-height: 600px; overflow-y: auto">
+        <table class="table table-status">
+            <thead>
+            <tr>
+                <th style="width: 115px">Date</th>
+                <th style="width: 100px">Old value</th>
+                <th style="width: 100px">New value</th>
+                <th style="width: 40px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="recommendationLog in ngDialogData.recommendationLogs">
+                <td style="vertical-align: middle">
+                    <input type="date" style="border: none; width: 100%; -webkit-box-shadow: none" ng-model="recommendationLog.AuditDatetime"  ng-required="true" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+                </td>
+                <td>
+                    {{recommendationLog.OldValueName}}
+                </td>
+                <td>
+                    {{recommendationLog.NewValueName}}
+                </td>
+                <td>
+                    <a class="delete-t01" title="Delete" data-toggle="tooltip" ng-click="deleteRecommendationLog(recommendationLog)"><i class="material-icons">&#xE872;</i></a>                            
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <span ng-hide="isRecommendationDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-save-kpi" ng-click="saveRecommendationLogs()" ng-disabled="recommendationLogDialogForm.$invalid" />
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left: 5px" data-dismiss="modal" value="Cancel" ng-click="cancelRecommendationLog()"/>
+    </div>
+</div>

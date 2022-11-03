@@ -1,0 +1,86 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Configurations
+@using GES.Common.Enumeration
+@using GES.Common.Helpers
+@using GES.Inside.Data.Models
+@model GES.Inside.Data.Models.DialogueAndLogModel  
+
+@if (Model != null && Model.DialogueModels.Any())
+{
+    <div class="direct-chat-messages">
+
+        @foreach (var dialogue in Model.DialogueModels)
+        {
+            
+            if (dialogue.ContactDirectionId == (int)ContactDirection.Meeting || dialogue.ContactDirectionId == (int)ContactDirection.Outgoing)
+            {
+                var isConferenceCall = dialogue.ContactDirectionId == (int)ContactDirection.Meeting;
+                <div class="direct-chat-msg">
+                    <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-left">
+                            @if (dialogue.ClassA)
+                            {
+                                <i class="fa fa-star class-a-star tooltip-hint" aria-hidden="true" data-tooltip-content="class-a-hint"></i>
+                            }
+                            @(isConferenceCall ? "" : "To:")
+                            @GetLogTitle(dialogue)
+                        </span>
+                    </div>
+                    <img class="direct-chat-img-custom" src="/Content/img/icons/direction_@(isConferenceCall ? "2" : "0").png" alt="">
+                    <div class="direct-chat-text @(isConferenceCall ? "left-group-call" : "")">
+                        @dialogue.ContactTypeName
+                        @GetDocumentLink(dialogue.FileName, Model.ShowDocument)
+                    </div>
+                </div>  
+            }
+            else if(dialogue.ContactDirectionId == (int)ContactDirection.Incoming)
+            {
+                <div class="direct-chat-msg right">
+                    <div class="direct-chat-info clearfix">
+                        <span class="direct-chat-name pull-right">
+                            @if (dialogue.ClassA)
+                            {
+                                <i class="fa fa-star class-a-star tooltip-hint" aria-hidden="true" data-tooltip-content="class-a-hint"></i>
+                            }
+                            From:
+                            @GetLogTitle(dialogue)
+                        </span>
+                    </div>
+                    <img class="direct-chat-img-custom" src="/Content/img/icons/direction_1.png" alt="">
+                    <div class="direct-chat-text text-lg-right">
+                        @dialogue.ContactTypeName
+                        @GetDocumentLink(dialogue.FileName, Model.ShowDocument)
+                    </div>
+                </div>
+            }
+        }
+
+    </div>    
+}
+
+@functions
+{
+    public IHtmlString GetLogTitle(DialogueModel dialogue)
+    {
+        var logTitle = $"<span class=\"font-normal\">{dialogue.FirstName} {dialogue.LastName}</span>";
+
+        if (dialogue.ContactDate.HasValue)
+        {
+            logTitle += $"<span class=\"direct-chat-timestamp\"> ({dialogue.ContactDate?.ToString(Configurations.DateFormat)})</span><br />";
+        }
+
+        if (!string.IsNullOrEmpty(dialogue.JobTitle))
+        {
+            logTitle += $"<span class=\"font-normal\">{dialogue.JobTitle}</span> <br />";
+        }
+        return Html.Raw(logTitle);
+    }
+
+    public IHtmlString GetDocumentLink(string fileName, bool showDocument)
+    {
+        if (string.IsNullOrEmpty(fileName) || !showDocument) return null;
+        var faFileIcon = CommonHelper.GetFaFileStr(UtilHelper.GetFileExtension(fileName));
+        var html = $"<a href=\"{@Url.Action("DownloadEmail", new { fileName = fileName })}\" target=\"_blank\" title='Download'><i class=\"document-icon fa fa-fw fa-file-{faFileIcon}-o\"></i></a>";
+        return Html.Raw(html);
+    }
+}

@@ -1,0 +1,7 @@
+﻿@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CaseProfiles.CaseProfileEngagementInformationViewModel
+@SharedComponents.BuildTabContent(Html, new Dictionary<string, KeyValuePair<string, string>>
+{
+    [CommonHelper.ConvertNameToHtmlElementId(Resources.EngagementInformation)] = new KeyValuePair<string, string>($"<i class=\"fa fa-asterisk\" aria-hidden=\"true\"></i> {Resources.EngagementInformation}", Html.Partial("CaseProfiles/Shared/EngagementInformation", Model).ToHtmlString())
+})

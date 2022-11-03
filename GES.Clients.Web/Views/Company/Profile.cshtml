@@ -1,0 +1,372 @@
+﻿@using System.Web.Mvc.Html
+@using GES.Clients.Web.Extensions
+@using GES.Clients.Web.Helpers
+@using GES.Common.Resources
+@model GES.Inside.Data.Models.CompanyDetailViewModel
+@{
+    ViewBag.Title = @Model.CompanyName;
+    ViewBag.SubTitle = Resources.CompanyProfile;
+
+    var btnAddToFocusListClass = Model.IsInFocusList ? "in-focus-list azure-background" : "azure-background";
+    var btnAddToFocusListIcon = Model.IsInFocusList ? "fa-dot-circle-o" : "fa-circle-o";
+    var btnAddToFocusListText = Model.IsInFocusList ? Resources.AlreadyInMyFocusList : Resources.AddToMyFocusList;
+    var btnAddToFocusListTooltip = Model.IsInFocusList ? Resources.ClickToRemoveFromMyFocusList : Resources.ClickToAddToMyFocusList;
+}
+@section styling {
+    @Styles.Render("~/Content/plugins/flag-icon-css/flag-css-bundle")
+    @Styles.Render("~/Content/plugins/eventify/eventify-css-bundle")
+    @*@Styles.Render("~/bundles/page-company-profile-print-css")*@
+    <link rel="stylesheet" href="/Content/css/page-company-profile-print.css" media="print" />
+}
+@section scripts {
+    @Scripts.Render("~/bundles/page-company-profile")
+    <script type="text/javascript">
+        function Open(theme) {
+            var message = '';
+            if (theme.indexOf("Burma") >= 0) {
+                message = '@Resources.UnsubscribeBurma';
+            }
+            else if (theme.indexOf("Carbon") >= 0) {
+                message = '@Resources.UnsubscribeCarbon';
+            }
+            else if (theme.indexOf("EME") >= 0) {
+                message = '@Resources.UnsubscribeEME';
+            }
+            else if (theme.indexOf("Palm Oil") >= 0) {
+                message = '@Resources.UnsubscribePalmOil';
+            }
+            else if (theme.indexOf("Taxation") >= 0) {
+                message = '@Resources.UnsubscribeTaxation';
+            }
+            else if (theme.indexOf("Water") >= 0) {
+                message = '@Resources.UnsubscribeWater';
+            }
+            else if (theme.indexOf("Bespoke") >= 0) {
+                message = '@Resources.UnsubscribeBespoke';
+            }
+            else {
+                message = '@Resources.UnsubscribedServiceContent';
+            }
+
+            $('#unsubscribed-body').html(message);
+            $('#pop-up-unsubscribed').modal('show');
+        }
+
+        var clientType = '@ViewBag.ClientType';
+    </script>
+}
+@section pageButtons {
+    <button class="btn btn-sm azure-background" data-toggle="modal" data-target="#company-profile-export-dialog" id="export-button"><i class="fa fa-file-pdf-o" id="export-icon"></i><i class="fa fa-refresh fa-spin" id="export-loading" style="display: none"></i>&nbsp;&nbsp;@Resources.ExportPdf</button>
+}
+@section globalVar {
+    <script type="text/javascript">
+        var gesCompanyId = @Html.Raw(Model.GesCompanyId);
+    </script>
+
+    <script id="summary-modal-template" type="text/x-handlebars-template">
+        <div id="{{type}}SummaryModal-{{id}}" class="{{type}}SummaryModal modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{title}}</h4>
+                        <small class="modal-subtitle">{{companyName}} > {{typeText}}</small><br/>
+                        <span class="text-bold text-primary">{{alertType}}</span>
+                    </div>
+                    <div class="modal-body">
+                        <p>({{date}})</p>
+                        <p>{{summary}} {{source}}</p>
+                        <p class="notices-italic">{{notices}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="print-cases-template" type="text/x-handlebars-template">
+        {{#each rows}}
+        <div class="print-case">
+            <p>@Resources.Issue: {{this.IssueName}} | @Resources.Published: {{this.EntryDate}} | @Resources.LastModified: {{this.LastModified}} | @Resources.Location: {{this.Location}} | @Resources.EngagementStatus: {{this.Recommendation}}</p>
+            <p>@Resources.ServiceEngagementThemeNorm: {{this.ServiceEngagementThemeNorm}}</p>
+            <p>@Resources.Description: {{this.Description}}</p>
+            <hr>
+        </div>
+        {{/each}}
+    </script>
+
+    <script id="print-alerts-template" type="text/x-handlebars-template">
+        {{#each rows}}
+        <div class="print-alert">
+            <p>@Resources.Issue: {{this.Heading}} | @Resources.Published: {{this.Date}} | @Resources.AlertDate: {{this.LastModified}} | @Resources.Location: {{this.Location}} | @Resources.Norm: {{this.Norm}}</p>
+            <p>@Resources.Summary: {{this.Summary}}</p>
+            <hr>
+        </div>
+        {{/each}}
+    </script>
+}
+<script type="text/javascript">
+    var i_companyId = @Html.Raw(Json.Encode(Model.CompanyId));
+    var i_companyName = @Html.Raw(Json.Encode(Model.CompanyName));
+    var i_gesCompanyId = @Html.Raw(Json.Encode(Model.GesCompanyId));
+    var i_orgId = @Html.Raw(Json.Encode(Model.OrganizationId));
+    var i_individualId = @Html.Raw(Json.Encode(Model.IndividualId));
+
+    var isNew = @Html.Raw(Json.Encode(ViewBag.IsNew));
+</script>
+
+<div class="caseSummaryModalsHtml"></div>
+<div class="alertSummaryModalsHtml"></div>
+<div class="row">
+
+<div class="col-md-8 col-xs-12">
+    <!-- Company Summary Box -->
+    <div class="box box-primary box-company-overview">
+        <div class="box-header with-border">
+            <h3 class="box-title"><i class="fa fa-circle-o-notch" aria-hidden="true"></i> @Resources.CompanyOverview</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <p class="text-justify pre-line-white-space">@Model.Overview</p>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs hidden-print">
+            <li class="tab-cases active"><a href="#cases" data-toggle="tab"><i class="fa fa-briefcase"></i>&nbsp;&nbsp;@Resources.CaseProfiles</a></li>
+            <li class="tab-alerts"><a href="#alerts" data-toggle="tab"><i class="fa fa-bell"></i>&nbsp;&nbsp;@Resources.Alerts</a></li>
+            <li class="tab-events"><a href="#events" data-toggle="tab"><i class="fa fa-calendar"></i>&nbsp;&nbsp;@Resources.CompanyEvents (@Model.Events.Count(@*x => x.EventDate >= DateTime.UtcNow*@))</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="active tab-pane" id="cases">
+                <div class="box box-primary visible-print-block">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-briefcase"></i> @Resources.CaseProfiles</h3>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox margin-top-none">
+                        <label>
+                            <input id="cb-show-closed-cases" name="CbShowClosedCases" type="checkbox" checked="checked" value="1"/>@Resources.Show <a target="_blank" href="/Glossary#resolved-recommendation">resolved</a> and <a target="_blank" href="/Glossary#archived-recommendation">@Resources.Archived.ToLower()</a> @Resources.Cases.ToLower()
+                        </label>
+                    </div>
+                </div>
+                <div class="visible-print-block" id="print-case-profiles">
+
+                </div>
+                <div class="hidden-print">
+                    <div id="caseProfilesTableContainer">
+                        <table id="tblcases" class="table table-bordered table-striped"></table>
+                        <div id="tblcases-pager"></div>
+                    </div>
+                    <div class="no-cases-msg no-result-found-message">@Resources.NoCaseFound</div>
+                </div>
+            </div><!-- /.tab-pane: cases -->
+            <div class="tab-pane" id="alerts">
+                <div class="box box-primary visible-print-block">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-bell"></i> @Resources.Alerts</h3>
+                    </div>
+                </div>
+                <div class="visible-print-block" id="print-alerts">
+
+                </div>
+                <div class="hidden-print">
+                    <div id="alertsTableContainer">
+                        <table id="tblalerts" class="table table-bordered table-striped"></table>
+                        <div id="tblalerts-pager"></div>
+                    </div>
+                    <div class="no-alerts-msg no-result-found-message">@Resources.NoAlertFound</div>
+                </div>
+            </div><!-- /.tab-pane: alerts -->
+            <div class="tab-pane" id="events">
+                <div class="box box-primary visible-print-block">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-calendar"></i> @Resources.UpcomingEvents</h3>
+                    </div>
+                </div>
+                @Html.Partial("_Profile_Events", Model.Events)
+                @Html.Partial("_StatusTooltip")
+            </div><!-- /.tab-pane: events -->
+        </div><!-- /.tab-content -->
+    </div>
+</div><!-- /.col -->
+
+<div class="col-md-4 col-xs-12">
+    <!-- Company Info Box -->
+    <div class="box box-primary box-company-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <i class="fa fa-info-circle" aria-hidden="true"></i> @Resources.CompanyInfo
+            </h3>
+        </div>
+        <div class="box-body">
+
+            <dl class="dl-horizontal company-info-dl">
+                <dt>ISIN</dt>
+                <dd>@Model.Isin</dd>
+
+                <dt>@Resources.HQCountry</dt>
+                <dd>@Model.Country <span class="flag-icon flag-icon-@Model.CountryCode"></span></dd>
+
+                <dt>@Resources.Website</dt>
+                <dd><a href="@Model.Website" target="_blank">@Model.Website</a></dd>
+
+                @*<dt>@Resources.SectorGICSLevel1</dt>
+                <dd>@Model.GicsSector</dd>*@
+
+                <dt>@Resources.SubIndustry</dt>
+                <dd>@Model.MsciIndustry</dd>
+            </dl>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            <button type="button" data-loading-text="@Resources.Processing..." class="btn btn-sm btn-add-to-focus-list @btnAddToFocusListClass"><i class="fa @btnAddToFocusListIcon"></i>&nbsp;&nbsp;@btnAddToFocusListText</button>
+        </div><!-- /.box-footer -->
+    </div><!-- /.box -->
+
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs hidden-print">
+            <li class="active"><a href="#dialogstats" data-toggle="tab"><i class="fa fa-comments-o" aria-hidden="true"></i> @Resources.Dialogue</a></li>
+            <li><a href="#documents" data-toggle="tab"><i class="fa fa-folder" aria-hidden="true"></i> @Resources.Documents (@Model.Documents.Count())</a></li>
+        </ul>
+        <div class="tab-content hidden-print">
+            <div class="active tab-pane" id="dialogstats">
+                <div class="box box-primary visible-print-block">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <i class="fa fa-comments-o" aria-hidden="true"></i> @Resources.Dialogue
+                        </h3>
+                    </div>
+                </div>
+                <div class="tab-wrapper">
+                    <dl class="dl-horizontal company-info-dl">
+                        <dt><i class="fa fa-commenting-o margin-r-5"></i> @Resources.NumberOfContacts</dt>
+                        <dd><span class="text-muted">@Model.Dialogues</span></dd>
+                        <dt><i class="fa fa-star class-a-star margin-r-5 tooltip-hint" aria-hidden="true" data-tooltip-content="class-a-hint"></i> @Resources.CorrespondenceCount</dt>
+                        <dd><span class="text-muted">@Model.Correspondence</span></dd>
+                        <dt><i class="fa fa-phone margin-r-5"></i> @Resources.ConferenceCalls</dt>
+                        <dd><span class="text-muted">@Model.ConferenceCalls</span></dd>
+                        <dt><i class="fa fa-users margin-r-5"></i> @Resources.MeetingsInPerson</dt>
+                        <dd><span class="text-muted">@Model.Meetings</span></dd>
+                    </dl>
+                    @*<hr>
+                            <strong><i class="fa fa-phone margin-r-5"></i> Contacts</strong>
+                            <span class="text-muted">@Model.Contacts</span>*@
+                </div><!-- /.box-body -->
+            </div><!-- /.tab-pane -->
+            <div class="tab-pane" id="documents">
+                <div class="box box-primary visible-print-block">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <i class="fa fa-folder" aria-hidden="true"></i> @Resources.Documents
+                        </h3>
+                    </div>
+                </div>
+                @if (Model.Documents.Any())
+                {
+                    var counter = 0;
+                    <table class="table table-hover">
+                        @foreach (var doc in Model.Documents)
+                        {
+                            var faFileIcon = CommonHelper.GetFaFileStr(doc.FileExtension);
+                            var dtStr = doc.Created?.ToString("MMM dd, yyyy") ?? "-";
+
+                            counter++;
+                            var isCollapsedCls = counter > 3 ? "hidden-doc-row collapse" : "";
+                            <tr class="@isCollapsedCls">
+                                <td style="width: 24px;"><i class="fa fa-fw fa-file-@faFileIcon-o"></i></td>
+                                <td>
+                                    @*<a href="@CommonHelper.GetDocDownloadUrl(doc.FileName)" target="_blank">@doc.Name</a>*@
+                                    <a target="_blank" href="@Url.Action("DownloadFile", new {fileName = doc.FileName})">@doc.Name</a>
+                                </td>
+                                <td style="width: 70px;">@dtStr</td>
+                            </tr>
+                        }
+                    </table>
+                    if (Model.Documents.Count() > 3)
+                    {
+                        <div class="box-footer text-right">
+                            <a class="btn-doc-show-all btn-link">@Resources.ShowAll</a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="no-doc">
+                        <p>@Resources.ThereAreNoDocumentsAvailable</p>
+                    </div>
+                }
+            </div><!-- /.tab-pane -->
+        </div><!-- /.tab-content -->
+
+        <div class="tab-content row visible-print">
+            <div class="active tab-pane col-md-12 col-xs-6" id="dialogstats">
+                <div class="box box-primary visible-print-block">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <i class="fa fa-bullhorn" aria-hidden="true"></i> @Resources.Dialogue
+                        </h3>
+                    </div>
+                </div>
+                <div class="tab-wrapper">
+                    <dl class="dl-horizontal">
+                        <dt><i class="fa fa-commenting-o margin-r-5"></i> @Resources.NumberOfContacts</dt>
+                        <dd><span class="text-muted">@Model.Dialogues</span></dd>
+                        <dt><i class="fa fa-users margin-r-5"></i> @Resources.MeetingsInPerson</dt>
+                        <dd><span class="text-muted">@Model.Meetings</span></dd>
+                        <dt><i class="fa fa-phone margin-r-5"></i> @Resources.ConferenceCalls</dt>
+                        <dd><span class="text-muted">@Model.ConferenceCalls</span></dd>
+                    </dl>
+                    @*<hr>
+                            <strong><i class="fa fa-phone margin-r-5"></i> Contacts</strong>
+                            <span class="text-muted">@Model.Contacts</span>*@
+                </div><!-- /.box-body -->
+            </div><!-- /.tab-pane -->
+            <div class="tab-pane col-md-12 col-xs-6" id="documents">
+                <div class="box box-primary visible-print-block">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            <i class="fa fa-folder" aria-hidden="true"></i> @Resources.Documents
+                        </h3>
+                    </div>
+                </div>
+                @if (Model.Documents.Any())
+                {
+                    var counter = 0;
+                    <table class="table table-hover">
+                        @foreach (var doc in Model.Documents)
+                        {
+                            var faFileIcon = CommonHelper.GetFaFileStr(doc.FileExtension);
+                            var dtStr = doc.Created?.ToString("MMM dd, yyyy") ?? "-";
+
+                            counter++;
+                            var isCollapsedCls = counter > 3 ? "hidden-doc-row collapse" : "";
+                            <tr class="@isCollapsedCls">
+                                <td style="width: 24px;"><i class="fa fa-fw fa-file-@faFileIcon-o"></i></td>
+                                <td><a href="@CommonHelper.GetDocDownloadUrl(doc.FileName)" target="_blank">@doc.Name</a></td>
+                                <td style="width: 70px;">@dtStr</td>
+                            </tr>
+                        }
+                    </table>
+                    if (Model.Documents.Count() > 3)
+                    {
+                        <div class="box-footer text-right">
+                            <a class="btn-doc-show-all btn-link">@Resources.ShowAll</a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="no-doc">
+                        <p>@Resources.ThereAreNoDocumentsAvailable</p>
+                    </div>
+                }
+            </div><!-- /.tab-pane -->
+        </div><!-- /.tab-content -->
+    </div><!-- /.nav-tabs-custom -->
+</div><!-- /.col -->
+</div><!-- /.row -->
+
+@{ Html.RenderPartial("CompanyProfileExportDialog", Model); }
+@{ Html.RenderPartial("_UnSubscribed_Box_Message"); }

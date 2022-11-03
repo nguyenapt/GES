@@ -1,0 +1,37 @@
+﻿<div ng-form="gsslinkForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" ng-click="cancelGSSLink(ngDialogData.editingGSSLink)">×</span>
+        </button>
+        <h4 class="modal-title text-bold">GSS Link</h4>
+    </div>
+
+    <div class="modal-body" style="min-height: 0; max-height: 430px; overflow-y: auto">
+        <div class="box-body box-edit">
+            <div class="ges-content-block">
+                <div class="header">
+                    <div class="title col-lg-9 col-md-8">
+                        <p>Description <i class="fa fa-info-circle tooltip-hint" data-tooltip-content="case-profile-full-gsslink-instructions" data-tooltip-title="Gss link instructions"></i></p>
+                    </div>
+                </div>
+                <hr class="style10" />
+                <textarea type="text"  maxlength="5000" ng-style={"height":"230px;"} click-to-edit-text-area ng-model="ngDialogData.editingGSSLink.Description" is-edit-state="true" name="description" ng-required="true" style="height:250px"></textarea>
+            </div>
+            
+        </div>
+    </div>
+    <br />
+    <div class="modal-footer">
+        <span ng-hide="isGSSLinkDisabled">
+            <input class="btn btn-success" type="button" value="Save" data-dismiss="modal" id="btn-gsslink-update" ng-disabled="gsslinkForm.$invalid" ng-click="saveGSSLink(ngDialogData.editingGSSLink)" />
+            <input class="btn btn-success" type="button" style="margin-right:15px" value="Save & add new" id="btn-submit-addnew-gsslink" ng-click="saveGSSLink(ngDialogData.editingGSSLink,true)" ng-disabled="gsslinkForm.$invalid" />
+            <span ng-if="ngDialogData.editingGSSLink.I_GSSLink_Id !== '00000000-0000-0000-0000-000000000000'">
+                <input class="btn btn-danger" type="button" value="Delete" id="btn-delete-kpi" ng-click="deleteGSSLink(ngDialogData.editingGSSLink,true)" />
+            </span>
+        </span>
+        <input type="button" class="btn btn-default" style="margin-left:5px" data-dismiss="modal" value="Cancel" ng-click="cancelGSSLink(ngDialogData.editingGSSLink)" />
+    </div>
+</div>
+<style>
+    textarea { resize: vertical; }
+</style>
